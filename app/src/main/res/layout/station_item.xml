@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_item_selector">
+
+        <LinearLayout
+            android:id="@+id/dress_yout"
+            android:layout_width="match_parent"
+
+            android:layout_height="35dp"
+            android:layout_below="@id/dress_youta"
+            android:layout_alignLeft="@+id/dress_youta"
+            android:background="@drawable/setting_item_selector"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.5"
+                android:text="站点名称"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_13" />
+
+            <LinearLayout
+                android:id="@+id/yout_ic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/font_size_20"
+                    android:layout_height="@dimen/font_size_22"
+                    android:background="@drawable/ic_mark"
+                    />
+                <TextView
+                    android:id="@+id/distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1m"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_13" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
