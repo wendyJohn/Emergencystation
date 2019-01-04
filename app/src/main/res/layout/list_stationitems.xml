@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <AutoCompleteTextView
+            android:id="@+id/search_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/search_background"
+            android:drawableLeft="@drawable/t_image"
+            android:drawablePadding="@dimen/widget_size_3"
+            android:hint="查找附近的应急站"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true" />
+
+        <ImageView
+            android:id="@+id/voicesearch_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|right"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/voice" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/n_lineryoutstation"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:layout_below="@id/linearLayout">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/n_station"
+                android:gravity="center" />
+
+            <ListView
+                android:id="@+id/stationlistview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/n_backgroupitem"
+                android:cacheColorHint="#00000000"
+                android:divider="#dddbdb"
+                android:dividerHeight="1.0px"
+                android:drawSelectorOnTop="false"
+                android:listSelector="@android:color/transparent" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/n_lineryoutsos"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:layout_below="@id/n_lineryoutstation">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/n_sos"
+                android:gravity="center" />
+
+            <ListView
+                android:id="@+id/soslistview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/n_backgroupitem"
+                android:cacheColorHint="#00000000"
+                android:divider="#dddbdb"
+                android:dividerHeight="1.0px"
+                android:drawSelectorOnTop="false"
+                android:listSelector="@android:color/transparent" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/open_linyout"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/function"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/opendoor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开门"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/receivingmaterials_linyout"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/open_linyout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/function"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/receivingmaterials" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="领物资"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/returnsupplies_linyout"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/receivingmaterials_linyout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/function"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/returnsupplies" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="还物资"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/more_linyout"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/returnsupplies_linyout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/function"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/more" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/surveillance"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/more_linyout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/surveillance" />
+    </LinearLayout>
+</RelativeLayout>
