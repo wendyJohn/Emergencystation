@@ -16,7 +16,7 @@ import com.baidu.navisdk.adapter.BaiduNaviManagerFactory;
 import com.baidu.navisdk.adapter.IBNRouteGuideManager;
 import com.baidu.navisdk.adapter.map.BNItemizedOverlay;
 import com.baidu.navisdk.adapter.map.BNOverlayItem;
-import com.sanleng.emergencystation.MainActivity;
+import com.sanleng.emergencystation.activity.MainActivity;
 import com.sanleng.emergencystation.R;
 
 /**

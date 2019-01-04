@@ -22,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -102,12 +103,13 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
     private int i = 0;// 开锁次数
     private String str;
     private List<String> mylist = new ArrayList<>();//应急门的标识
-    private RelativeLayout myr_back;
+    //    private RelativeLayout myr_back;
     private static final double EARTH_RADIUS = 6378137.0;
     private List<StationBean> slist;
     private List<StationBean> slistsos;
     private List<StationBean> slists;//底部菜单选项
     private ListView stationlistview;
+    private ListView soslistview;
     private StationAdapter stationAdapter;
     WalkNaviLaunchParam walkParam;
     /*导航起终点Marker，可拖动改变起终点的坐标*/
@@ -125,7 +127,9 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
     private BottomMenuAdapter bottomMenuAdapter;
     private RelativeLayout foot;
     private TextView walkingnavigation;
-    private RelativeLayout viewdetails;
+    private TextView viewdetails;
+    private TextView driveingnavigation;
+
     private TextView name;
     private TextView address;
     private TextView distance;
@@ -136,10 +140,17 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
     };
     private static final int authBaseRequestCode = 1;
     private boolean hasInitSuccess = false;
-    private static final String APP_FOLDER_NAME = "移动消防安全防火";
+    private static final String APP_FOLDER_NAME = "应急站";
     public static final String ROUTE_PLAN_NODE = "routePlanNode";
     private String mSDCardPath = null;
     private BNRoutePlanNode mStartNode = null;
+    //地图按钮功能
+    private LinearLayout open_linyout;//开门
+    private LinearLayout receivingmaterials_linyout;//领物资
+    private LinearLayout returnsupplies_linyout; //还物资
+    private LinearLayout surveillance;//视频
+    private LinearLayout more_linyout;//更多
+
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -361,15 +372,30 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
         foot = findViewById(R.id.foot);
         walkingnavigation = findViewById(R.id.walkingnavigation);
         viewdetails = findViewById(R.id.viewdetails);
+        driveingnavigation = findViewById(R.id.driveingnavigation);
+
+        open_linyout = findViewById(R.id.open_linyout);//开门
+        receivingmaterials_linyout = findViewById(R.id.receivingmaterials_linyout);//领物资
+        returnsupplies_linyout = findViewById(R.id.returnsupplies_linyout); //还物资
+        surveillance = findViewById(R.id.surveillance);//视频
+        more_linyout = findViewById(R.id.more_linyout);//更多
+//        myr_back = (RelativeLayout) findViewById(R.id.r_back);
+
         mylist.add("A");
         mylist.add("B");
         mylist.add("C");
         mylist.add("D");
-        myr_back = (RelativeLayout) findViewById(R.id.r_back);
-        myr_back.setOnClickListener(this);
+//        myr_back.setOnClickListener(this);
         walkingnavigation.setOnClickListener(this);
         viewdetails.setOnClickListener(this);
+        driveingnavigation.setOnClickListener(this);
         foot.setOnClickListener(this);
+        open_linyout.setOnClickListener(this);
+        receivingmaterials_linyout.setOnClickListener(this);
+        returnsupplies_linyout.setOnClickListener(this);
+        surveillance.setOnClickListener(this);
+        more_linyout.setOnClickListener(this);
+
     }
 
     private static double rad(double d) {
@@ -421,8 +447,32 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
     public void onClick(View v) {
         // TODO Auto-generated method stub
         switch (v.getId()) {
-            case R.id.r_back:
-                finish();
+//            case R.id.r_back:
+//                finish();
+//                break;
+            //开门
+            case R.id.open_linyout:
+
+                break;
+            //领物资
+            case R.id.receivingmaterials_linyout:
+                Intent intent_OutOfStock = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
+                intent_OutOfStock.putExtra("mode", "OutOfStock");
+                startActivity(intent_OutOfStock);
+                break;
+            //还物资
+            case R.id.returnsupplies_linyout:
+                Intent intent_Warehousing = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
+                intent_Warehousing.putExtra("mode", "Warehousing");
+                startActivity(intent_Warehousing);
+                break;
+            //视频
+            case R.id.surveillance:
+
+                break;
+            //更多
+            case R.id.more_linyout:
+
                 break;
             // 步行导航
             case R.id.walkingnavigation:
@@ -438,8 +488,11 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
                 break;
 //                查看详情
             case R.id.viewdetails:
+                mScrollLayout.setToOpen();
+                break;
+//                驾车导航
+            case R.id.driveingnavigation:
                 routeplanToNavi(CoordinateType.BD09LL);
-//                mScrollLayout.setToOpen();
                 break;
             default:
                 break;
@@ -457,6 +510,24 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
         beana.setE_mylongitude(118.83488);
         beana.setDistance(gps_m(S_mylatitude, S_mylongitude, 31.87308, 118.83488));
         slist.add(beana);
+
+        StationBean beanb = new StationBean();
+        beanb.setId("1234567890");
+        beanb.setName("应急站B");
+        beanb.setAddress("南京市-江宁区-秣周东路12号");
+        beanb.setE_mylatitude(31.87308);
+        beanb.setE_mylongitude(118.83488);
+        beanb.setDistance(gps_m(S_mylatitude, S_mylongitude, 31.87308, 118.83488));
+        slist.add(beanb);
+
+        StationBean beanc = new StationBean();
+        beanc.setId("1234567890");
+        beanc.setName("应急站C");
+        beanc.setAddress("南京市-江宁区-秣周东路12号");
+        beanc.setE_mylatitude(31.87308);
+        beanc.setE_mylongitude(118.83488);
+        beanc.setDistance(gps_m(S_mylatitude, S_mylongitude, 31.87308, 118.83488));
+        slist.add(beanc);
         // 构建MarkerOption，用于在地图上添加Marker
         LatLng llA = new LatLng(31.87308, 118.83488);
         MarkerOptions option = new MarkerOptions().position(llA).icon(bdAs);
@@ -516,6 +587,34 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
         bundle.putSerializable("marker", bean);
         marker.setExtraInfo(bundle);
         mBaiduMap.addOverlays(list);
+
+        soslistview = findViewById(R.id.soslistview);
+        stationAdapter = new StationAdapter(EmergencyRescueActivity.this, slistsos);
+        soslistview.setAdapter(stationAdapter);
+
+        soslistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                E_mylatitude = slistsos.get(position).getE_mylatitude();
+                E_mylongitude = slistsos.get(position).getE_mylongitude();
+
+                String ids = slistsos.get(position).getId();
+                String names = slistsos.get(position).getName();
+                String addresss = slistsos.get(position).getAddress();
+                double distances = slistsos.get(position).getDistance();
+
+                name.setText(names);
+                address.setText(addresss);
+                distance.setText("距您 " + distances + "m");
+
+                ChooseMyLocation(E_mylatitude, E_mylongitude);
+                BottomMenu(names, addresss, distances, ids);
+                mScrollLayout.setVisibility(View.VISIBLE);
+
+                LatLng llA = new LatLng(E_mylatitude, E_mylongitude);
+                showInfoWindow(llA, names);
+            }
+        });
     }
 
     // 返回单位是米
@@ -698,21 +797,21 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
                     break;
                 //还物资
                 case 5859591:
-//                    Intent intent_Warehousing = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
-//                    intent_Warehousing.putExtra("mode", "Warehousing");
-//                    startActivity(intent_Warehousing);
+                    Intent intent_Warehousing = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
+                    intent_Warehousing.putExtra("mode", "Warehousing");
+                    startActivity(intent_Warehousing);
                     break;
-                //取物质
+                //领物质
                 case 5859592:
-//                    Intent intent_OutOfStock = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
-//                    intent_OutOfStock.putExtra("mode", "OutOfStock");
-//                    startActivity(intent_OutOfStock);
+                    Intent intent_OutOfStock = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
+                    intent_OutOfStock.putExtra("mode", "OutOfStock");
+                    startActivity(intent_OutOfStock);
                     break;
                 //报损
                 case 5859593:
-//                    Intent intent_Reportloss = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
-//                    intent_Reportloss.putExtra("mode", "Reportloss");
-//                    startActivity(intent_Reportloss);
+                    Intent intent_Reportloss = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
+                    intent_Reportloss.putExtra("mode", "Reportloss");
+                    startActivity(intent_Reportloss);
                     break;
                 default:
                     break;

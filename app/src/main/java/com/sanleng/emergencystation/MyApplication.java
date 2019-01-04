@@ -1,13 +1,20 @@
 package com.sanleng.emergencystation;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.baidu.mapapi.SDKInitializer;
 
 public class MyApplication extends MultiDexApplication {
-
     private static Application instance;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
+    }
 
     @Override
     public void onCreate() {
@@ -18,5 +25,6 @@ public class MyApplication extends MultiDexApplication {
         instance = this;
         // 注意该方法要再setContentView方法之前实现
         SDKInitializer.initialize(this);
+
     }
 }

@@ -4,14 +4,16 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.sanleng.emergencystation"
-        minSdkVersion 23
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        useLibrary 'org.apache.http.legacy'
         multiDexEnabled true
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -47,4 +49,6 @@ dependencies {
     implementation(name: 'onsdk_all', ext: 'aar')
     implementation(name: 'NaviTts', ext: 'aar')
     implementation 'com.android.support:multidex:1.0.0'
+    implementation files('libs/zxing.jar')
+    implementation 'com.bigkoo:svprogresshud:1.0.6'
 }

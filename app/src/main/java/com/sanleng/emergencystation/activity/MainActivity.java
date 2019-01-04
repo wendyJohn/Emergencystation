@@ -1,4 +1,4 @@
-package com.sanleng.emergencystation;
+package com.sanleng.emergencystation.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.BottomAdapter;
 import com.sanleng.emergencystation.fragment.Tab1Fragment;
 
