@@ -15,12 +15,14 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -59,6 +61,13 @@ import com.baidu.navisdk.adapter.IBNTTSManager;
 import com.baidu.navisdk.adapter.IBaiduNaviManager;
 import com.baidu.navisdk.adapter.impl.BaiduNaviManager;
 import com.baidu.platform.comapi.walknavi.widget.ArCameraView;
+import com.google.gson.Gson;
+import com.iflytek.cloud.RecognizerResult;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.ui.RecognizerDialog;
+import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.BottomMenuAdapter;
 import com.sanleng.emergencystation.adapter.StationAdapter;
@@ -121,7 +130,6 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
             .fromResource(R.drawable.icon_end);
     private static boolean isPermissionRequested = false;
     private LatLng startPt, endPt;
-
     //底部详情菜单
     private ScrollLayout mScrollLayout;
     private BottomMenuAdapter bottomMenuAdapter;
@@ -129,7 +137,6 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
     private TextView walkingnavigation;
     private TextView viewdetails;
     private TextView driveingnavigation;
-
     private TextView name;
     private TextView address;
     private TextView distance;
@@ -150,7 +157,9 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
     private LinearLayout returnsupplies_linyout; //还物资
     private LinearLayout surveillance;//视频
     private LinearLayout more_linyout;//更多
-
+    //语音搜索
+    private ImageView voicesearch_image;
+    private AutoCompleteTextView search_edit;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -158,6 +167,8 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
         super.onCreate(arg0);
         this.setContentView(R.layout.emergencyrescuefragment);
         RequestPermission();
+        requestPermissions();
+        SpeechUtility.createUtility(EmergencyRescueActivity.this, SpeechConstant.APPID +"=5c2ef470");
         initview();
         initMap();
         if (initDirs()) {
@@ -379,6 +390,10 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
         returnsupplies_linyout = findViewById(R.id.returnsupplies_linyout); //还物资
         surveillance = findViewById(R.id.surveillance);//视频
         more_linyout = findViewById(R.id.more_linyout);//更多
+
+        voicesearch_image = findViewById(R.id.voicesearch_image);//语音搜索
+        search_edit = findViewById(R.id.search_edit);//搜索输入框
+
 //        myr_back = (RelativeLayout) findViewById(R.id.r_back);
 
         mylist.add("A");
@@ -395,7 +410,7 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
         returnsupplies_linyout.setOnClickListener(this);
         surveillance.setOnClickListener(this);
         more_linyout.setOnClickListener(this);
-
+        voicesearch_image.setOnClickListener(this);
     }
 
     private static double rad(double d) {
@@ -473,6 +488,10 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
             //更多
             case R.id.more_linyout:
 
+                break;
+            //语音搜索
+            case R.id.voicesearch_image:
+                initSpeech(EmergencyRescueActivity.this);
                 break;
             // 步行导航
             case R.id.walkingnavigation:
@@ -1046,4 +1065,92 @@ public class EmergencyRescueActivity extends Activity implements OnClickListener
         }
     }
 
+    //语音搜索
+    /**
+     * 初始化语音识别
+     */
+    public void initSpeech(final Context context) {
+        //1.创建RecognizerDialog对象
+        RecognizerDialog mDialog = new RecognizerDialog(EmergencyRescueActivity.this, null);
+        //2.设置accent、language等参数
+        mDialog.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
+        mDialog.setParameter(SpeechConstant.ACCENT, "mandarin");
+        //3.设置回调接口
+        mDialog.setListener(new RecognizerDialogListener() {
+            @Override
+            public void onResult(RecognizerResult recognizerResult, boolean isLast) {
+                if (!isLast) {
+                    //解析语音返回的result为识别后的汉字,直接赋值到TextView上即可
+                    String result = parseVoice(recognizerResult.getResultString());
+                    search_edit.setText(result);
+
+//                   if(result.equals("驾车导航")){
+//                       routeplanToNavi(CoordinateType.BD09LL);
+//                   }
+
+                }
+            }
+
+            @Override
+            public void onError(SpeechError speechError) {
+
+            }
+        });
+        //4.显示dialog，接收语音输入
+        mDialog.show();
+    }
+
+    /**
+     * 解析语音json
+     */
+    public String parseVoice(String resultString) {
+        Gson gson = new Gson();
+        Voice voiceBean = gson.fromJson(resultString, Voice.class);
+
+        StringBuffer sb = new StringBuffer();
+        ArrayList<Voice.WSBean> ws = voiceBean.ws;
+        for (Voice.WSBean wsBean : ws) {
+            String word = wsBean.cw.get(0).w;
+            sb.append(word);
+        }
+        return sb.toString();
+    }
+    /**
+     * 语音对象封装
+     */
+    public class Voice {
+
+        public ArrayList<WSBean> ws;
+
+        public class WSBean {
+            public ArrayList<CWBean> cw;
+        }
+
+        public class CWBean {
+            public String w;
+        }
+    }
+    private void requestPermissions(){
+        try {
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission = ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if(permission!= PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this,new String[]
+                            {Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                    Manifest.permission.LOCATION_HARDWARE,Manifest.permission.READ_PHONE_STATE,
+                                    Manifest.permission.WRITE_SETTINGS,Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_CONTACTS},0x0010);
+                }
+
+                if(permission != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this,new String[] {
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION},0x0010);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
