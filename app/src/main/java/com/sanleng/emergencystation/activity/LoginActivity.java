@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
+import com.sanleng.emergencystation.dialog.PromptDialog;
 import com.sanleng.emergencystation.net.NetCallBack;
 import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
@@ -42,6 +43,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
     private String lastAccount;
     private String lastPwd;
     private CheckBox whether_contact;
+    private PromptDialog promptDialog;
+
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -52,6 +55,11 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
     }
 
     private void initView() {
+        // 创建对象
+        promptDialog = new PromptDialog(this);
+        // 设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(2000);
+
         login_btn = (Button) findViewById(R.id.login_btn);
         login_number = (EditText) findViewById(R.id.login_number);
         login_password = (EditText) findViewById(R.id.login_password);
@@ -104,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
                 RequestUtils.ClientPost(URLs.BULOGIN_URL, params, new NetCallBack() {
                     @Override
                     public void onStart() {
-
+                        promptDialog.showLoading("正在登录...");
                         super.onStart();
                     }
 
@@ -120,8 +128,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
                             String msg = jsonObject.getString("msg");
 
                             if (msg.equals("登录成功")) {
-
-
+                                promptDialog.showSuccess("登录成功");
                                 String data = jsonObject.getString("data");
                                 JSONObject object = new JSONObject(data);
                                 String unitcode = object.getString("unitcode");
@@ -147,7 +154,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
                                     }
                                 }, 1000);
                             } else {
-
+                                promptDialog.showError(msg);
                             }
 
                         } catch (JSONException e) {
@@ -158,8 +165,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
 
                     @Override
                     public void onMyFailure(Throwable arg0) {
-
-
+                        promptDialog.showError("登录失败");
                     }
                 });
 
