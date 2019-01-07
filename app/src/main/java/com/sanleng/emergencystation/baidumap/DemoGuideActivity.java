@@ -3,10 +3,10 @@
  */
 package com.sanleng.emergencystation.baidumap;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -16,13 +16,13 @@ import com.baidu.navisdk.adapter.BaiduNaviManagerFactory;
 import com.baidu.navisdk.adapter.IBNRouteGuideManager;
 import com.baidu.navisdk.adapter.map.BNItemizedOverlay;
 import com.baidu.navisdk.adapter.map.BNOverlayItem;
-import com.sanleng.emergencystation.activity.MainActivity;
 import com.sanleng.emergencystation.R;
+import com.sanleng.emergencystation.activity.MainActivity;
 
 /**
  * 诱导界面
  */
-public class DemoGuideActivity extends Activity {
+public class DemoGuideActivity extends AppCompatActivity {
 
     private static final String TAG = DemoGuideActivity.class.getName();
 

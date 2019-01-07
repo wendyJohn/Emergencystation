@@ -75,37 +75,47 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="lEWaSi7xNaDaSUpVumnEeNw0d0fc5pIm" />
-
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.WelcomeActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- 登录 -->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+           />
+
+        <!--首页 -->
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
+          />
+        <!-- 应急救援 -->
         <activity
             android:name=".activity.EmergencyRescueActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="adjustPan" />
+          />
+        <!-- 应急导航 -->
         <activity
             android:name=".baidumap.WNaviGuideActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="adjustPan" />
+          />
+        <!-- 应急导航 -->
         <activity
             android:name=".baidumap.DemoGuideActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="adjustPan" />
+           />
+        <!-- 物资管理-->
         <activity
             android:name=".activity.MaterialManagementCapture"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="adjustPan" />
+          />
 
         <service
             android:name="com.baidu.location.f"

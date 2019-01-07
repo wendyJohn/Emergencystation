@@ -2,7 +2,6 @@ package com.sanleng.emergencystation.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +15,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,7 +90,7 @@ import java.util.List;
  *
  * @author qiaoshi
  */
-public class EmergencyRescueActivity extends Activity implements OnClickListener {
+public class EmergencyRescueActivity extends AppCompatActivity implements OnClickListener {
     private LocationClient mLocationClient = null; // 定位对象
     private BDLocationListener myListener = new MyLocationListener(); // 定位监听
     private double S_mylatitude;// 纬度

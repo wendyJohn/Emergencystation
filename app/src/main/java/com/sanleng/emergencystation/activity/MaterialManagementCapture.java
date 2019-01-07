@@ -1,7 +1,6 @@
 package com.sanleng.emergencystation.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
@@ -12,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -46,7 +46,7 @@ import java.util.Vector;
  * @author qiaoshi
  */
 @SuppressLint("HandlerLeak")
-public class MaterialManagementCapture extends Activity implements Callback {
+public class MaterialManagementCapture extends AppCompatActivity implements Callback {
 
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
@@ -354,7 +354,7 @@ public class MaterialManagementCapture extends Activity implements Callback {
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
         params.put("stationAddress", stationAddress);
-//		params.put("state", "入库");
+		params.put("state", "emergencystation_in");
 
         params.put("username", PreferenceUtils.getString(MaterialManagementCapture.this, "MobileFig_username"));
         params.put("platformkey", "app_firecontrol_owner");
@@ -393,7 +393,7 @@ public class MaterialManagementCapture extends Activity implements Callback {
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
         params.put("stationAddress", stationAddress);
-//			params.put("state", "出库");
+			params.put("state", "emergencystation_out");
 
         params.put("username", PreferenceUtils.getString(MaterialManagementCapture.this, "MobileFig_username"));
         params.put("platformkey", "app_firecontrol_owner");
@@ -432,7 +432,7 @@ public class MaterialManagementCapture extends Activity implements Callback {
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
         params.put("stationAddress", stationAddress);
-//			params.put("state", "报损");
+			params.put("state", "emergencystation_break");
         params.put("reason", reason);
 
         params.put("username", PreferenceUtils.getString(MaterialManagementCapture.this, "MobileFig_username"));

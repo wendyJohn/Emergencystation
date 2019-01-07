@@ -3,10 +3,10 @@
  */
 package com.sanleng.emergencystation.baidumap;
 
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -20,7 +20,7 @@ import com.baidu.platform.comapi.walknavi.WalkNaviModeSwitchListener;
 import com.baidu.platform.comapi.walknavi.widget.ArCameraView;
 
 
-public class WNaviGuideActivity extends Activity {
+public class WNaviGuideActivity extends AppCompatActivity {
 
     private final static String TAG = WNaviGuideActivity.class.getSimpleName();
 
