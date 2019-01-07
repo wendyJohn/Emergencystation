@@ -1,0 +1,107 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/b_security">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/copyrights" />
+
+
+        <EditText
+            android:id="@+id/login_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/edit_line"
+            android:drawableLeft="@drawable/login_tip_phone_light"
+            android:drawablePadding="10dp"
+            android:hint="请输入用户名"
+            android:paddingLeft="@dimen/widget_size_10"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/cursor_color" />
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_number"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/edit_line"
+            android:drawableLeft="@drawable/login_tip_password"
+            android:drawablePadding="10dp"
+            android:hint="请输入密码"
+            android:paddingLeft="@dimen/widget_size_10"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:password="true"
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/cursor_color" />
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_45"
+            android:layout_below="@+id/login_password"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="@dimen/widget_size_20"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/login_btn_color"
+            android:text="登录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16" />
+
+        <TextView
+            android:id="@+id/login_questions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_btn"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="60dp"
+            android:text="忘记密码？" />
+
+        <TextView
+            android:id="@+id/code_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_btn"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/whether_contact"
+            android:text="记住密码" />
+
+        <CheckBox
+            android:id="@+id/whether_contact"
+            style="@style/CustomCheckBoxTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/login_btn"
+            android:layout_marginLeft="60dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Copyright©2018-2019 江苏三棱智慧物联发展股份有限公司版权所有"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+</LinearLayout>
