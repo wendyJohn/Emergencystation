@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/taba"
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/index_image_list" />
+
+    <include
+        android:id="@+id/title_news"
+        layout="@layout/index_news_list" />
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Tab_1"
-        android:textColor="#f00" />
+        android:layout_height="5dp"
+        android:background="@color/normal_bg_color" />
+
+    <include layout="@layout/index_application_list" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/normal_bg_color" />
+
+    <include layout="@layout/index_statistics_list" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/normal_bg_color" />
+
+    <include layout="@layout/index_education_list" />
+
 </LinearLayout>

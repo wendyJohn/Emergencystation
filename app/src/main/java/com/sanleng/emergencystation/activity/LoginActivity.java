@@ -26,6 +26,8 @@ import com.sanleng.emergencystation.utils.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * 登陆界面
@@ -135,7 +137,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
                                 String agentName = object.getString("name");
 
                                 //绑定唯一标识
-//                                JPushInterface.setAlias(LoginActivity.this, 1, unitcode);
+                                JPushInterface.setAlias(LoginActivity.this, 1, unitcode);
 
                                 // 存入数据库中（登录名称和密码）
                                 PreferenceUtils.setString(LoginActivity.this, "EmergencyStation_username", userName);

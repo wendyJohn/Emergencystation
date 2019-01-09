@@ -7,7 +7,7 @@ public class RequestUtils {
     public static AsyncHttpClient client = new AsyncHttpClient();
 
     static {
-        client.setTimeout(60000);// 设置超时的时间
+        client.setTimeout(6000);// 设置超时的时间
     }
 
     public static void ClientGet(String url, NetCallBack cb) {

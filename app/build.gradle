@@ -12,6 +12,14 @@ android {
         useLibrary 'org.apache.http.legacy'
         multiDexEnabled true
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+
+        ndk { //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        manifestPlaceholders = [JPUSH_PKGNAME: applicationId,
+                                JPUSH_APPKEY : "091b53a924519d044e82fb41",  //JPush上注册的包名对应的
+                                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
     }
 
     buildTypes {
@@ -53,4 +61,7 @@ dependencies {
     implementation 'com.bigkoo:svprogresshud:1.0.6'
     implementation files('libs/Msc.jar')
     implementation 'com.google.code.gson:gson:2.2.4'
+    //极光
+    implementation 'cn.jiguang.sdk:jpush:3.1.1'
+    implementation 'cn.jiguang.sdk:jcore:1.1.9'
 }

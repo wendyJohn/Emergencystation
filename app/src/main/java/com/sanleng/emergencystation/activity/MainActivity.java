@@ -1,6 +1,10 @@
 package com.sanleng.emergencystation.activity;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,11 +18,18 @@ import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.BottomAdapter;
 import com.sanleng.emergencystation.fragment.Tab1Fragment;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager mVp;
     private BottomNavigationView mBv;
     public static final String ROUTE_PLAN_NODE = "routePlanNode";
+    private static final String BROADCAST_PERMISSION_DISC = "com.permissions.MYE_BROADCAST";
+    private static final String BROADCAST_ACTION_DISC = "com.permissions.mye_broadcast";
+    private Receivers receivers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
     //初始化数据
     @SuppressLint("ClickableViewAccessibility")
     private void initView() {
+        //注册广播
+        receivers = new Receivers();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BROADCAST_ACTION_DISC); // 只有持有相同的action的接受者才能接收此广
+        registerReceiver(receivers, intentFilter, BROADCAST_PERMISSION_DISC, null);
+
         mBv = (BottomNavigationView) findViewById(R.id.navigation);
         mBv.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         mVp = (ViewPager) findViewById(R.id.vp);
@@ -83,4 +100,15 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    // 收到报警广播处理，刷新界面
+    public class Receivers extends BroadcastReceiver {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(BROADCAST_ACTION_DISC)) {
+                System.out.println("收到； 121212121212121212");
+
+            }
+
+        }
+    }
 }
