@@ -28,7 +28,7 @@ import android.util.Log;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.activity.MaterialManagementCapture;
+import com.sanleng.emergencystation.activity.MaterialCaptureActivity;
 import com.sanleng.emergencystation.zxing.camera.CameraManager;
 import com.sanleng.emergencystation.zxing.view.ViewfinderResultPointCallback;
 
@@ -41,7 +41,7 @@ public final class CaptureActivityHandler extends Handler {
 
     private static final String TAG = CaptureActivityHandler.class.getSimpleName();
 
-    private final MaterialManagementCapture activity;
+    private final MaterialCaptureActivity activity;
     private final DecodeThread decodeThread;
     private State state;
 
@@ -51,7 +51,7 @@ public final class CaptureActivityHandler extends Handler {
         DONE
     }
 
-    public CaptureActivityHandler(MaterialManagementCapture activity, Vector<BarcodeFormat> decodeFormats,
+    public CaptureActivityHandler(MaterialCaptureActivity activity, Vector<BarcodeFormat> decodeFormats,
                                   String characterSet) {
         this.activity = activity;
         decodeThread = new DecodeThread(activity, decodeFormats, characterSet,

@@ -30,7 +30,7 @@ android {
     }
 
     repositories {
-        flatDir{
+        flatDir {
             dirs 'libs'
         }
     }
@@ -64,4 +64,7 @@ dependencies {
     //极光
     implementation 'cn.jiguang.sdk:jpush:3.1.1'
     implementation 'cn.jiguang.sdk:jcore:1.1.9'
+    implementation files('libs/universal-image-loader-1.8.6-with-sources.jar')
+    //视频播放
+    implementation 'com.github.open-android:JieCaoVideoPlayer:0.1.0'
 }

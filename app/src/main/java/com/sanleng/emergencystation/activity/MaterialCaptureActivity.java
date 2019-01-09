@@ -46,7 +46,7 @@ import java.util.Vector;
  * @author qiaoshi
  */
 @SuppressLint("HandlerLeak")
-public class MaterialManagementCapture extends AppCompatActivity implements Callback {
+public class MaterialCaptureActivity extends AppCompatActivity implements Callback {
 
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
@@ -139,24 +139,24 @@ public class MaterialManagementCapture extends AppCompatActivity implements Call
         playBeepSoundAndVibrate();
         String resultString = result.getText();
         if (resultString.equals("")) {
-            Toast.makeText(MaterialManagementCapture.this, "扫码失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MaterialCaptureActivity.this, "扫码失败", Toast.LENGTH_SHORT).show();
         } else {
             if (mode.equals("Warehousing")) {
                 // 入库
-                WarehousingDialog warehousingDialog = new WarehousingDialog(MaterialManagementCapture.this,
+                WarehousingDialog warehousingDialog = new WarehousingDialog(MaterialCaptureActivity.this,
                         resultString, mHandler);
                 warehousingDialog.show();
             }
 
             if (mode.equals("OutOfStock")) {
                 // 出库
-                OutofStockDialog outofStockDialog = new OutofStockDialog(MaterialManagementCapture.this, resultString,
+                OutofStockDialog outofStockDialog = new OutofStockDialog(MaterialCaptureActivity.this, resultString,
                         mHandler);
                 outofStockDialog.show();
             }
             if (mode.equals("Reportloss")) {
                 // 报损
-                ReportLossDialog reportLossDialog = new ReportLossDialog(MaterialManagementCapture.this, resultString,
+                ReportLossDialog reportLossDialog = new ReportLossDialog(MaterialCaptureActivity.this, resultString,
                         mHandler);
                 reportLossDialog.show();
             }
@@ -172,7 +172,7 @@ public class MaterialManagementCapture extends AppCompatActivity implements Call
             return;
         }
         if (handler == null) {
-            handler = new CaptureActivityHandler(MaterialManagementCapture.this, decodeFormats, characterSet);
+            handler = new CaptureActivityHandler(MaterialCaptureActivity.this, decodeFormats, characterSet);
         }
     }
 
@@ -348,15 +348,15 @@ public class MaterialManagementCapture extends AppCompatActivity implements Call
     private void Warehousing() {
         RequestParams params = new RequestParams();
         params.put("ids", ids);
-        params.put("agentName", PreferenceUtils.getString(MaterialManagementCapture.this, "agentName"));
-//		params.put("agentId", PreferenceUtils.getString(MaterialManagementCapture.this, "agentId"));
+        params.put("agentName", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentName"));
+//		params.put("agentId", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentId"));
         params.put("stationName", stationName);
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
         params.put("stationAddress", stationAddress);
 		params.put("state", "emergencystation_in");
 
-        params.put("username", PreferenceUtils.getString(MaterialManagementCapture.this, "MobileFig_username"));
+        params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "MobileFig_username"));
         params.put("platformkey", "app_firecontrol_owner");
 
         RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
@@ -371,13 +371,13 @@ public class MaterialManagementCapture extends AppCompatActivity implements Call
                     return;
                 }
                 System.out.println("数据请求成功" + result);
-                new SVProgressHUD(MaterialManagementCapture.this).showSuccessWithStatus("入库成功");
+                new SVProgressHUD(MaterialCaptureActivity.this).showSuccessWithStatus("入库成功");
                 continuePreview();
             }
 
             @Override
             public void onMyFailure(Throwable arg0) {
-                new SVProgressHUD(MaterialManagementCapture.this).showErrorWithStatus("入库失败");
+                new SVProgressHUD(MaterialCaptureActivity.this).showErrorWithStatus("入库失败");
             }
         });
 
@@ -387,15 +387,15 @@ public class MaterialManagementCapture extends AppCompatActivity implements Call
     private void OutOfStock() {
         RequestParams params = new RequestParams();
         params.put("ids", ids);
-        params.put("agentName", PreferenceUtils.getString(MaterialManagementCapture.this, "agentName"));
-//			params.put("agentId", PreferenceUtils.getString(MaterialManagementCapture.this, "agentId"));
+        params.put("agentName", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentName"));
+//			params.put("agentId", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentId"));
         params.put("stationName", stationName);
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
         params.put("stationAddress", stationAddress);
 			params.put("state", "emergencystation_out");
 
-        params.put("username", PreferenceUtils.getString(MaterialManagementCapture.this, "MobileFig_username"));
+        params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "MobileFig_username"));
         params.put("platformkey", "app_firecontrol_owner");
 
         RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
@@ -410,13 +410,13 @@ public class MaterialManagementCapture extends AppCompatActivity implements Call
                     return;
                 }
                 System.out.println("数据请求成功" + result);
-                new SVProgressHUD(MaterialManagementCapture.this).showSuccessWithStatus("出库成功");
+                new SVProgressHUD(MaterialCaptureActivity.this).showSuccessWithStatus("出库成功");
                 continuePreview();
             }
 
             @Override
             public void onMyFailure(Throwable arg0) {
-                new SVProgressHUD(MaterialManagementCapture.this).showErrorWithStatus("出库失败");
+                new SVProgressHUD(MaterialCaptureActivity.this).showErrorWithStatus("出库失败");
             }
         });
 
@@ -426,8 +426,8 @@ public class MaterialManagementCapture extends AppCompatActivity implements Call
     private void ReportLoss() {
         RequestParams params = new RequestParams();
         params.put("ids", ids);
-        params.put("agentName", PreferenceUtils.getString(MaterialManagementCapture.this, "agentName"));
-//			params.put("agentId", PreferenceUtils.getString(MaterialManagementCapture.this, "agentId"));
+        params.put("agentName", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentName"));
+//			params.put("agentId", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentId"));
         params.put("stationName", stationName);
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
@@ -435,7 +435,7 @@ public class MaterialManagementCapture extends AppCompatActivity implements Call
 			params.put("state", "emergencystation_break");
         params.put("reason", reason);
 
-        params.put("username", PreferenceUtils.getString(MaterialManagementCapture.this, "MobileFig_username"));
+        params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "MobileFig_username"));
         params.put("platformkey", "app_firecontrol_owner");
 
         RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
@@ -450,13 +450,13 @@ public class MaterialManagementCapture extends AppCompatActivity implements Call
                     return;
                 }
                 System.out.println("数据请求成功" + result);
-                new SVProgressHUD(MaterialManagementCapture.this).showSuccessWithStatus("报损成功");
+                new SVProgressHUD(MaterialCaptureActivity.this).showSuccessWithStatus("报损成功");
                 continuePreview();
             }
 
             @Override
             public void onMyFailure(Throwable arg0) {
-                new SVProgressHUD(MaterialManagementCapture.this).showErrorWithStatus("报损失败");
+                new SVProgressHUD(MaterialCaptureActivity.this).showErrorWithStatus("报损失败");
             }
         });
 

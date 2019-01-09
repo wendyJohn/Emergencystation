@@ -67,7 +67,6 @@
     <!--读取联系人权限，上传联系人需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-
     <application
         android:name="com.sanleng.emergencystation.MyApplication"
         android:allowBackup="true"
@@ -112,9 +111,22 @@
         <activity
             android:name=".baidumap.DemoGuideActivity"
             android:screenOrientation="portrait" />
-        <!-- 物资管理-->
+        <!-- 物资管理扫码-->
         <activity
-            android:name=".activity.MaterialManagementCapture"
+            android:name=".activity.MaterialCaptureActivity"
+            android:screenOrientation="portrait" />
+        <!--文章-->
+        <activity
+            android:name=".activity.ArticleActivity"
+            android:screenOrientation="portrait" />
+        <!--文章详情-->
+        <activity
+            android:name=".activity.ArticleItemActivity"
+            android:screenOrientation="portrait" />
+        <!--视频播放-->
+        <activity
+            android:name=".activity.VideoPlayerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
         <service
@@ -126,7 +138,6 @@
                 <action android:name="com.baidu.location.service_v5.2.1"></action>
             </intent-filter>
         </service>
-
 
         <!-- 替换原生极光推送接收器 -->
         <receiver
@@ -143,6 +154,7 @@
                 <category android:name="com.sanleng.emergencystation" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>

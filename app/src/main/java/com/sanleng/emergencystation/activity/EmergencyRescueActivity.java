@@ -471,13 +471,13 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 break;
             //领物资
             case R.id.receivingmaterials_linyout:
-                Intent intent_OutOfStock = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
+                Intent intent_OutOfStock = new Intent(EmergencyRescueActivity.this, MaterialCaptureActivity.class);
                 intent_OutOfStock.putExtra("mode", "OutOfStock");
                 startActivity(intent_OutOfStock);
                 break;
             //还物资
             case R.id.returnsupplies_linyout:
-                Intent intent_Warehousing = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
+                Intent intent_Warehousing = new Intent(EmergencyRescueActivity.this, MaterialCaptureActivity.class);
                 intent_Warehousing.putExtra("mode", "Warehousing");
                 startActivity(intent_Warehousing);
                 break;
@@ -816,19 +816,19 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                     break;
                 //还物资
                 case 5859591:
-                    Intent intent_Warehousing = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
+                    Intent intent_Warehousing = new Intent(EmergencyRescueActivity.this, MaterialCaptureActivity.class);
                     intent_Warehousing.putExtra("mode", "Warehousing");
                     startActivity(intent_Warehousing);
                     break;
                 //领物质
                 case 5859592:
-                    Intent intent_OutOfStock = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
+                    Intent intent_OutOfStock = new Intent(EmergencyRescueActivity.this, MaterialCaptureActivity.class);
                     intent_OutOfStock.putExtra("mode", "OutOfStock");
                     startActivity(intent_OutOfStock);
                     break;
                 //报损
                 case 5859593:
-                    Intent intent_Reportloss = new Intent(EmergencyRescueActivity.this, MaterialManagementCapture.class);
+                    Intent intent_Reportloss = new Intent(EmergencyRescueActivity.this, MaterialCaptureActivity.class);
                     intent_Reportloss.putExtra("mode", "Reportloss");
                     startActivity(intent_Reportloss);
                     break;

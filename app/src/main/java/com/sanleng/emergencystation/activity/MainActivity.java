@@ -16,13 +16,9 @@ import android.view.View;
 
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.BottomAdapter;
-import com.sanleng.emergencystation.fragment.Tab1Fragment;
-
-import java.util.ArrayList;
-import java.util.Map;
+import com.sanleng.emergencystation.fragment.Taba_Fragment;
 
 public class MainActivity extends AppCompatActivity {
-
     private ViewPager mVp;
     private BottomNavigationView mBv;
     public static final String ROUTE_PLAN_NODE = "routePlanNode";
@@ -96,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         BottomAdapter adapter = new BottomAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Tab1Fragment());
+        adapter.addFragment(new Taba_Fragment());
         viewPager.setAdapter(adapter);
     }
 
@@ -111,4 +107,5 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
 }
