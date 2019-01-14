@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- function items -->
+    <string-array name="myfunction_name_items">
+        <item>物资管理</item>
+        <item>应急开门</item>
+        <item>SOS事件</item>
+        <item>我的消息</item>
+        <item>在线求助</item>
+        <item>授权中心</item>
+    </string-array>
+
+    <string-array name="myfunction_icon_items">
+        <item>@drawable/material</item>
+        <item>@drawable/dooropening</item>
+        <item>@drawable/defecttreatment</item>
+        <item>@drawable/news_m</item>
+        <item>@drawable/seekhelp</item>
+        <item>@drawable/authorization</item>
+    </string-array>
+
+    <!-- function items -->
+    <string-array name="material_management_item">
+        <item>还物资</item>
+        <item>取物资</item>
+        <item>物资查询</item>
+        <item>报损</item>
+        <item>盘点</item>
+        <item>站点详情</item>
+    </string-array>
+
+    <array name="material_management_icon_item">
+        <item>@drawable/warehousings</item>
+        <item>@drawable/outofstock</item>
+        <item>@drawable/materialinquiries</item>
+        <item>@drawable/reportloss</item>
+        <item>@drawable/inventory</item>
+        <item>@drawable/sitedetails</item>
+    </array>
+
+</resources>
