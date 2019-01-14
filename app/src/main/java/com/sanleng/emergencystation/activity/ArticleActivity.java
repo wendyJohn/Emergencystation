@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * 文章列表数据
  *
- * @author qiaoshi
+ * @author Qiaoshi
  */
 public class ArticleActivity extends Activity {
 
