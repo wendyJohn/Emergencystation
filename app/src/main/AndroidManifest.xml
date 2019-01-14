@@ -111,6 +111,10 @@
         <activity
             android:name=".baidumap.DemoGuideActivity"
             android:screenOrientation="portrait" />
+        <!-- 物资管理-->
+        <activity
+            android:name=".activity.MonStationActivity"
+            android:screenOrientation="portrait" />
         <!-- 物资管理扫码-->
         <activity
             android:name=".activity.MaterialCaptureActivity"

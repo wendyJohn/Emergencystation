@@ -87,7 +87,6 @@ import java.util.List;
 
 /**
  * 应急救援
- *
  * @author qiaoshi
  */
 public class EmergencyRescueActivity extends AppCompatActivity implements OnClickListener {
@@ -1106,7 +1105,6 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     public String parseVoice(String resultString) {
         Gson gson = new Gson();
         Voice voiceBean = gson.fromJson(resultString, Voice.class);
-
         StringBuffer sb = new StringBuffer();
         ArrayList<Voice.WSBean> ws = voiceBean.ws;
         for (Voice.WSBean wsBean : ws) {
@@ -1119,13 +1117,10 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
      * 语音对象封装
      */
     public class Voice {
-
         public ArrayList<WSBean> ws;
-
         public class WSBean {
             public ArrayList<CWBean> cw;
         }
-
         public class CWBean {
             public String w;
         }

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.ArticleActivity;
 import com.sanleng.emergencystation.activity.EmergencyRescueActivity;
+import com.sanleng.emergencystation.activity.MonStationActivity;
 import com.sanleng.emergencystation.activity.VideoPlayerActivity;
 import com.sanleng.emergencystation.utils.RotateCard;
 import com.sanleng.emergencystation.view.MarqueeViews;
@@ -164,7 +165,8 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             //应急站管理
             case R.id.administration:
-
+                Intent intent_monStation = new Intent(getActivity(), MonStationActivity.class);
+                startActivity(intent_monStation);
                 break;
             //应急救援
             case R.id.rescue:
