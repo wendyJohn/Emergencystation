@@ -1,6 +1,7 @@
 package com.sanleng.emergencystation.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ public class BottomMenuAdapter extends BaseAdapter {
     private String address;
     private double distance;
     private String id;
+    private String mac;
 
     private final int TYPE_COUNT = 3;
     private final int TYPE_ONE = 0;
@@ -36,7 +38,7 @@ public class BottomMenuAdapter extends BaseAdapter {
     private int currentType;
 
 
-    public BottomMenuAdapter(Context mContext, List<StationBean> mList, String name, String address, double distance, String id, Handler handler) {
+    public BottomMenuAdapter(Context mContext, List<StationBean> mList, String name, String address, double distance, String id,String mac,Handler handler) {
         super();
 
         this.mContext = mContext;
@@ -45,6 +47,7 @@ public class BottomMenuAdapter extends BaseAdapter {
         this.address = address;
         this.distance = distance;
         this.id = id;
+        this.mac = mac;
         this.handler = handler;
         inflater = LayoutInflater.from(mContext);
     }
@@ -87,6 +90,9 @@ public class BottomMenuAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Message msg = new Message();
+                    Bundle data = new Bundle();
+                    data.putString("mac", mac);
+                    msg.setData(data);
                     msg.what = 5859590;
                     handler.sendMessage(msg);
                 }

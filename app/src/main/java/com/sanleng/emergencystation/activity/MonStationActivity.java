@@ -54,9 +54,9 @@ public class MonStationActivity extends Activity implements OnClickListener, OnI
 				startActivity(intent_materialmanagement);
 				break;
 			case 1:// 应急开门
-//				Intent intent_emergencyStation = new Intent(MonStationActivity.this, EmergencyStationActivity.class);
-//				intent_emergencyStation.putExtra("mode", "应急开门");
-//				startActivity(intent_emergencyStation);
+				Intent intent_emergencyStation = new Intent(MonStationActivity.this, EmergencyStationActivity.class);
+				intent_emergencyStation.putExtra("mode", "应急开门");
+				startActivity(intent_emergencyStation);
 				break;
 			case 2:// SOS事件
 

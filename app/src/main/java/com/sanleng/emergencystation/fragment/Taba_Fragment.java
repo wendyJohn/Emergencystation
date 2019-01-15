@@ -91,9 +91,9 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
         img.setImageResource(R.drawable.statistics_c);
         views.add(img);
 
-        img = new ImageView(getActivity());
-        img.setImageResource(R.drawable.statistics_d);
-        views.add(img);
+//        img = new ImageView(getActivity());
+//        img.setImageResource(R.drawable.statistics_d);
+//        views.add(img);
 
         card.commitViews(views, 200);
 
@@ -103,15 +103,15 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
     //获取信息
     private void addNews(int page) {
         info = new ArrayList<>();
-        info.add("南京工程学院附近应急柜物资缺少");
-        info.add("南京工程学院附近危化品柜急需处理");
+        info.add("江苏三棱附近应急柜物资缺少");
+        info.add("江苏三棱附近危化品柜急需处理");
         marqueeviews.startWithList(info);
 //        RequestParams params = new RequestParams();
 //        params.put("event_no", "142");
 //        params.put("pageNum", page + "");
 //        params.put("pageSize", "10");
 //        params.put("unit_code", PreferenceUtils.getString(getActivity(), "unitcode"));
-//        params.put("username", PreferenceUtils.getString(getActivity(), "MobileFig_username"));
+//        params.put("username", PreferenceUtils.getString(getActivity(), "EmergencyStation_username"));
 //        params.put("platformkey", "app_firecontrol_owner");
 //
 //        RequestUtils.ClientPost(URLs.Police_URL, params, new NetCallBack() {

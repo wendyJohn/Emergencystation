@@ -135,6 +135,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
                                 JSONObject object = new JSONObject(data);
                                 String unitcode = object.getString("unitcode");
                                 String agentName = object.getString("name");
+                                String ids = object.getString("ids");
 
                                 //绑定唯一标识
                                 JPushInterface.setAlias(LoginActivity.this, 1, unitcode);
@@ -146,6 +147,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
                                 PreferenceUtils.setString(LoginActivity.this, "unitcode", unitcode);
                                 // 人员名称
                                 PreferenceUtils.setString(LoginActivity.this, "agentName", agentName);
+                                PreferenceUtils.setString(LoginActivity.this, "ids", ids);
 
                                 new Handler().postDelayed(new Runnable() {
                                     public void run() {

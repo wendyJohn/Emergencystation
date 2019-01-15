@@ -123,6 +123,22 @@
         <activity
             android:name=".activity.ArticleActivity"
             android:screenOrientation="portrait" />
+        <!--物资管理-->
+        <activity
+            android:name=".activity.MaterialManagementActivity"
+            android:screenOrientation="portrait" />
+        <!--开门-->
+        <activity
+            android:name=".activity.EmergencyStationActivity"
+            android:screenOrientation="portrait" />
+        <!--应急开门-->
+        <activity
+            android:name=".activity.EmergencyUnlockingActivity"
+            android:screenOrientation="portrait" />
+        <!--物资详情-->
+        <activity
+            android:name=".activity.MaterialActivity"
+            android:screenOrientation="portrait" />
         <!--文章详情-->
         <activity
             android:name=".activity.ArticleItemActivity"

@@ -129,6 +129,7 @@ public class WarehousingDialog extends Dialog implements View.OnClickListener {
 		}
 	}
 
+	@SuppressLint("HandlerLeak")
 	private Handler m_Handler = new Handler() {
 		@SuppressLint("HandlerLeak")
 		@Override

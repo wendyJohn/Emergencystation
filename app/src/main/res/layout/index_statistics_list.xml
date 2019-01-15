@@ -14,7 +14,7 @@
     <com.sanleng.emergencystation.utils.RotateCard
         android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="@dimen/widget_size_120"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true" >
     </com.sanleng.emergencystation.utils.RotateCard>

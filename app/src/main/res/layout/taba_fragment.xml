@@ -4,33 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/title_bar"
-        layout="@layout/index_image_list" />
 
-    <include
-        android:id="@+id/title_news"
-        layout="@layout/index_news_list" />
+        <include
+            android:id="@+id/title_bar"
+            layout="@layout/index_image_list" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/normal_bg_color" />
+        <include
+            android:id="@+id/title_news"
+            layout="@layout/index_news_list" />
 
-    <include layout="@layout/index_application_list" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/normal_bg_color" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/normal_bg_color" />
+        <include layout="@layout/index_application_list" />
 
-    <include layout="@layout/index_statistics_list" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/normal_bg_color" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/normal_bg_color" />
+        <include layout="@layout/index_statistics_list" />
 
-    <include layout="@layout/index_education_list" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/normal_bg_color" />
+
+        <include layout="@layout/index_education_list" />
 
 </LinearLayout>

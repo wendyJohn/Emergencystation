@@ -68,30 +68,43 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
+import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.BottomMenuAdapter;
 import com.sanleng.emergencystation.adapter.StationAdapter;
 import com.sanleng.emergencystation.baidumap.DemoGuideActivity;
 import com.sanleng.emergencystation.baidumap.NormalUtils;
 import com.sanleng.emergencystation.baidumap.WNaviGuideActivity;
+import com.sanleng.emergencystation.bean.ArchitectureBean;
 import com.sanleng.emergencystation.bean.StationBean;
+import com.sanleng.emergencystation.dialog.E_StationDialog;
+import com.sanleng.emergencystation.fragment.Tabb_Fragment;
 import com.sanleng.emergencystation.net.NetCallBack;
 import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
+import com.sanleng.emergencystation.utils.PreferenceUtils;
 import com.sanleng.emergencystation.utils.ScreenUtil;
 import com.yinglan.scrolllayout.ScrollLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * 应急救援
+ *
  * @author qiaoshi
  */
 public class EmergencyRescueActivity extends AppCompatActivity implements OnClickListener {
     private LocationClient mLocationClient = null; // 定位对象
     private BDLocationListener myListener = new MyLocationListener(); // 定位监听
+    private RelativeLayout myr_back;
     private double S_mylatitude;// 纬度
     private double S_mylongitude;// 经度
     private double E_mylatitude;// 纬度
@@ -100,18 +113,14 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     private MapView mMapView;  // 地图应用
     private MyLocationData locData;
     private BaiduMap mBaiduMap;
-    private List<OverlayOptions> list;
+    private List<OverlayOptions> listoption;
     private LatLng latLng;
     private boolean isFirstLoc = true; // 是否首次定位
-    BitmapDescriptor bdAs = BitmapDescriptorFactory.fromResource(R.drawable.e_station);//应急站标识
+    BitmapDescriptor bdAs = BitmapDescriptorFactory.fromResource(R.drawable.stations_icon);//应急站标识
     BitmapDescriptor bdA = BitmapDescriptorFactory.fromResource(R.drawable.ico_sos);//求救标识
-    private String AlarmTime;
-    private String AlarmEquipment;
-    private String AlarmUnit;
     private int i = 0;// 开锁次数
     private String str;
     private List<String> mylist = new ArrayList<>();//应急门的标识
-    //    private RelativeLayout myr_back;
     private static final double EARTH_RADIUS = 6378137.0;
     private List<StationBean> slist;
     private List<StationBean> slistsos;
@@ -159,15 +168,21 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     //语音搜索
     private ImageView voicesearch_image;
     private AutoCompleteTextView search_edit;
+    private E_StationDialog e_stationDialog;
+    private String Mac;//开锁的MAC地址
+
+    private double lately_mylatitude;// 最近纬度
+    private double lately_mylongitude;// 最近经度
+
 
     @Override
     protected void onCreate(Bundle arg0) {
         // TODO Auto-generated method stub
         super.onCreate(arg0);
-        this.setContentView(R.layout.emergencyrescuefragment);
+        this.setContentView(R.layout.emergencyrescueactivity);
         RequestPermission();
         requestPermissions();
-        SpeechUtility.createUtility(EmergencyRescueActivity.this, SpeechConstant.APPID +"=5c2ef470");
+        SpeechUtility.createUtility(EmergencyRescueActivity.this, SpeechConstant.APPID + "=5c2ef470");
         initview();
         initMap();
         if (initDirs()) {
@@ -230,22 +245,26 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 E_mylatitude = bean.getE_mylatitude();
                 E_mylongitude = bean.getE_mylongitude();
                 String ids = bean.getId();
+                String mac = bean.getMac();
                 String names = bean.getName();
                 String addresss = bean.getAddress();
                 double distances = bean.getDistance();
+                int type = bean.getType();
                 name.setText(names);
                 address.setText(addresss);
                 distance.setText("距您 " + distances + " m");
-                BottomMenu(names, addresss, distances, ids);
-                mScrollLayout.setVisibility(View.VISIBLE);
-
+                BottomMenu(names, addresss, distances, ids, mac);
                 LatLng llA = new LatLng(E_mylatitude, E_mylongitude);
                 showInfoWindow(llA, names);
-
-                // 获得marker中的数据
-//                e_stationDialog = new E_StationDialog(EmergencyRescueActivity.this, clickListener,
-//                        AlarmEquipment, AlarmUnit, null, null);
-//                e_stationDialog.show();
+                if (type == 1) {
+                    mScrollLayout.setVisibility(View.VISIBLE);
+                }
+                if (type == 2) {
+                    // 获得marker中的数据
+                    e_stationDialog = new E_StationDialog(EmergencyRescueActivity.this, names, addresss, clickListener);
+                    e_stationDialog.show();
+                    mScrollLayout.setVisibility(View.GONE);
+                }
                 return true;
 
             }
@@ -291,7 +310,6 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
             latLng = new LatLng(location.getLatitude(), location.getLongitude());
             S_mylatitude = location.getLatitude();
             S_mylongitude = location.getLongitude();
-
             // 构造定位数据
             MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
@@ -371,7 +389,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         distance = (TextView) findViewById(R.id.distance);
         /**设置 setting*/
         mScrollLayout.setMinOffset(0);
-        mScrollLayout.setMaxOffset((int) (ScreenUtil.getScreenHeight(EmergencyRescueActivity.this) * 1));
+        mScrollLayout.setMaxOffset((int) (ScreenUtil.getScreenHeight(EmergencyRescueActivity.this) * 0.6));
         mScrollLayout.setExitOffset(ScreenUtil.dip2px(EmergencyRescueActivity.this, 110));
         mScrollLayout.setIsSupportExit(true);
         mScrollLayout.setAllowHorizontalScroll(true);
@@ -393,13 +411,13 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         voicesearch_image = findViewById(R.id.voicesearch_image);//语音搜索
         search_edit = findViewById(R.id.search_edit);//搜索输入框
 
-//        myr_back = (RelativeLayout) findViewById(R.id.r_back);
+        myr_back = (RelativeLayout) findViewById(R.id.r_back);
 
         mylist.add("A");
         mylist.add("B");
         mylist.add("C");
         mylist.add("D");
-//        myr_back.setOnClickListener(this);
+        myr_back.setOnClickListener(this);
         walkingnavigation.setOnClickListener(this);
         viewdetails.setOnClickListener(this);
         driveingnavigation.setOnClickListener(this);
@@ -424,9 +442,9 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
             if (i == 4) {
                 handler.removeCallbacks(runnable);
             } else {
-                str = mylist.get(i).toString();
+                str = mylist.get(i).toString().trim();
                 i++;
-                Unlock(str, "54C9DFF77FAB");
+                Unlock(str, Mac);
                 // 要做的事情
                 handler.postDelayed(this, 2000);
             }
@@ -461,12 +479,14 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     public void onClick(View v) {
         // TODO Auto-generated method stub
         switch (v.getId()) {
-//            case R.id.r_back:
-//                finish();
-//                break;
+            case R.id.r_back:
+                finish();
+                break;
             //开门
             case R.id.open_linyout:
-
+                Intent intent_emergencyStation = new Intent(EmergencyRescueActivity.this, EmergencyStationActivity.class);
+                intent_emergencyStation.putExtra("mode", "应急开门");
+                startActivity(intent_emergencyStation);
                 break;
             //领物资
             case R.id.receivingmaterials_linyout:
@@ -520,67 +540,103 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     //附近的应急站
     private void NearbyEmergencyStation() {
         slist = new ArrayList<>();
-        StationBean beana = new StationBean();
-        beana.setId("1234567890");
-        beana.setName("应急站A");
-        beana.setAddress("南京市-江宁区-秣周东路12号");
-        beana.setE_mylatitude(31.87308);
-        beana.setE_mylongitude(118.83488);
-        beana.setDistance(gps_m(S_mylatitude, S_mylongitude, 31.87308, 118.83488));
-        slist.add(beana);
-
-        StationBean beanb = new StationBean();
-        beanb.setId("1234567890");
-        beanb.setName("应急站B");
-        beanb.setAddress("南京市-江宁区-秣周东路12号");
-        beanb.setE_mylatitude(31.87308);
-        beanb.setE_mylongitude(118.83488);
-        beanb.setDistance(gps_m(S_mylatitude, S_mylongitude, 31.87308, 118.83488));
-        slist.add(beanb);
-
-        StationBean beanc = new StationBean();
-        beanc.setId("1234567890");
-        beanc.setName("应急站C");
-        beanc.setAddress("南京市-江宁区-秣周东路12号");
-        beanc.setE_mylatitude(31.87308);
-        beanc.setE_mylongitude(118.83488);
-        beanc.setDistance(gps_m(S_mylatitude, S_mylongitude, 31.87308, 118.83488));
-        slist.add(beanc);
-        // 构建MarkerOption，用于在地图上添加Marker
-        LatLng llA = new LatLng(31.87308, 118.83488);
-        MarkerOptions option = new MarkerOptions().position(llA).icon(bdAs);
-        Marker marker = (Marker) mBaiduMap.addOverlay(option);
-        // 将信息保存
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("marker", beana);
-        marker.setExtraInfo(bundle);
-        mBaiduMap.addOverlays(list);
-
-        stationlistview = findViewById(R.id.stationlistview);
-        stationAdapter = new StationAdapter(EmergencyRescueActivity.this, slist);
-        stationlistview.setAdapter(stationAdapter);
-
-        stationlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        RequestParams params = new RequestParams();
+        params.put("lat", S_mylatitude + "");
+        params.put("lng", S_mylongitude + "");
+        params.put("pageNum", "1");
+        params.put("pageSize", "100");
+        params.put("username", PreferenceUtils.getString(EmergencyRescueActivity.this, "EmergencyStation_username"));
+        params.put("platformkey", "app_firecontrol_owner");
+        RequestUtils.ClientPost(URLs.NearbyEmergencyStation_URL, params, new NetCallBack() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                E_mylatitude = slist.get(position).getE_mylatitude();
-                E_mylongitude = slist.get(position).getE_mylongitude();
+            public void onStart() {
+                super.onStart();
+            }
 
-                String ids = slist.get(position).getId();
-                String names = slist.get(position).getName();
-                String addresss = slist.get(position).getAddress();
-                double distances = slist.get(position).getDistance();
+            @Override
+            public void onMySuccess(String result) {
+                if (result == null || result.length() == 0) {
+                    return;
+                }
+                System.out.println("附近站点数据请求成功" + result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String msg = jsonObject.getString("msg");
+                    if (msg.equals("获取成功")) {
+                        String data = jsonObject.getString("data");
+                        JSONObject objects = new JSONObject(data);
+                        String list = objects.getString("list");
+                        JSONArray array = new JSONArray(list);
+                        JSONObject object;
+                        for (int i = 0; i < array.length(); i++) {
+                            StationBean bean = new StationBean();
+                            object = (JSONObject) array.get(i);
+                            String name = object.getString("name");
+                            String address = object.getString("address");
+                            String mac = object.getString("mac");
+                            String ids = object.getString("ids");
+                            String lat = object.getString("lat");
+                            String lng = object.getString("lng");
 
-                name.setText(names);
-                address.setText(addresss);
-                distance.setText("距您 " + distances + "m");
+                            Double.parseDouble(lat);
+                            bean.setId(ids);
+                            bean.setName(name);
+                            bean.setAddress(address);
+                            bean.setE_mylatitude(Double.parseDouble(lat));
+                            bean.setE_mylongitude(Double.parseDouble(lng));
+                            bean.setMac(mac);
+                            bean.setType(1);
 
-                ChooseMyLocation(E_mylatitude, E_mylongitude);
-                BottomMenu(names, addresss, distances, ids);
-                mScrollLayout.setVisibility(View.VISIBLE);
+                            bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
 
-                LatLng llA = new LatLng(E_mylatitude, E_mylongitude);
-                showInfoWindow(llA, names);
+                            // 构建MarkerOption，用于在地图上添加Marker
+                            LatLng llA = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+                            MarkerOptions option = new MarkerOptions().position(llA).icon(bdAs);
+                            Marker marker = (Marker) mBaiduMap.addOverlay(option);
+                            // 将信息保存
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("marker", bean);
+                            marker.setExtraInfo(bundle);
+                            mBaiduMap.addOverlays(listoption);
+                            slist.add(bean);
+                        }
+                        stationlistview = findViewById(R.id.stationlistview);
+                        stationAdapter = new StationAdapter(EmergencyRescueActivity.this, slist);
+                        stationlistview.setAdapter(stationAdapter);
+
+                        stationlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                E_mylatitude = slist.get(position).getE_mylatitude();
+                                E_mylongitude = slist.get(position).getE_mylongitude();
+
+                                String ids = slist.get(position).getId();
+                                String names = slist.get(position).getName();
+                                String addresss = slist.get(position).getAddress();
+                                String mac = slist.get(position).getMac();
+                                double distances = slist.get(position).getDistance();
+                                name.setText(names);
+                                address.setText(addresss);
+                                distance.setText("距您 " + distances + "m");
+
+//                              ChooseMyLocation(E_mylatitude, E_mylongitude);
+                                BottomMenu(names, addresss, distances, ids, mac);
+                                mScrollLayout.setVisibility(View.VISIBLE);
+                                LatLng llA = new LatLng(E_mylatitude, E_mylongitude);
+                                showInfoWindow(llA, names);
+                            }
+                        });
+                    } else {
+                    }
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onMyFailure(Throwable arg0) {
+
             }
         });
     }
@@ -594,6 +650,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         bean.setAddress("南京市-江宁区-秣周东路12号");
         bean.setE_mylatitude(31.87368);
         bean.setE_mylongitude(118.83358);
+        bean.setType(2);
         bean.setDistance(gps_m(S_mylatitude, S_mylongitude, 31.87368, 118.83358));
         slistsos.add(bean);
         // 构建MarkerOption，用于在地图上添加Marker
@@ -604,7 +661,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         Bundle bundle = new Bundle();
         bundle.putSerializable("marker", bean);
         marker.setExtraInfo(bundle);
-        mBaiduMap.addOverlays(list);
+        mBaiduMap.addOverlays(listoption);
 
         soslistview = findViewById(R.id.soslistview);
         stationAdapter = new StationAdapter(EmergencyRescueActivity.this, slistsos);
@@ -625,12 +682,17 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 address.setText(addresss);
                 distance.setText("距您 " + distances + "m");
 
-                ChooseMyLocation(E_mylatitude, E_mylongitude);
-                BottomMenu(names, addresss, distances, ids);
-                mScrollLayout.setVisibility(View.VISIBLE);
+//                ChooseMyLocation(E_mylatitude, E_mylongitude);
+//                BottomMenu(names, addresss, distances, ids);
 
                 LatLng llA = new LatLng(E_mylatitude, E_mylongitude);
                 showInfoWindow(llA, names);
+
+                // 获得marker中的数据
+                e_stationDialog = new E_StationDialog(EmergencyRescueActivity.this, names, addresss, clickListener);
+                e_stationDialog.show();
+                mScrollLayout.setVisibility(View.GONE);
+
             }
         });
     }
@@ -727,7 +789,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     }
 
     //底部菜单
-    private void BottomMenu(String name, String address, double distance, String id) {
+    private void BottomMenu(String name, String address, double distance, String id, String mac) {
         slists = new ArrayList<>();
         StationBean beana = new StationBean();
         beana.setType(0);
@@ -745,7 +807,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         beanc.setType(1);
         slists.add(beanc);
         ListView listView = (ListView) findViewById(R.id.list_view);
-        bottomMenuAdapter = new BottomMenuAdapter(EmergencyRescueActivity.this, slists, name, address, distance, id, m_Handler);
+        bottomMenuAdapter = new BottomMenuAdapter(EmergencyRescueActivity.this, slists, name, address, distance, id, mac, m_Handler);
         listView.setAdapter(bottomMenuAdapter);
     }
 
@@ -811,6 +873,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 //一键开门
                 case 5859590:
                     i = 0;
+                    Bundle bundle = message.getData();
+                    Mac = bundle.getString("mac");
                     handler.postDelayed(runnable, 2000);// 每两秒执行一次runnable.
                     break;
                 //还物资
@@ -844,7 +908,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     private void showInfoWindow(LatLng ll, String name) {
         //创建InfoWindow展示的view
         View contentView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.infowindow_item, null);
-        TextView tvCount = (TextView) contentView.findViewById(R.id.tv_count);
+        TextView tvCount = contentView.findViewById(R.id.tv_count);
         tvCount.setText(name);
         //创建InfoWindow , 传入 view， 地理坐标， y 轴偏移量
         InfoWindow infoWindow = new InfoWindow(contentView, ll, -80);
@@ -1065,6 +1129,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     }
 
     //语音搜索
+
     /**
      * 初始化语音识别
      */
@@ -1081,11 +1146,28 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 if (!isLast) {
                     //解析语音返回的result为识别后的汉字,直接赋值到TextView上即可
                     String result = parseVoice(recognizerResult.getResultString());
-                    search_edit.setText(result);
+//                    search_edit.setText(result);
+                    mBaiduMap.clear();
 
-//                   if(result.equals("驾车导航")){
-//                       routeplanToNavi(CoordinateType.BD09LL);
-//                   }
+                    if (result.equals("消防应急站") || result.equals("救援")|| result.equals("消防")) {
+                        NearbyEmergencyStation();
+                    }
+                    if (result.equals("医疗应急站") || result.equals("医疗")) {
+                        NearbyEmergencyStation();
+                    }
+                    if (result.equals("SOS求救信息") || result.equals("SOS")) {
+                        NearbyEmergencySOS();
+                    }
+                    if (result.equals("全部信息") || result.equals("全部")) {
+                        NearbyEmergencySOS();
+                        NearbyEmergencyStation();
+                        NearbyEmergencySOS();
+                    }
+                    if (result.equals("导航到离我最近的应急站") || result.equals("去我最近的应急站") || result.equals("最近的应急站") || result.equals("导航到去我最近的应急站") || result.equals("去离我最近的应急站")||result.equals("去最近的应急站")||result.equals("导航去最近的应急站")||result.equals("离我最近的应急站")) {
+                        E_mylatitude = slist.get(0).getE_mylatitude();
+                        E_mylongitude = slist.get(0).getE_mylongitude();
+                        routeplanToNavi(CoordinateType.BD09LL);
+                    }
 
                 }
             }
@@ -1113,39 +1195,75 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         }
         return sb.toString();
     }
+
     /**
      * 语音对象封装
      */
     public class Voice {
         public ArrayList<WSBean> ws;
+
         public class WSBean {
             public ArrayList<CWBean> cw;
         }
+
         public class CWBean {
             public String w;
         }
     }
-    private void requestPermissions(){
+
+    private void requestPermissions() {
         try {
             if (Build.VERSION.SDK_INT >= 23) {
                 int permission = ActivityCompat.checkSelfPermission(this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                if(permission!= PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this,new String[]
+                if (permission != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]
                             {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                    Manifest.permission.LOCATION_HARDWARE,Manifest.permission.READ_PHONE_STATE,
-                                    Manifest.permission.WRITE_SETTINGS,Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_CONTACTS},0x0010);
+                                    Manifest.permission.LOCATION_HARDWARE, Manifest.permission.READ_PHONE_STATE,
+                                    Manifest.permission.WRITE_SETTINGS, Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_CONTACTS}, 0x0010);
                 }
 
-                if(permission != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this,new String[] {
+                if (permission != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{
                             Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION},0x0010);
+                            Manifest.permission.ACCESS_FINE_LOCATION}, 0x0010);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private OnClickListener clickListener = new OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            switch (v.getId()) {
+                //步行导航
+                case R.id.walknavigation:
+                    //初始化导航数据
+                    initOverlay();
+                    startPt = new LatLng(S_mylatitude, S_mylongitude);
+                    endPt = new LatLng(E_mylatitude, E_mylongitude);
+                    /*构造导航起终点参数对象*/
+                    walkParam = new WalkNaviLaunchParam().stPt(startPt).endPt(endPt);
+                    walkParam.extraNaviMode(0);
+                    startWalkNavi();
+                    mBaiduMap.clear();
+                    break;
+                //驾车导航
+                case R.id.drivenavigation:
+                    routeplanToNavi(CoordinateType.BD09LL);
+                    break;
+                // 取消
+                case R.id.canles:
+                    e_stationDialog.dismiss();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }

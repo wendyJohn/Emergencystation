@@ -79,7 +79,7 @@ public class MonStationDialog extends Dialog {
 		params.put("pageNum", page + "");
 		params.put("pageSize", "10");
 		params.put("unit_code", PreferenceUtils.getString(context, "unitcode"));
-		params.put("username", PreferenceUtils.getString(context, "MobileFig_username"));
+		params.put("username", PreferenceUtils.getString(context, "EmergencyStation_username"));
 		params.put("platformkey", "app_firecontrol_owner");
 
 		RequestUtils.ClientPost(URLs.EmergencyStation_URL, params, new NetCallBack() {

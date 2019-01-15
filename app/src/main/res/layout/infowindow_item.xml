@@ -10,7 +10,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/text_roundeds"
             android:textColor="@color/text_blue"
-            android:text="这----"
+            android:text=""
             android:gravity="center_vertical" />
 
 </LinearLayout>

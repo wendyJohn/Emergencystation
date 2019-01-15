@@ -17,6 +17,8 @@ import android.view.View;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.BottomAdapter;
 import com.sanleng.emergencystation.fragment.Taba_Fragment;
+import com.sanleng.emergencystation.fragment.Tabb_Fragment;
+import com.sanleng.emergencystation.fragment.Tabc_Fragment;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager mVp;
@@ -63,12 +65,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //禁止ViewPager滑动
-        mVp.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+//        mVp.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;
+//            }
+//        });
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -93,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         BottomAdapter adapter = new BottomAdapter(getSupportFragmentManager());
         adapter.addFragment(new Taba_Fragment());
+        adapter.addFragment(new Tabb_Fragment());
+        adapter.addFragment(new Tabc_Fragment());
         viewPager.setAdapter(adapter);
     }
 
@@ -108,4 +112,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receivers);
+        super.onDestroy();
+    }
 }

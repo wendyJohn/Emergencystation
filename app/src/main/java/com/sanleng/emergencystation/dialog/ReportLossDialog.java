@@ -121,7 +121,7 @@ public class ReportLossDialog extends Dialog implements View.OnClickListener {
     private void MaterialDetails() {
         RequestParams params = new RequestParams();
         params.put("ids", ids);
-        params.put("username", PreferenceUtils.getString(context, "MobileFig_username"));
+        params.put("username", PreferenceUtils.getString(context, "EmergencyStation_username"));
         params.put("platformkey", "app_firecontrol_owner");
         RequestUtils.ClientPost(URLs.MaterialDetails_URL, params, new NetCallBack() {
             @Override

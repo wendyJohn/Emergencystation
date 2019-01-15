@@ -81,13 +81,12 @@ public class MaterialActivity extends Activity {
 		params.put("pageNum", page + "");
 		params.put("pageSize", "10");
 		params.put("unit_code", PreferenceUtils.getString(MaterialActivity.this, "unitcode"));
-		params.put("username", PreferenceUtils.getString(MaterialActivity.this, "MobileFig_username"));
+		params.put("username", PreferenceUtils.getString(MaterialActivity.this, "EmergencyStation_username"));
 		params.put("platformkey", "app_firecontrol_owner");
 
 		RequestUtils.ClientPost(URLs.Material_URL, params, new NetCallBack() {
 			@Override
 			public void onStart() {
-
 				super.onStart();
 			}
 

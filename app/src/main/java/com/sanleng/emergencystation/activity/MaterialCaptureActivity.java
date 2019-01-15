@@ -349,14 +349,14 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
         RequestParams params = new RequestParams();
         params.put("ids", ids);
         params.put("agentName", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentName"));
-//		params.put("agentId", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentId"));
+		params.put("agentId", PreferenceUtils.getString(MaterialCaptureActivity.this, "ids"));
         params.put("stationName", stationName);
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
         params.put("stationAddress", stationAddress);
 		params.put("state", "emergencystation_in");
 
-        params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "MobileFig_username"));
+        params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "EmergencyStation_username"));
         params.put("platformkey", "app_firecontrol_owner");
 
         RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
@@ -388,17 +388,17 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
         RequestParams params = new RequestParams();
         params.put("ids", ids);
         params.put("agentName", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentName"));
-//			params.put("agentId", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentId"));
+        params.put("agentId", PreferenceUtils.getString(MaterialCaptureActivity.this, "ids"));
         params.put("stationName", stationName);
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
         params.put("stationAddress", stationAddress);
 			params.put("state", "emergencystation_out");
 
-        params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "MobileFig_username"));
+        params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "EmergencyStation_username"));
         params.put("platformkey", "app_firecontrol_owner");
 
-        RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
+        RequestUtils.ClientPost(URLs.Outofstock_URL, params, new NetCallBack() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -427,7 +427,7 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
         RequestParams params = new RequestParams();
         params.put("ids", ids);
         params.put("agentName", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentName"));
-//			params.put("agentId", PreferenceUtils.getString(MaterialCaptureActivity.this, "agentId"));
+        params.put("agentId", PreferenceUtils.getString(MaterialCaptureActivity.this, "ids"));
         params.put("stationName", stationName);
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
@@ -435,7 +435,7 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
 			params.put("state", "emergencystation_break");
         params.put("reason", reason);
 
-        params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "MobileFig_username"));
+        params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "EmergencyStation_username"));
         params.put("platformkey", "app_firecontrol_owner");
 
         RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {

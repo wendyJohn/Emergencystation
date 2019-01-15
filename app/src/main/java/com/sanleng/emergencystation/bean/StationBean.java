@@ -16,6 +16,7 @@ public class StationBean implements Serializable {
     private double E_mylongitude;
     private String number;
     private String image_type;
+    private String mac;
 
     private int type;//布局样式
 
@@ -89,5 +90,13 @@ public class StationBean implements Serializable {
 
     public void setImage_type(String image_type) {
         this.image_type = image_type;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
     }
 }
