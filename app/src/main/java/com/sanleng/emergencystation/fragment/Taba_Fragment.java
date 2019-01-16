@@ -9,11 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.ArticleActivity;
 import com.sanleng.emergencystation.activity.EmergencyRescueActivity;
 import com.sanleng.emergencystation.activity.MonStationActivity;
 import com.sanleng.emergencystation.activity.VideoPlayerActivity;
+import com.sanleng.emergencystation.dialog.SosDialog;
 import com.sanleng.emergencystation.utils.RotateCard;
 import com.sanleng.emergencystation.view.MarqueeViews;
 
@@ -179,7 +181,8 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
                 break;
             //应急小程序
             case R.id.smallprogram:
-
+                SosDialog sosDialog=new SosDialog(getActivity());
+                sosDialog.show();
                 break;
             //文章
             case R.id.article:

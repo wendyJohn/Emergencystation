@@ -25,7 +25,7 @@ public class URLs {
     // 应急站列表
     public static String EmergencyStation_URL = HOST + "/kspf/app/station/list";
     // 应急开锁
-    public static String ORDER_BASE_URL = "http://10.101.208.157:8091/emergencystation";// Order消息发送,心跳包uri
+    public static String ORDER_BASE_URL = "http://101.132.139.37:8091/emergencystation";// Order消息发送,心跳包uri
     // 物资入库
     public static String Warehousing_URL = HOST + "/kspf/app/station/state";
     // 物资出库
@@ -36,5 +36,10 @@ public class URLs {
     public static String MaterialDetails_URL = HOST + "/kspf/app/station/detail";
     // 密码修改
     public static String PasswordModification = HOST + "/kspf/app/user/appPassChange";
-
+    // 一键求救
+    public static String CryForHelp_URL = HOST + "/kspf/app/stationassistant/add";
+    // SOS列表
+    public static String SOSITEM_URL = HOST + "/kspf/app/stationassistant/list";
+    // 监控视频
+    public static String Monitor_URL ="http://hls.open.ys7.com/openlive/ff814ef5eacf479c8ee045a24fbc21a7.hd.m3u8";
 }

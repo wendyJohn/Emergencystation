@@ -148,6 +148,10 @@
             android:name=".activity.VideoPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+        <!--视频监控-->
+        <activity
+            android:name=".activity.MonitorActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.baidu.location.f"

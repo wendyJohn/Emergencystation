@@ -45,8 +45,6 @@ import java.util.Map;
  * @author Qiaoshi
  */
 public class ArticleActivity extends Activity {
-
-
     private ListView listView;
     private ArticleAdapter articleAdapter;
     private ProgressDialog dialog;

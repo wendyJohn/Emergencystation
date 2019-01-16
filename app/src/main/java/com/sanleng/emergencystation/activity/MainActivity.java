@@ -64,13 +64,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //禁止ViewPager滑动
-//        mVp.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return true;
-//            }
-//        });
+//        禁止ViewPager滑动
+        mVp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

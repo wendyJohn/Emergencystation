@@ -104,12 +104,25 @@
 
                         <TextView
                             android:id="@+id/name"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="3"
                             android:layout_marginLeft="10dp"
                             android:text="站点名称"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/text_size_15" />
+
+                        <TextView
+                            android:id="@+id/monitor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.5"
+                            android:drawableLeft="@drawable/surveillance"
+                            android:text="现场监控"
+                            android:layout_marginRight="10dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/text_size_15" />
+
                     </LinearLayout>
 
                     <LinearLayout

@@ -1,4 +1,4 @@
-package com.sanleng.emergencystation.activity;
+package com.sanleng.emergencystation.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -15,11 +15,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -70,6 +71,10 @@ import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
+import com.sanleng.emergencystation.activity.EmergencyRescueActivity;
+import com.sanleng.emergencystation.activity.EmergencyStationActivity;
+import com.sanleng.emergencystation.activity.MaterialCaptureActivity;
+import com.sanleng.emergencystation.activity.MonitorActivity;
 import com.sanleng.emergencystation.adapter.BottomMenuAdapter;
 import com.sanleng.emergencystation.adapter.StationAdapter;
 import com.sanleng.emergencystation.baidumap.DemoGuideActivity;
@@ -94,9 +99,10 @@ import java.util.List;
 
 /**
  * 应急救援
+ *
  * @author qiaoshi
  */
-public class EmergencyRescueActivity extends AppCompatActivity implements OnClickListener {
+public class Tabb_Fragment extends Fragment implements OnClickListener {
     private LocationClient mLocationClient = null; // 定位对象
     private BDLocationListener myListener = new MyLocationListener(); // 定位监听
     private RelativeLayout myr_back;
@@ -166,28 +172,27 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     private AutoCompleteTextView search_edit;
     private E_StationDialog e_stationDialog;
     private String Mac;//开锁的MAC地址
+    private View view;
 
     @Override
-    protected void onCreate(Bundle arg0) {
-        // TODO Auto-generated method stub
-        super.onCreate(arg0);
-        this.setContentView(R.layout.emergencyrescueactivity);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.tabb_fragment, null);
         RequestPermission();
         requestPermissions();
-        SpeechUtility.createUtility(EmergencyRescueActivity.this, SpeechConstant.APPID + "=5c2ef470");
+        SpeechUtility.createUtility(getActivity(), SpeechConstant.APPID + "=5c2ef470");
         initview();
         initMap();
         if (initDirs()) {
             initNavi();
         }
+        return view;
     }
 
-
     private void initMap() {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(EmergencyRescueActivity.this);
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
             dialog.setTitle("GPS未打开");
             dialog.setMessage("请打开GPS或WIFI，提高定位精度");
             dialog.setCancelable(false);
@@ -221,7 +226,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         mBaiduMap.setBaiduHeatMapEnabled(false);
         // 开启定位图层
         mBaiduMap.setMyLocationEnabled(true);
-        mLocationClient = new LocationClient(getApplicationContext());
+        mLocationClient = new LocationClient(getActivity());
         // 声明LocationClient类 //配置定位SDK参数
         initLocation();
         mLocationClient.registerLocationListener(myListener);// 注册监听函数
@@ -253,7 +258,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 }
                 if (type == 2) {
                     // 获得marker中的数据
-                    e_stationDialog = new E_StationDialog(EmergencyRescueActivity.this, names, addresss, clickListener);
+                    e_stationDialog = new E_StationDialog(getActivity(), names, addresss, clickListener);
                     e_stationDialog.show();
                     mScrollLayout.setVisibility(View.GONE);
                 }
@@ -318,19 +323,19 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 if (location.getLocType() == BDLocation.TypeGpsLocation) {
                     // GPS定位结果
-                    Toast.makeText(EmergencyRescueActivity.this, location.getAddrStr(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), location.getAddrStr(), Toast.LENGTH_SHORT).show();
                 } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
                     // 网络定位结果
-                    Toast.makeText(EmergencyRescueActivity.this, location.getAddrStr(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), location.getAddrStr(), Toast.LENGTH_SHORT).show();
                 } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {
                     // 离线定位结果
-                    Toast.makeText(EmergencyRescueActivity.this, location.getAddrStr(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), location.getAddrStr(), Toast.LENGTH_SHORT).show();
                 } else if (location.getLocType() == BDLocation.TypeServerError) {
-                    Toast.makeText(EmergencyRescueActivity.this, "服务器错误，请检查", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "服务器错误，请检查", Toast.LENGTH_SHORT).show();
                 } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
-                    Toast.makeText(EmergencyRescueActivity.this, "网络错误，请检查", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "网络错误，请检查", Toast.LENGTH_SHORT).show();
                 } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
-                    Toast.makeText(EmergencyRescueActivity.this, "手机模式错误，请检查是否飞行", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "手机模式错误，请检查是否飞行", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -338,7 +343,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         new Handler().postDelayed(new Runnable() {
             public void run() {
@@ -354,7 +359,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         // 在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
         WalkNavigateHelper.getInstance().pause();
@@ -362,7 +367,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         // TODO Auto-generated method stub
         // 当不需要定位图层时关闭定位图层
         WalkNavigateHelper.getInstance().quit();
@@ -375,36 +380,36 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
     // 初始化数据
     private void initview() {
-        mScrollLayout = (ScrollLayout) findViewById(R.id.scroll_down_layout);
-        name = (TextView) findViewById(R.id.name);
-        address = (TextView) findViewById(R.id.address);
-        distance = (TextView) findViewById(R.id.distance);
+        mScrollLayout = (ScrollLayout) view.findViewById(R.id.scroll_down_layout);
+        name = (TextView) view.findViewById(R.id.name);
+        address = (TextView) view.findViewById(R.id.address);
+        distance = (TextView) view.findViewById(R.id.distance);
         /**设置 setting*/
         mScrollLayout.setMinOffset(0);
-        mScrollLayout.setMaxOffset((int) (ScreenUtil.getScreenHeight(EmergencyRescueActivity.this) * 0.6));
-        mScrollLayout.setExitOffset(ScreenUtil.dip2px(EmergencyRescueActivity.this, 110));
+        mScrollLayout.setMaxOffset((int) (ScreenUtil.getScreenHeight(getActivity()) * 0.6));
+        mScrollLayout.setExitOffset(ScreenUtil.dip2px(getActivity(), 110));
         mScrollLayout.setIsSupportExit(true);
         mScrollLayout.setAllowHorizontalScroll(true);
         mScrollLayout.setOnScrollChangedListener(mOnScrollChangedListener);
         mScrollLayout.setToExit();
         mScrollLayout.getBackground().setAlpha(0);
-        mMapView = (MapView) findViewById(R.id.bmapView);
-        foot = findViewById(R.id.foot);
-        walkingnavigation = findViewById(R.id.walkingnavigation);
-        monitor = findViewById(R.id.monitor);
-        viewdetails = findViewById(R.id.viewdetails);
-        driveingnavigation = findViewById(R.id.driveingnavigation);
+        mMapView = (MapView) view.findViewById(R.id.bmapView);
+        foot = view.findViewById(R.id.foot);
+        walkingnavigation = view.findViewById(R.id.walkingnavigation);
+        monitor = view.findViewById(R.id.monitor);
+        viewdetails = view.findViewById(R.id.viewdetails);
+        driveingnavigation = view.findViewById(R.id.driveingnavigation);
 
-        open_linyout = findViewById(R.id.open_linyout);//开门
-        receivingmaterials_linyout = findViewById(R.id.receivingmaterials_linyout);//领物资
-        returnsupplies_linyout = findViewById(R.id.returnsupplies_linyout); //还物资
-        surveillance = findViewById(R.id.surveillance);//视频
-        more_linyout = findViewById(R.id.more_linyout);//更多
+        open_linyout = view.findViewById(R.id.open_linyout);//开门
+        receivingmaterials_linyout = view.findViewById(R.id.receivingmaterials_linyout);//领物资
+        returnsupplies_linyout = view.findViewById(R.id.returnsupplies_linyout); //还物资
+        surveillance = view.findViewById(R.id.surveillance);//视频
+        more_linyout = view.findViewById(R.id.more_linyout);//更多
 
-        voicesearch_image = findViewById(R.id.voicesearch_image);//语音搜索
-        search_edit = findViewById(R.id.search_edit);//搜索输入框
+        voicesearch_image = view.findViewById(R.id.voicesearch_image);//语音搜索
+        search_edit =view.findViewById(R.id.search_edit);//搜索输入框
 
-        myr_back = (RelativeLayout) findViewById(R.id.r_back);
+        myr_back = (RelativeLayout) view.findViewById(R.id.r_back);
 
         mylist.add("A");
         mylist.add("B");
@@ -474,29 +479,29 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         // TODO Auto-generated method stub
         switch (v.getId()) {
             case R.id.r_back:
-                finish();
+                getActivity().finish();
                 break;
             //开门
             case R.id.open_linyout:
-                Intent intent_emergencyStation = new Intent(EmergencyRescueActivity.this, EmergencyStationActivity.class);
+                Intent intent_emergencyStation = new Intent(getActivity(), EmergencyStationActivity.class);
                 intent_emergencyStation.putExtra("mode", "应急开门");
                 startActivity(intent_emergencyStation);
                 break;
             //领物资
             case R.id.receivingmaterials_linyout:
-                Intent intent_OutOfStock = new Intent(EmergencyRescueActivity.this, MaterialCaptureActivity.class);
+                Intent intent_OutOfStock = new Intent(getActivity(), MaterialCaptureActivity.class);
                 intent_OutOfStock.putExtra("mode", "OutOfStock");
                 startActivity(intent_OutOfStock);
                 break;
             //还物资
             case R.id.returnsupplies_linyout:
-                Intent intent_Warehousing = new Intent(EmergencyRescueActivity.this, MaterialCaptureActivity.class);
+                Intent intent_Warehousing = new Intent(getActivity(), MaterialCaptureActivity.class);
                 intent_Warehousing.putExtra("mode", "Warehousing");
                 startActivity(intent_Warehousing);
                 break;
             //查看视频
             case R.id.monitor:
-                Intent intent_Monitor = new Intent(EmergencyRescueActivity.this, MonitorActivity.class);
+                Intent intent_Monitor = new Intent(getActivity(), MonitorActivity.class);
                 startActivity(intent_Monitor);
                 break;
             //视频
@@ -508,7 +513,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 break;
             //语音搜索
             case R.id.voicesearch_image:
-                initSpeech(EmergencyRescueActivity.this);
+                initSpeech(getActivity());
                 break;
             // 步行导航
             case R.id.walkingnavigation:
@@ -543,7 +548,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         params.put("lng", S_mylongitude + "");
         params.put("pageNum", "1");
         params.put("pageSize", "100");
-        params.put("username", PreferenceUtils.getString(EmergencyRescueActivity.this, "EmergencyStation_username"));
+        params.put("username", PreferenceUtils.getString(getActivity(), "EmergencyStation_username"));
         params.put("platformkey", "app_firecontrol_owner");
         RequestUtils.ClientPost(URLs.NearbyEmergencyStation_URL, params, new NetCallBack() {
             @Override
@@ -596,8 +601,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                             mBaiduMap.addOverlays(listoption);
                             slist.add(bean);
                         }
-                        stationlistview = findViewById(R.id.stationlistview);
-                        stationAdapter = new StationAdapter(EmergencyRescueActivity.this, slist);
+                        stationlistview = view.findViewById(R.id.stationlistview);
+                        stationAdapter = new StationAdapter(getActivity(), slist);
                         stationlistview.setAdapter(stationAdapter);
 
                         stationlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -643,8 +648,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         RequestParams params = new RequestParams();
         params.put("pageNum", "1");
         params.put("pageSize", "100");
-        params.put("unit_code", PreferenceUtils.getString(EmergencyRescueActivity.this, "unitcode"));
-        params.put("username", PreferenceUtils.getString(EmergencyRescueActivity.this, "EmergencyStation_username"));
+        params.put("unit_code", PreferenceUtils.getString(getActivity(), "unitcode"));
+        params.put("username", PreferenceUtils.getString(getActivity(), "EmergencyStation_username"));
         params.put("platformkey", "app_firecontrol_owner");
         RequestUtils.ClientPost(URLs.SOSITEM_URL, params, new NetCallBack() {
             @Override
@@ -697,8 +702,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                             slistsos.add(bean);
                         }
 
-                        soslistview = findViewById(R.id.soslistview);
-                        stationAdapter = new StationAdapter(EmergencyRescueActivity.this, slistsos);
+                        soslistview = view.findViewById(R.id.soslistview);
+                        stationAdapter = new StationAdapter(getActivity(), slistsos);
                         soslistview.setAdapter(stationAdapter);
 
                         soslistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -714,7 +719,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                                 showInfoWindow(llA, names);
 
                                 // 获得marker中的数据
-                                e_stationDialog = new E_StationDialog(EmergencyRescueActivity.this, names, addresss, clickListener);
+                                e_stationDialog = new E_StationDialog(getActivity(), names, addresss, clickListener);
                                 e_stationDialog.show();
                                 mScrollLayout.setVisibility(View.GONE);
 
@@ -786,7 +791,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
      */
     private void startWalkNavi() {
         try {
-            WalkNavigateHelper.getInstance().initNaviEngine(this, new IWEngineInitListener() {
+            WalkNavigateHelper.getInstance().initNaviEngine(getActivity(), new IWEngineInitListener() {
                 @Override
                 public void engineInitSuccess() {
                     routePlanWithWalkParam();
@@ -814,7 +819,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
             @Override
             public void onRoutePlanSuccess() {
                 Intent intent = new Intent();
-                intent.setClass(EmergencyRescueActivity.this, WNaviGuideActivity.class);
+                intent.setClass(getActivity(), WNaviGuideActivity.class);
                 startActivity(intent);
             }
 
@@ -844,8 +849,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         beanc.setImage_type("2");
         beanc.setType(1);
         slists.add(beanc);
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        bottomMenuAdapter = new BottomMenuAdapter(EmergencyRescueActivity.this, slists, name, address, distance, id, mac, m_Handler);
+        ListView listView = (ListView) view.findViewById(R.id.list_view);
+        bottomMenuAdapter = new BottomMenuAdapter(getActivity(), slists, name, address, distance, id, mac, m_Handler);
         listView.setAdapter(bottomMenuAdapter);
     }
 
@@ -917,19 +922,19 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                     break;
                 //还物资
                 case 5859591:
-                    Intent intent_Warehousing = new Intent(EmergencyRescueActivity.this, MaterialCaptureActivity.class);
+                    Intent intent_Warehousing = new Intent(getActivity(), MaterialCaptureActivity.class);
                     intent_Warehousing.putExtra("mode", "Warehousing");
                     startActivity(intent_Warehousing);
                     break;
                 //领物质
                 case 5859592:
-                    Intent intent_OutOfStock = new Intent(EmergencyRescueActivity.this, MaterialCaptureActivity.class);
+                    Intent intent_OutOfStock = new Intent(getActivity(), MaterialCaptureActivity.class);
                     intent_OutOfStock.putExtra("mode", "OutOfStock");
                     startActivity(intent_OutOfStock);
                     break;
                 //报损
                 case 5859593:
-                    Intent intent_Reportloss = new Intent(EmergencyRescueActivity.this, MaterialCaptureActivity.class);
+                    Intent intent_Reportloss = new Intent(getActivity(), MaterialCaptureActivity.class);
                     intent_Reportloss.putExtra("mode", "Reportloss");
                     startActivity(intent_Reportloss);
                     break;
@@ -945,7 +950,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
      */
     private void showInfoWindow(LatLng ll, String name) {
         //创建InfoWindow展示的view
-        View contentView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.infowindow_item, null);
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.infowindow_item, null);
         TextView tvCount = contentView.findViewById(R.id.tv_count);
         tvCount.setText(name);
         //创建InfoWindow , 传入 view， 地理坐标， y 轴偏移量
@@ -956,9 +961,9 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     }
 
     private boolean hasBasePhoneAuth() {
-        PackageManager pm = this.getPackageManager();
+        PackageManager pm = getActivity().getPackageManager();
         for (String auth : authBaseArr) {
-            if (pm.checkPermission(auth, this.getPackageName()) != PackageManager.PERMISSION_GRANTED) {
+            if (pm.checkPermission(auth, getActivity().getPackageName()) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
         }
@@ -991,7 +996,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 return;
             }
         }
-        BaiduNaviManagerFactory.getBaiduNaviManager().init(this,
+        BaiduNaviManagerFactory.getBaiduNaviManager().init(getActivity(),
                 mSDCardPath, APP_FOLDER_NAME, new IBaiduNaviManager.INaviInitListener() {
                     @Override
                     public void onAuthResult(int status, String msg) {
@@ -1030,7 +1035,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
     private void initTTS() {
         // 使用内置TTS
-        BaiduNaviManagerFactory.getTTSManager().initTTS(getApplicationContext(),
+        BaiduNaviManagerFactory.getTTSManager().initTTS(getActivity(),
                 getSdcardDir(), APP_FOLDER_NAME, NormalUtils.getTTSAppID());
         // 注册同步内置tts状态回调
         BaiduNaviManagerFactory.getTTSManager().setOnTTSStateChangedListener(
@@ -1076,7 +1081,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
     private void routeplanToNavi(final int coType) {
         if (!hasInitSuccess) {
-            Toast.makeText(EmergencyRescueActivity.this, "还未初始化!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "还未初始化!", Toast.LENGTH_SHORT).show();
         }
 
         BNRoutePlanNode sNode = new BNRoutePlanNode(S_mylongitude, S_mylatitude, "", "", coType);
@@ -1111,7 +1116,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                             case IBNRoutePlanManager.MSG_NAVI_ROUTE_PLAN_FAILED:
                                 break;
                             case IBNRoutePlanManager.MSG_NAVI_ROUTE_PLAN_TO_NAVI:
-                                Intent intent = new Intent(EmergencyRescueActivity.this,
+                                Intent intent = new Intent(getActivity(),
                                         DemoGuideActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable(ROUTE_PLAN_NODE, mStartNode);
@@ -1134,7 +1139,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         if (Build.VERSION.SDK_INT >= 23 && !isPermissionRequested) {
             isPermissionRequested = true;
             ArrayList<String> permissions = new ArrayList<>();
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
             }
             if (permissions.size() == 0) {
@@ -1150,7 +1155,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == ArCameraView.WALK_AR_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                Toast.makeText(EmergencyRescueActivity.this, "没有相机权限,请打开后重试", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "没有相机权限,请打开后重试", Toast.LENGTH_SHORT).show();
             }
         }
         if (requestCode == authBaseRequestCode) {
@@ -1158,7 +1163,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 if (ret == 0) {
                     continue;
                 } else {
-                    Toast.makeText(EmergencyRescueActivity.this, "缺少导航基本的权限!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "缺少导航基本的权限!", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -1173,7 +1178,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
      */
     public void initSpeech(final Context context) {
         //1.创建RecognizerDialog对象
-        RecognizerDialog mDialog = new RecognizerDialog(EmergencyRescueActivity.this, null);
+        RecognizerDialog mDialog = new RecognizerDialog(getActivity(), null);
         //2.设置accent、language等参数
         mDialog.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
         mDialog.setParameter(SpeechConstant.ACCENT, "mandarin");
@@ -1224,10 +1229,10 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
      */
     public String parseVoice(String resultString) {
         Gson gson = new Gson();
-        Voice voiceBean = gson.fromJson(resultString, Voice.class);
+        EmergencyRescueActivity.Voice voiceBean = gson.fromJson(resultString, EmergencyRescueActivity.Voice.class);
         StringBuffer sb = new StringBuffer();
-        ArrayList<Voice.WSBean> ws = voiceBean.ws;
-        for (Voice.WSBean wsBean : ws) {
+        ArrayList<EmergencyRescueActivity.Voice.WSBean> ws = voiceBean.ws;
+        for (EmergencyRescueActivity.Voice.WSBean wsBean : ws) {
             String word = wsBean.cw.get(0).w;
             sb.append(word);
         }
@@ -1238,10 +1243,10 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
      * 语音对象封装
      */
     public class Voice {
-        public ArrayList<WSBean> ws;
+        public ArrayList<EmergencyRescueActivity.Voice.WSBean> ws;
 
         public class WSBean {
-            public ArrayList<CWBean> cw;
+            public ArrayList<EmergencyRescueActivity.Voice.CWBean> cw;
         }
 
         public class CWBean {
@@ -1252,10 +1257,10 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     private void requestPermissions() {
         try {
             if (Build.VERSION.SDK_INT >= 23) {
-                int permission = ActivityCompat.checkSelfPermission(this,
+                int permission = ActivityCompat.checkSelfPermission(getActivity(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 if (permission != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]
+                    ActivityCompat.requestPermissions(getActivity(), new String[]
                             {Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                     Manifest.permission.LOCATION_HARDWARE, Manifest.permission.READ_PHONE_STATE,
                                     Manifest.permission.WRITE_SETTINGS, Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -1263,7 +1268,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 }
 
                 if (permission != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{
                             Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_FINE_LOCATION}, 0x0010);
                 }
