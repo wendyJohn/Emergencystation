@@ -112,7 +112,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     private List<OverlayOptions> listoption;
     private LatLng latLng;
     private boolean isFirstLoc = true; // 是否首次定位
-    BitmapDescriptor bdAs = BitmapDescriptorFactory.fromResource(R.drawable.e_station);//应急站标识
+    BitmapDescriptor bdAs = BitmapDescriptorFactory.fromResource(R.drawable.stations_icon);//应急站标识
     BitmapDescriptor bdA = BitmapDescriptorFactory.fromResource(R.drawable.ico_sos);//求救标识
     private int i = 0;// 开锁次数
     private String str;
@@ -840,7 +840,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
         StationBean bean1 = new StationBean();
         bean1.setName("简易呼吸器" + "  数量：1");
-        bean1.setNumber("A号应急箱");
+        bean1.setNumber("1号应急箱");
         bean1.setImage_type("a");
         bean1.setType(1);
         bean1.setMac("54C9DFF77EA4");
@@ -848,7 +848,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
         StationBean bean2 = new StationBean();
         bean2.setName("头盔" + "  数量：2");
-        bean2.setNumber("B号应急箱");
+        bean2.setNumber("2号应急箱");
         bean2.setImage_type("b");
         bean2.setType(1);
         bean2.setMac("54C9DFF77EA4");
@@ -856,7 +856,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
         StationBean bean3= new StationBean();
         bean3.setName("消防服" + "  数量：2");
-        bean3.setNumber("B号应急箱");
+        bean3.setNumber("2号应急箱");
         bean3.setImage_type("c");
         bean3.setType(1);
         bean3.setMac("54C9DFF77EA4");
@@ -864,7 +864,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
         StationBean bean4= new StationBean();
         bean4.setName("手套" + "  数量：2");
-        bean4.setNumber("B号应急箱");
+        bean4.setNumber("2号应急箱");
         bean4.setImage_type("d");
         bean4.setType(1);
         bean4.setMac("54C9DFF77EA4");
@@ -872,7 +872,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
         StationBean bean5= new StationBean();
         bean5.setName("安全绳" + "  数量：2");
-        bean5.setNumber("B号应急箱");
+        bean5.setNumber("2号应急箱");
         bean5.setImage_type("e");
         bean5.setType(1);
         bean5.setMac("54C9DFF77EA4");
@@ -880,7 +880,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
         StationBean bean6= new StationBean();
         bean6.setName("腰帶" + "  数量：1");
-        bean6.setNumber("B号应急箱");
+        bean6.setNumber("2号应急箱");
         bean6.setImage_type("f");
         bean6.setType(1);
         bean6.setMac("54C9DFF77EA4");
@@ -888,7 +888,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
         StationBean bean7= new StationBean();
         bean7.setName("胶鞋" + "  数量：2");
-        bean7.setNumber("B号应急箱");
+        bean7.setNumber("2号应急箱");
         bean7.setImage_type("g");
         bean7.setType(1);
         bean7.setMac("54C9DFF77EA4");
@@ -896,7 +896,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
         StationBean bean8= new StationBean();
         bean8.setName("水带" + "  数量：2");
-        bean8.setNumber("C号应急箱");
+        bean8.setNumber("3号应急箱");
         bean8.setImage_type("h");
         bean8.setType(1);
         bean8.setMac("54C9DFF77EA4");
@@ -904,7 +904,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
         StationBean bean9 = new StationBean();
         bean9.setName("折叠担架" + "  数量：1");
-        bean9.setNumber("D号应急箱");
+        bean9.setNumber("3号应急箱");
         bean9.setImage_type("k");
         bean9.setType(1);
         bean9.setMac("54C9DFF77EA4");
@@ -912,7 +912,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
         StationBean bean10 = new StationBean();
         bean10.setName("干粉灭火器" + "  数量：2");
-        bean10.setNumber("E号应急箱");
+        bean10.setNumber("4号应急箱");
         bean10.setImage_type("l");
         bean10.setType(1);
         bean10.setMac("54C9DFF77EA4");

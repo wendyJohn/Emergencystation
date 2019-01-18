@@ -102,7 +102,7 @@ public class WarehousingDialog extends Dialog implements View.OnClickListener {
 					data.putString("stationAddress", stationAddress);
 					data.putString("stationId", stationId);
 					data.putString("stationName", stationName);
-					data.putString("storageLocation", "emergencystation_in");
+					data.putString("storageLocation", storageLocation);
 
 					mymsg.setData(data);
 					mymsg.what = 25267;

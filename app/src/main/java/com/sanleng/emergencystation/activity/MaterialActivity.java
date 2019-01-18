@@ -82,7 +82,7 @@ public class MaterialActivity extends Activity {
         onelist = new ArrayList<ArchitectureBean>();
         ArchitectureBean beana = new ArchitectureBean();
         beana.setName("简易呼吸器" + "  数量：1");
-        beana.setAddress("A号应急箱");
+        beana.setAddress("1号应急箱");
         beana.setId("a");
         beana.setType("A");
         beana.setMac("54C9DFF77EA4");
@@ -90,7 +90,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beanb = new ArchitectureBean();
         beanb.setName("头盔" + "  数量：2");
-        beanb.setAddress("B号应急箱");
+        beanb.setAddress("2号应急箱");
         beanb.setId("b");
         beanb.setType("B");
         beanb.setMac("54C9DFF77EA4");
@@ -98,7 +98,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beanc = new ArchitectureBean();
         beanc.setName("消防服" + "  数量：2");
-        beanc.setAddress("B号应急箱");
+        beanc.setAddress("2号应急箱");
         beanc.setId("c");
         beanc.setType("B");
         beanc.setMac("54C9DFF77EA4");
@@ -106,7 +106,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beand = new ArchitectureBean();
         beand.setName("手套" + "  数量：2");
-        beand.setAddress("B号应急箱");
+        beand.setAddress("2号应急箱");
         beand.setId("d");
         beand.setType("B");
         beand.setMac("54C9DFF77EA4");
@@ -114,7 +114,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beane = new ArchitectureBean();
         beane.setName("安全绳" + "  数量：2");
-        beane.setAddress("B号应急箱");
+        beane.setAddress("2号应急箱");
         beane.setId("e");
         beane.setType("B");
         beane.setMac("54C9DFF77EA4");
@@ -122,7 +122,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beanf = new ArchitectureBean();
         beanf.setName("腰帶" + "  数量：1");
-        beanf.setAddress("B号应急箱");
+        beanf.setAddress("2号应急箱");
         beanf.setId("f");
         beanf.setType("B");
         beanf.setMac("54C9DFF77EA4");
@@ -130,7 +130,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beang = new ArchitectureBean();
         beang.setName("胶鞋" + "  数量：2");
-        beang.setAddress("B号应急箱");
+        beang.setAddress("2号应急箱");
         beang.setId("g");
         beang.setType("B");
         beang.setMac("54C9DFF77EA4");
@@ -138,7 +138,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beanc1 = new ArchitectureBean();
         beanc1.setName("水带" + "  数量：2");
-        beanc1.setAddress("C号应急箱");
+        beanc1.setAddress("3号应急箱");
         beanc1.setId("h");
         beanc1.setType("C");
         beanc1.setMac("54C9DFF77EA4");
@@ -146,7 +146,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beanc2 = new ArchitectureBean();
         beanc2.setName("消防枪头" + "  数量：2");
-        beanc2.setAddress("C号应急箱");
+        beanc2.setAddress("3号应急箱");
         beanc2.setId("i");
         beanc2.setType("C");
         beanc2.setMac("54C9DFF77EA4");
@@ -154,7 +154,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beanc3 = new ArchitectureBean();
         beanc3.setName("水带接头" + "  数量：4");
-        beanc3.setAddress("C号应急箱");
+        beanc3.setAddress("3号应急箱");
         beanc3.setId("j");
         beanc3.setType("C");
         beanc3.setMac("54C9DFF77EA4");
@@ -162,7 +162,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beand1 = new ArchitectureBean();
         beand1.setName("折叠担架" + "  数量：1");
-        beand1.setAddress("D号应急箱");
+        beand1.setAddress("4号应急箱");
         beand1.setId("k");
         beand1.setType("D");
         beand1.setMac("54C9DFF77EA4");
@@ -170,7 +170,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beane1 = new ArchitectureBean();
         beane1.setName("干粉灭火器" + "  数量：2");
-        beane1.setAddress("E号应急箱");
+        beane1.setAddress("5号应急箱");
         beane1.setId("l");
         beane1.setType("E");
         beane1.setMac("54C9DFF77EA4");
@@ -178,7 +178,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beane2 = new ArchitectureBean();
         beane2.setName("逃生应急箱" + "  数量：1");
-        beane2.setAddress("E号应急箱");
+        beane2.setAddress("5号应急箱");
         beane2.setId("m");
         beane2.setType("E");
         beane2.setMac("54C9DFF77EA4");
@@ -186,7 +186,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beanf1 = new ArchitectureBean();
         beanf1.setName("消防桶" + "  数量：1");
-        beanf1.setAddress("F号应急箱");
+        beanf1.setAddress("6号应急箱");
         beanf1.setId("n");
         beanf1.setType("F");
         beanf1.setMac("54C9DFF77EA4");
@@ -194,7 +194,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beanf2 = new ArchitectureBean();
         beanf2.setName("扩音喇叭" + "  数量：2");
-        beanf2.setAddress("F号应急箱");
+        beanf2.setAddress("6号应急箱");
         beanf2.setId("o");
         beanf2.setType("F");
         beanf2.setMac("54C9DFF77EA4");
@@ -202,7 +202,7 @@ public class MaterialActivity extends Activity {
 
         ArchitectureBean beang1 = new ArchitectureBean();
         beang1.setName("轮椅" + "  数量：1");
-        beang1.setAddress("G号应急箱");
+        beang1.setAddress("7号应急箱");
         beang1.setId("p");
         beang1.setType("G");
         beang1.setMac("54C9DFF77EA4");

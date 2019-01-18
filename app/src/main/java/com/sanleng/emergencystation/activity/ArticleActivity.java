@@ -217,7 +217,7 @@ public class ArticleActivity extends Activity {
                 for (int i = 0; i < array.length(); i++) {
                     object = (JSONObject) array.get(i);
                     String id = object.optString("ids");
-                    String name = object.optString("name");
+                    String name = object.optString("topic");
                     String category = object.optString("subject_type");
                     String frequency = object.optString("browse_times");
                     String cover_img = object.optString("cover_img");

@@ -89,7 +89,7 @@ public class OutofStockDialog extends Dialog implements View.OnClickListener {
                 data.putString("stationAddress", stationAddress);
                 data.putString("stationId", stationId);
                 data.putString("stationName", stationName);
-                data.putString("storageLocation", "emergencystation_out");
+                data.putString("storageLocation", storageLocation);
                 mymsg.setData(data);
                 mymsg.what = 35267;
                 mHandler.sendMessage(mymsg);
@@ -135,7 +135,7 @@ public class OutofStockDialog extends Dialog implements View.OnClickListener {
                     String mymodel = object.getString("model");
                     stationName = object.getString("stationName");
                     stationId = object.getString("stationId");
-                    stationAddress = object.getString("stationAddress");
+//                    stationAddress = object.getString("stationAddress");
                     storageLocation = object.getString("storageLocation");
 
                     name.setText("物资名称：" + myname);

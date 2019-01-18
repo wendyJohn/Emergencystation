@@ -63,7 +63,6 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
     private String ids = null;
     private String stationName = null;
     private String stationId = null;
-    private String stationAddress = null;
     private String storageLocation = null;
     private String reason = null;
     private RelativeLayout r_back;
@@ -268,7 +267,6 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
                 case 25267:
                     try {
                         Bundle bundle = message.getData();
-                        stationAddress = bundle.getString("stationAddress");
                         stationId = bundle.getString("stationId");
                         stationName = bundle.getString("stationName");
                         storageLocation = bundle.getString("storageLocation");
@@ -292,7 +290,6 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
                 case 35267:
                     try {
                         Bundle bundle = message.getData();
-                        stationAddress = bundle.getString("stationAddress");
                         stationId = bundle.getString("stationId");
                         stationName = bundle.getString("stationName");
                         storageLocation = bundle.getString("storageLocation");
@@ -316,7 +313,6 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
                 case 35268:
                     try {
                         Bundle bundle = message.getData();
-                        stationAddress = bundle.getString("stationAddress");
                         stationId = bundle.getString("stationId");
                         stationName = bundle.getString("stationName");
                         storageLocation = bundle.getString("storageLocation");
@@ -353,7 +349,8 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
         params.put("stationName", stationName);
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
-        params.put("stationAddress", stationAddress);
+        System.out.println("=======================aaaaaaaaaaaa"+storageLocation);
+//        params.put("stationAddress", stationAddress);
 		params.put("state", "emergencystation_in");
 
         params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "EmergencyStation_username"));
@@ -392,7 +389,7 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
         params.put("stationName", stationName);
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
-        params.put("stationAddress", stationAddress);
+//        params.put("stationAddress", stationAddress);
 			params.put("state", "emergencystation_out");
 
         params.put("username", PreferenceUtils.getString(MaterialCaptureActivity.this, "EmergencyStation_username"));
@@ -431,7 +428,7 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
         params.put("stationName", stationName);
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
-        params.put("stationAddress", stationAddress);
+//        params.put("stationAddress", stationAddress);
 			params.put("state", "emergencystation_break");
         params.put("reason", reason);
 

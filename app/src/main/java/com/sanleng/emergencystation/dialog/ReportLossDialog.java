@@ -97,7 +97,7 @@ public class ReportLossDialog extends Dialog implements View.OnClickListener {
                     data.putString("stationAddress", stationAddress);
                     data.putString("stationId", stationId);
                     data.putString("stationName", stationName);
-                    data.putString("storageLocation", "emergencystation_break");
+                    data.putString("storageLocation",storageLocation);
                     data.putString("reason", info_editText.getText().toString().trim());
                     mymsg.setData(data);
                     mymsg.what = 35268;
@@ -146,7 +146,7 @@ public class ReportLossDialog extends Dialog implements View.OnClickListener {
 
                     stationName = object.getString("stationName");
                     stationId = object.getString("stationId");
-                    stationAddress = object.getString("stationAddress");
+//                    stationAddress = object.getString("stationAddress");
                     storageLocation = object.getString("storageLocation");
 
 

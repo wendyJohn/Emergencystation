@@ -118,7 +118,7 @@ public class MaterialDetailsDialog extends Dialog implements View.OnClickListene
 
 					String mystationName = object.getString("stationName");
 					String myeffective = object.getString("effective");
-					String mystationAddress = object.getString("stationAddress");
+//					String mystationAddress = object.getString("stationAddress");
 					String mystorageLocation = object.getString("storageLocation");
 
 					name.setText("物资名称：" + myname);
