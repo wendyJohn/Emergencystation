@@ -200,7 +200,7 @@ public class ArticleActivity extends Activity {
      * @return
      */
     public List<Map<String, Object>> JSONAnalysis(String result) {
-        System.out.println("数据请求成功" + result);
+        System.out.println("文章数据请求成功" + result);
         try {
             int length = 50;
             int SIZE = 0;

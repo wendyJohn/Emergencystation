@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/widget_size_45"
-        android:background="@color/text_blue" >
+        android:background="@color/text_blue">
 
         <RelativeLayout
             android:id="@+id/r_back"
             android:layout_width="@dimen/widget_size_45"
             android:layout_height="@dimen/widget_size_45"
-            android:background="@color/text_blue" >
+            android:background="@color/text_blue">
 
             <ImageView
                 android:id="@+id/tl_back"
@@ -65,6 +65,27 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/door_d"
         android:text="开启四号箱" />
+
+    <Button
+        android:id="@+id/btn_five"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/door_e"
+        android:text="开启五号箱" />
+
+    <Button
+        android:id="@+id/btn_six"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/door_f"
+        android:text="开启六号箱" />
+
+    <Button
+        android:id="@+id/btn_seven"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/door_g"
+        android:text="开启七号箱" />
 
     <Button
         android:id="@+id/btn_onekey"

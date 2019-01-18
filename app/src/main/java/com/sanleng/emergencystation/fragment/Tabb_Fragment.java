@@ -117,7 +117,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
     private List<OverlayOptions> listoption;
     private LatLng latLng;
     private boolean isFirstLoc = true; // 是否首次定位
-    BitmapDescriptor bdAs = BitmapDescriptorFactory.fromResource(R.drawable.stations_icon);//应急站标识
+    BitmapDescriptor bdAs = BitmapDescriptorFactory.fromResource(R.drawable.e_station);//应急站标识
     BitmapDescriptor bdA = BitmapDescriptorFactory.fromResource(R.drawable.ico_sos);//求救标识
     private int i = 0;// 开锁次数
     private String str;
@@ -323,13 +323,10 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 if (location.getLocType() == BDLocation.TypeGpsLocation) {
                     // GPS定位结果
-                    Toast.makeText(getActivity(), location.getAddrStr(), Toast.LENGTH_SHORT).show();
                 } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
                     // 网络定位结果
-                    Toast.makeText(getActivity(), location.getAddrStr(), Toast.LENGTH_SHORT).show();
                 } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {
                     // 离线定位结果
-                    Toast.makeText(getActivity(), location.getAddrStr(), Toast.LENGTH_SHORT).show();
                 } else if (location.getLocType() == BDLocation.TypeServerError) {
                     Toast.makeText(getActivity(), "服务器错误，请检查", Toast.LENGTH_SHORT).show();
                 } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
@@ -992,7 +989,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
         // 申请权限
         if (Build.VERSION.SDK_INT >= 23) {
             if (!hasBasePhoneAuth()) {
-                this.requestPermissions(authBaseArr, authBaseRequestCode);
+                getActivity().requestPermissions(authBaseArr, authBaseRequestCode);
                 return;
             }
         }

@@ -65,12 +65,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        禁止ViewPager滑动
-        mVp.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+//        mVp.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;
+//            }
+//        });
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    // 收到报警广播处理，刷新界面
     public class Receivers extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();

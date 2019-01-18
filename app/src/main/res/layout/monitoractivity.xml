@@ -37,19 +37,25 @@
             android:textSize="@dimen/text_size_16" />
     </RelativeLayout>
 
-    <com.sanleng.emergencystation.view.FullVideoView
-        android:id="@+id/video"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ryout"
-        />
+        android:orientation="vertical">
 
+        <com.sanleng.emergencystation.view.FullVideoView
+            android:id="@+id/videoa"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1" />
 
+        <com.sanleng.emergencystation.view.FullVideoView
+            android:id="@+id/videob"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
-    <!--<WebView-->
-        <!--android:id="@+id/webview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="300dp"-->
-        <!--android:background="@color/black"-->
-        <!--android:layout_below="@+id/ryout" />-->
 </RelativeLayout>

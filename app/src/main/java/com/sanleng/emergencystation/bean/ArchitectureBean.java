@@ -10,6 +10,7 @@ public class ArchitectureBean {
 	private String name;
 	private String id;
 	private String mac;
+	private String type;
 	private String address;
 
 	public String getName() {
@@ -44,4 +45,11 @@ public class ArchitectureBean {
 		this.address = address;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }

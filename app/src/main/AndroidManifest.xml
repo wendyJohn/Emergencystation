@@ -66,13 +66,24 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!--读取联系人权限，上传联系人需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <permission android:name="android.permission.BAIDU_LOCATION_SERVICE"></permission>
+
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.sanleng.emergencystation.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/emergencystation_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/emergencystation_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
@@ -80,6 +91,7 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="lEWaSi7xNaDaSUpVumnEeNw0d0fc5pIm" />
+
         <activity
             android:name=".activity.WelcomeActivity"
             android:label="@string/app_name">
@@ -143,14 +155,14 @@
         <activity
             android:name=".activity.ArticleItemActivity"
             android:screenOrientation="portrait" />
-        <!--视频播放-->
-        <activity
-            android:name=".activity.VideoPlayerActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
         <!--视频监控-->
         <activity
             android:name=".activity.MonitorActivity"
+            android:screenOrientation="portrait" />
+        <!--宣传视频-->
+        <activity
+            android:name=".activity.VideoPlayerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
         <service
@@ -159,7 +171,7 @@
             android:permission="android.permission.BAIDU_LOCATION_SERVICE"
             android:process=":remote">
             <intent-filter>
-                <action android:name="com.baidu.location.service_v5.2.1"></action>
+                <action android:name="com.baidu.location.service_v5.2.1" />
             </intent-filter>
         </service>
 

@@ -1,13 +1,16 @@
 package com.sanleng.emergencystation.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.bean.ArchitectureBean;
+import com.sanleng.emergencystation.bean.StationBean;
 
 import java.util.List;
 
@@ -21,16 +24,25 @@ public class MaterialAdapter extends BaseAdapter {
 
 	private List<ArchitectureBean> mList;
 	private Context mContext;
+	private Handler handler;
 
-	/**
-	 * bindData用来传递数据给适配器。
-	 *
-	 * @list
-	 */
-	public void bindData(Context mContext, List<ArchitectureBean> mList) {
-		this.mList = mList;
+
+	public MaterialAdapter(Context mContext, List<ArchitectureBean> mList,Handler handler) {
+		super();
 		this.mContext = mContext;
+		this.mList = mList;
+		this.handler = handler;
 	}
+
+//	/**
+//	 * bindData用来传递数据给适配器。
+//	 *
+//	 * @list
+//	 */
+//	public void bindData(Context mContext, List<ArchitectureBean> mList) {
+//		this.mList = mList;
+//		this.mContext = mContext;
+//	}
 
 	@Override
 	public int getCount() {
@@ -58,6 +70,8 @@ public class MaterialAdapter extends BaseAdapter {
 			holder = new Holder();
 			holder.name = (TextView) convertView.findViewById(R.id.name);
 			holder.address = (TextView) convertView.findViewById(R.id.address);
+			holder.icon =convertView.findViewById(R.id.icon);
+
 			convertView.setTag(holder);
 		} else {
 			holder = (Holder) convertView.getTag();
@@ -65,11 +79,61 @@ public class MaterialAdapter extends BaseAdapter {
 
 		holder.name.setText(mList.get(position).getName());
 		holder.address.setText(mList.get(position).getAddress());
+
+		String image_type=mList.get(position).getId();
+		if(image_type.equals("a")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.a));
+		}
+		if(image_type.equals("b")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.b));
+		}
+		if(image_type.equals("c")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.c));
+		}
+		if(image_type.equals("d")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.d));
+		}
+		if(image_type.equals("e")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.e));
+		}
+		if(image_type.equals("f")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.f));
+		}
+		if(image_type.equals("g")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.g));
+		}
+		if(image_type.equals("h")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.h));
+		}
+		if(image_type.equals("i")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.i));
+		}
+		if(image_type.equals("j")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.j));
+		}if(image_type.equals("k")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.k));
+		}
+		if(image_type.equals("l")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.l));
+		}
+		if(image_type.equals("m")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.m));
+		}
+		if(image_type.equals("n")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.n));
+		}if(image_type.equals("o")){
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.o));
+		}
+		if(image_type.equals("p")) {
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.p));
+		}
+
 		return convertView;
 	}
 
 	class Holder {
 		TextView name;
 		TextView address;
+		ImageView icon;
 	}
 }

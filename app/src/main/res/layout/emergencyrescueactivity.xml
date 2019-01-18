@@ -191,7 +191,7 @@
                         android:drawableLeft="@drawable/viewdetails_icon"
                         android:drawablePadding="@dimen/widget_size_3"
                         android:gravity="center"
-                        android:text="查看详情"
+                        android:text="站点详情"
                         android:textColor="@color/white" />
 
 

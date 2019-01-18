@@ -24,6 +24,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
+                android:visibility="gone"
                 android:src="@drawable/back_icon" />
         </RelativeLayout>
 

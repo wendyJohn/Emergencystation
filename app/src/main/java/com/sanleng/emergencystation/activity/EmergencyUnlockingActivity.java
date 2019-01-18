@@ -30,6 +30,10 @@ public class EmergencyUnlockingActivity extends Activity implements OnClickListe
 	private Button btn_two;
 	private Button btn_three;
 	private Button btn_four;
+	private Button btn_five;
+	private Button btn_six;
+	private Button btn_seven;
+
 	private Button btn_onekey;
 	private RelativeLayout r_back;
 	private List<String> list = new ArrayList<>();
@@ -47,6 +51,9 @@ public class EmergencyUnlockingActivity extends Activity implements OnClickListe
 		list.add("B");
 		list.add("C");
 		list.add("D");
+		list.add("E");
+		list.add("F");
+		list.add("G");
 	}
 
 	private void initview() {
@@ -56,11 +63,17 @@ public class EmergencyUnlockingActivity extends Activity implements OnClickListe
 		btn_two = (Button) findViewById(R.id.btn_two);
 		btn_three = (Button) findViewById(R.id.btn_three);
 		btn_four = (Button) findViewById(R.id.btn_four);
+		btn_five = (Button) findViewById(R.id.btn_five);
+		btn_six = (Button) findViewById(R.id.btn_six);
+		btn_seven = (Button) findViewById(R.id.btn_seven);
 		btn_onekey = (Button) findViewById(R.id.btn_onekey);
 		btn_one.setOnClickListener(this);
 		btn_two.setOnClickListener(this);
 		btn_three.setOnClickListener(this);
 		btn_four.setOnClickListener(this);
+		btn_five.setOnClickListener(this);
+		btn_six.setOnClickListener(this);
+		btn_seven.setOnClickListener(this);
 		btn_onekey.setOnClickListener(this);
 		r_back = (RelativeLayout) findViewById(R.id.r_back);
 		r_back.setOnClickListener(this);
@@ -86,6 +99,18 @@ public class EmergencyUnlockingActivity extends Activity implements OnClickListe
 			case R.id.btn_four:
 				Unlock("D", mac);
 				break;
+			// 五号开锁
+			case R.id.btn_five:
+				Unlock("E", mac);
+				break;
+			// 六号开锁
+			case R.id.btn_six:
+				Unlock("F", mac);
+				break;
+			// 七号开锁
+			case R.id.btn_seven:
+				Unlock("G", mac);
+				break;
 			// 一键开启
 			case R.id.btn_onekey:
 				i = 0;
@@ -105,7 +130,7 @@ public class EmergencyUnlockingActivity extends Activity implements OnClickListe
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			if (i == 4) {
+			if (i == 7) {
 				handler.removeCallbacks(runnable);
 			} else {
 				str = list.get(i).toString();
@@ -119,11 +144,10 @@ public class EmergencyUnlockingActivity extends Activity implements OnClickListe
 	};
 
 	// 开锁方式
-	private void Unlock(String position, final String mac) {
+	private void Unlock(final String position, final String mac) {
 		RequestUtils.ClientPost(URLs.ORDER_BASE_URL + "/" + position + "/" + mac, null, new NetCallBack() {
 			@Override
 			public void onStart() {
-				Log.d("qs", URLs.ORDER_BASE_URL);
 				super.onStart();
 			}
 
@@ -132,9 +156,7 @@ public class EmergencyUnlockingActivity extends Activity implements OnClickListe
 				if (result == null || result.length() == 0) {
 					return;
 				}
-				System.out.println("数据请求成功" + result);
 			}
-
 			@Override
 			public void onMyFailure(Throwable arg0) {
 

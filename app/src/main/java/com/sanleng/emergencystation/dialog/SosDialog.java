@@ -34,6 +34,7 @@ public class SosDialog extends Dialog implements View.OnClickListener {
     private TextView cancle;
     private double lat;// 纬度
     private double lng;// 经度
+    private String address;
     private LocationClient mLocationClient = null; // 定位对象
     private BDLocationListener myListener = new MyLocationListener(); // 定位监听
 
@@ -86,6 +87,7 @@ public class SosDialog extends Dialog implements View.OnClickListener {
         RequestParams params = new RequestParams();
         params.put("lat", lat+"");
         params.put("lng", lng+"");
+        params.put("name", address);
         params.put("unitCode", PreferenceUtils.getString(context, "unitcode"));
         params.put("username", PreferenceUtils.getString(context, "EmergencyStation_username"));
         params.put("platformkey", "app_firecontrol_owner");
@@ -170,6 +172,8 @@ public class SosDialog extends Dialog implements View.OnClickListener {
         public void onReceiveLocation(BDLocation location) {
             lat = location.getLatitude();
             lng = location.getLongitude();
+            address=location.getAddrStr();
+            System.out.println("====================="+address);
         }
     }
 }

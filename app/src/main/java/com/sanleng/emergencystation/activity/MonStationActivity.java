@@ -61,13 +61,11 @@ public class MonStationActivity extends Activity implements OnClickListener, OnI
 			case 2:// SOS事件
 
 				break;
-			case 4:// 我的消息
+
+			case 3:// 在线求助
 
 				break;
-			case 5:// 在线求助
-
-				break;
-			case 6:// 授权中心
+			case 4:// 授权中心
 
 				break;
 			default:

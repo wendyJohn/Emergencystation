@@ -1,72 +1,57 @@
 package com.sanleng.emergencystation.activity;
 
-import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.adapter.VideoListAdapter;
-
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-
+import com.sanleng.emergencystation.adapter.VideoAdapter;
+import com.sanleng.emergencystation.adapter.VideoViewHolder;
+import com.sanleng.emergencystation.data.VideoData;
+import com.xiao.nicevideoplayer.NiceVideoPlayer;
+import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 /**
- * 视频
+ * 视频宣传播放
+ *
+ * @author Qiaoshi
  */
-public class VideoPlayerActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "VideoPlayerActivity";
-    private ListView mListView;
-    private VideoListAdapter mAdapter;
-    private SensorEventListener mSensorEventListener;
-    private SensorManager mSensorManager;
-    private RelativeLayout r_back;
+public class VideoPlayerActivity extends AppCompatActivity {
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_videoplayer);
-        mListView = (ListView) findViewById(R.id.list_view);
-        r_back = findViewById(R.id.r_back);
-        r_back.setOnClickListener(this);
-        mAdapter = new VideoListAdapter(this);
-        mListView.setAdapter(mAdapter);
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mSensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
+        setContentView(R.layout.activity_video);
+        init();
+    }
+
+    private void init() {
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setHasFixedSize(true);
+        VideoAdapter adapter = new VideoAdapter(this, VideoData.getVideoListData());
+        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setRecyclerListener(new RecyclerView.RecyclerListener() {
+            @Override
+            public void onViewRecycled(RecyclerView.ViewHolder holder) {
+                NiceVideoPlayer niceVideoPlayer = ((VideoViewHolder) holder).mVideoPlayer;
+                if (niceVideoPlayer == NiceVideoPlayerManager.instance().getCurrentNiceVideoPlayer()) {
+                    NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();
     }
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
-            return;
-        }
+        if (NiceVideoPlayerManager.instance().onBackPressd()) return;
         super.onBackPressed();
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Sensor mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(mSensorEventListener, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mSensorManager.unregisterListener(mSensorEventListener);
-        JCVideoPlayer.releaseAllVideos();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.r_back:
-                finish();
-                break;
-        }
     }
 }

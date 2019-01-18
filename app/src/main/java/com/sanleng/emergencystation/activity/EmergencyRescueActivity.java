@@ -75,6 +75,7 @@ import com.sanleng.emergencystation.adapter.StationAdapter;
 import com.sanleng.emergencystation.baidumap.DemoGuideActivity;
 import com.sanleng.emergencystation.baidumap.NormalUtils;
 import com.sanleng.emergencystation.baidumap.WNaviGuideActivity;
+import com.sanleng.emergencystation.bean.ArchitectureBean;
 import com.sanleng.emergencystation.bean.StationBean;
 import com.sanleng.emergencystation.dialog.E_StationDialog;
 import com.sanleng.emergencystation.net.NetCallBack;
@@ -111,7 +112,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     private List<OverlayOptions> listoption;
     private LatLng latLng;
     private boolean isFirstLoc = true; // 是否首次定位
-    BitmapDescriptor bdAs = BitmapDescriptorFactory.fromResource(R.drawable.stations_icon);//应急站标识
+    BitmapDescriptor bdAs = BitmapDescriptorFactory.fromResource(R.drawable.e_station);//应急站标识
     BitmapDescriptor bdA = BitmapDescriptorFactory.fromResource(R.drawable.ico_sos);//求救标识
     private int i = 0;// 开锁次数
     private String str;
@@ -410,6 +411,10 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         mylist.add("B");
         mylist.add("C");
         mylist.add("D");
+        mylist.add("E");
+        mylist.add("F");
+        mylist.add("G");
+
         myr_back.setOnClickListener(this);
         walkingnavigation.setOnClickListener(this);
         viewdetails.setOnClickListener(this);
@@ -433,7 +438,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         @Override
         public void run() {
             // TODO Auto-generated method stub
-            if (i == 4) {
+            if (i == 7) {
                 handler.removeCallbacks(runnable);
             } else {
                 str = mylist.get(i).toString().trim();
@@ -832,18 +837,87 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         StationBean beana = new StationBean();
         beana.setType(0);
         slists.add(beana);
-        StationBean beanb = new StationBean();
-        beanb.setName("防火服");
-        beanb.setNumber("2件");
-        beanb.setImage_type("1");
-        beanb.setType(1);
-        slists.add(beanb);
-        StationBean beanc = new StationBean();
-        beanc.setName("灭火器");
-        beanc.setNumber("2件");
-        beanc.setImage_type("2");
-        beanc.setType(1);
-        slists.add(beanc);
+
+        StationBean bean1 = new StationBean();
+        bean1.setName("简易呼吸器" + "  数量：1");
+        bean1.setNumber("A号应急箱");
+        bean1.setImage_type("a");
+        bean1.setType(1);
+        bean1.setMac("54C9DFF77EA4");
+        slists.add(bean1);
+
+        StationBean bean2 = new StationBean();
+        bean2.setName("头盔" + "  数量：2");
+        bean2.setNumber("B号应急箱");
+        bean2.setImage_type("b");
+        bean2.setType(1);
+        bean2.setMac("54C9DFF77EA4");
+        slists.add(bean2);
+
+        StationBean bean3= new StationBean();
+        bean3.setName("消防服" + "  数量：2");
+        bean3.setNumber("B号应急箱");
+        bean3.setImage_type("c");
+        bean3.setType(1);
+        bean3.setMac("54C9DFF77EA4");
+        slists.add(bean3);
+
+        StationBean bean4= new StationBean();
+        bean4.setName("手套" + "  数量：2");
+        bean4.setNumber("B号应急箱");
+        bean4.setImage_type("d");
+        bean4.setType(1);
+        bean4.setMac("54C9DFF77EA4");
+        slists.add(bean4);
+
+        StationBean bean5= new StationBean();
+        bean5.setName("安全绳" + "  数量：2");
+        bean5.setNumber("B号应急箱");
+        bean5.setImage_type("e");
+        bean5.setType(1);
+        bean5.setMac("54C9DFF77EA4");
+        slists.add(bean5);
+
+        StationBean bean6= new StationBean();
+        bean6.setName("腰帶" + "  数量：1");
+        bean6.setNumber("B号应急箱");
+        bean6.setImage_type("f");
+        bean6.setType(1);
+        bean6.setMac("54C9DFF77EA4");
+        slists.add(bean6);
+
+        StationBean bean7= new StationBean();
+        bean7.setName("胶鞋" + "  数量：2");
+        bean7.setNumber("B号应急箱");
+        bean7.setImage_type("g");
+        bean7.setType(1);
+        bean7.setMac("54C9DFF77EA4");
+        slists.add(bean7);
+
+        StationBean bean8= new StationBean();
+        bean8.setName("水带" + "  数量：2");
+        bean8.setNumber("C号应急箱");
+        bean8.setImage_type("h");
+        bean8.setType(1);
+        bean8.setMac("54C9DFF77EA4");
+        slists.add(bean8);
+
+        StationBean bean9 = new StationBean();
+        bean9.setName("折叠担架" + "  数量：1");
+        bean9.setNumber("D号应急箱");
+        bean9.setImage_type("k");
+        bean9.setType(1);
+        bean9.setMac("54C9DFF77EA4");
+        slists.add(bean9);
+
+        StationBean bean10 = new StationBean();
+        bean10.setName("干粉灭火器" + "  数量：2");
+        bean10.setNumber("E号应急箱");
+        bean10.setImage_type("l");
+        bean10.setType(1);
+        bean10.setMac("54C9DFF77EA4");
+        slists.add(bean10);
+
         ListView listView = (ListView) findViewById(R.id.list_view);
         bottomMenuAdapter = new BottomMenuAdapter(EmergencyRescueActivity.this, slists, name, address, distance, id, mac, m_Handler);
         listView.setAdapter(bottomMenuAdapter);
@@ -991,7 +1065,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 return;
             }
         }
-        BaiduNaviManagerFactory.getBaiduNaviManager().init(this,
+        BaiduNaviManagerFactory.getBaiduNaviManager().init(EmergencyRescueActivity.this,
                 mSDCardPath, APP_FOLDER_NAME, new IBaiduNaviManager.INaviInitListener() {
                     @Override
                     public void onAuthResult(int status, String msg) {

@@ -2,6 +2,7 @@ package com.sanleng.emergencystation;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
@@ -27,6 +28,8 @@ public class MyApplication extends MultiDexApplication {
         JPushInterface.init(this); // 初始化 JPush
         // 注意该方法要再setContentView方法之前实现
         SDKInitializer.initialize(this);
-
+//        if (!"generic".equalsIgnoreCase(Build.BRAND)) {
+//            SDKInitializer.initialize(getApplicationContext());
+//        }
     }
 }

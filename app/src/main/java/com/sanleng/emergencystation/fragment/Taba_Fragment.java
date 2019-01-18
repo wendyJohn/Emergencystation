@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.ArticleActivity;
 import com.sanleng.emergencystation.activity.EmergencyRescueActivity;
@@ -90,7 +89,7 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
         views.add(img);
 
         img = new ImageView(getActivity());
-        img.setImageResource(R.drawable.statistics_c);
+        img.setImageResource(R.drawable.statistics_e);
         views.add(img);
 
 //        img = new ImageView(getActivity());
@@ -105,8 +104,8 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
     //获取信息
     private void addNews(int page) {
         info = new ArrayList<>();
-        info.add("江苏三棱附近应急柜物资缺少");
-        info.add("江苏三棱附近危化品柜急需处理");
+        info.add("江苏三棱4号楼应急柜物资缺少");
+        info.add("南京市江宁区秣周东路4号楼需紧急求救");
         marqueeviews.startWithList(info);
 //        RequestParams params = new RequestParams();
 //        params.put("event_no", "142");
