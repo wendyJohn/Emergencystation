@@ -349,7 +349,6 @@ public class MaterialCaptureActivity extends AppCompatActivity implements Callba
         params.put("stationName", stationName);
         params.put("stationId", stationId);
         params.put("storageLocation", storageLocation);
-        System.out.println("=======================aaaaaaaaaaaa"+storageLocation);
 //        params.put("stationAddress", stationAddress);
 		params.put("state", "emergencystation_in");
 

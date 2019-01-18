@@ -41,9 +41,6 @@ public class ArticleItemActivity extends Activity {
 		category = intent.getStringExtra("category");
 		frequency = intent.getStringExtra("frequency");
 
-		System.out.println("==================="+ url);
-
-
 		t_name = (TextView) findViewById(R.id.t_name);
 		t_category = (TextView) findViewById(R.id.t_category);
 		t_frequency = (TextView) findViewById(R.id.t_frequency);

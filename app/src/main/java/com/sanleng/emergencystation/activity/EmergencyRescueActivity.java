@@ -60,6 +60,7 @@ import com.baidu.navisdk.adapter.IBNRoutePlanManager;
 import com.baidu.navisdk.adapter.IBNTTSManager;
 import com.baidu.navisdk.adapter.IBaiduNaviManager;
 import com.baidu.navisdk.adapter.impl.BaiduNaviManager;
+import com.baidu.navisdk.ui.routeguide.mapmode.subview.A;
 import com.baidu.platform.comapi.walknavi.widget.ArCameraView;
 import com.google.gson.Gson;
 import com.iflytek.cloud.RecognizerResult;
@@ -837,87 +838,248 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         StationBean beana = new StationBean();
         beana.setType(0);
         slists.add(beana);
+        if(name.equals("三棱科技应急站A")) {
+            StationBean bean1 = new StationBean();
+            bean1.setName("简易呼吸器" + "  数量：1");
+            bean1.setNumber("1号应急箱");
+            bean1.setImage_type("a");
+            bean1.setType(1);
+            bean1.setMac("54C9DFF77EA4");
+            slists.add(bean1);
 
-        StationBean bean1 = new StationBean();
-        bean1.setName("简易呼吸器" + "  数量：1");
-        bean1.setNumber("1号应急箱");
-        bean1.setImage_type("a");
-        bean1.setType(1);
-        bean1.setMac("54C9DFF77EA4");
-        slists.add(bean1);
+            StationBean bean2 = new StationBean();
+            bean2.setName("头盔" + "  数量：2");
+            bean2.setNumber("2号应急箱");
+            bean2.setImage_type("b");
+            bean2.setType(1);
+            bean2.setMac("54C9DFF77EA4");
+            slists.add(bean2);
 
-        StationBean bean2 = new StationBean();
-        bean2.setName("头盔" + "  数量：2");
-        bean2.setNumber("2号应急箱");
-        bean2.setImage_type("b");
-        bean2.setType(1);
-        bean2.setMac("54C9DFF77EA4");
-        slists.add(bean2);
+            StationBean bean3 = new StationBean();
+            bean3.setName("消防服" + "  数量：2");
+            bean3.setNumber("2号应急箱");
+            bean3.setImage_type("c");
+            bean3.setType(1);
+            bean3.setMac("54C9DFF77EA4");
+            slists.add(bean3);
 
-        StationBean bean3= new StationBean();
-        bean3.setName("消防服" + "  数量：2");
-        bean3.setNumber("2号应急箱");
-        bean3.setImage_type("c");
-        bean3.setType(1);
-        bean3.setMac("54C9DFF77EA4");
-        slists.add(bean3);
+            StationBean bean4 = new StationBean();
+            bean4.setName("手套" + "  数量：2");
+            bean4.setNumber("2号应急箱");
+            bean4.setImage_type("d");
+            bean4.setType(1);
+            bean4.setMac("54C9DFF77EA4");
+            slists.add(bean4);
 
-        StationBean bean4= new StationBean();
-        bean4.setName("手套" + "  数量：2");
-        bean4.setNumber("2号应急箱");
-        bean4.setImage_type("d");
-        bean4.setType(1);
-        bean4.setMac("54C9DFF77EA4");
-        slists.add(bean4);
+            StationBean bean5 = new StationBean();
+            bean5.setName("安全绳" + "  数量：2");
+            bean5.setNumber("2号应急箱");
+            bean5.setImage_type("e");
+            bean5.setType(1);
+            bean5.setMac("54C9DFF77EA4");
+            slists.add(bean5);
 
-        StationBean bean5= new StationBean();
-        bean5.setName("安全绳" + "  数量：2");
-        bean5.setNumber("2号应急箱");
-        bean5.setImage_type("e");
-        bean5.setType(1);
-        bean5.setMac("54C9DFF77EA4");
-        slists.add(bean5);
+            StationBean bean6 = new StationBean();
+            bean6.setName("腰帶" + "  数量：1");
+            bean6.setNumber("2号应急箱");
+            bean6.setImage_type("f");
+            bean6.setType(1);
+            bean6.setMac("54C9DFF77EA4");
+            slists.add(bean6);
 
-        StationBean bean6= new StationBean();
-        bean6.setName("腰帶" + "  数量：1");
-        bean6.setNumber("2号应急箱");
-        bean6.setImage_type("f");
-        bean6.setType(1);
-        bean6.setMac("54C9DFF77EA4");
-        slists.add(bean6);
+            StationBean bean7 = new StationBean();
+            bean7.setName("胶鞋" + "  数量：2");
+            bean7.setNumber("2号应急箱");
+            bean7.setImage_type("g");
+            bean7.setType(1);
+            bean7.setMac("54C9DFF77EA4");
+            slists.add(bean7);
 
-        StationBean bean7= new StationBean();
-        bean7.setName("胶鞋" + "  数量：2");
-        bean7.setNumber("2号应急箱");
-        bean7.setImage_type("g");
-        bean7.setType(1);
-        bean7.setMac("54C9DFF77EA4");
-        slists.add(bean7);
+            StationBean bean8 = new StationBean();
+            bean8.setName("水带" + "  数量：2");
+            bean8.setNumber("3号应急箱");
+            bean8.setImage_type("h");
+            bean8.setType(1);
+            bean8.setMac("54C9DFF77EA4");
+            slists.add(bean8);
 
-        StationBean bean8= new StationBean();
-        bean8.setName("水带" + "  数量：2");
-        bean8.setNumber("3号应急箱");
-        bean8.setImage_type("h");
-        bean8.setType(1);
-        bean8.setMac("54C9DFF77EA4");
-        slists.add(bean8);
+            StationBean bean9 = new StationBean();
+            bean9.setName("折叠担架" + "  数量：1");
+            bean9.setNumber("3号应急箱");
+            bean9.setImage_type("k");
+            bean9.setType(1);
+            bean9.setMac("54C9DFF77EA4");
+            slists.add(bean9);
 
-        StationBean bean9 = new StationBean();
-        bean9.setName("折叠担架" + "  数量：1");
-        bean9.setNumber("3号应急箱");
-        bean9.setImage_type("k");
-        bean9.setType(1);
-        bean9.setMac("54C9DFF77EA4");
-        slists.add(bean9);
+            StationBean bean10 = new StationBean();
+            bean10.setName("干粉灭火器" + "  数量：2");
+            bean10.setNumber("4号应急箱");
+            bean10.setImage_type("l");
+            bean10.setType(1);
+            bean10.setMac("54C9DFF77EA4");
+            slists.add(bean10);
+        }
+        if(name.equals("紫金幽谷应急站")) {
+            StationBean bean5 = new StationBean();
+            bean5.setName("安全绳" + "  数量：2");
+            bean5.setNumber("2号应急箱");
+            bean5.setImage_type("e");
+            bean5.setType(1);
+            bean5.setMac("54C9DFF77EA4");
+            slists.add(bean5);
 
-        StationBean bean10 = new StationBean();
-        bean10.setName("干粉灭火器" + "  数量：2");
-        bean10.setNumber("4号应急箱");
-        bean10.setImage_type("l");
-        bean10.setType(1);
-        bean10.setMac("54C9DFF77EA4");
-        slists.add(bean10);
+            StationBean bean6 = new StationBean();
+            bean6.setName("腰帶" + "  数量：1");
+            bean6.setNumber("2号应急箱");
+            bean6.setImage_type("f");
+            bean6.setType(1);
+            bean6.setMac("54C9DFF77EA4");
+            slists.add(bean6);
 
+            StationBean bean7 = new StationBean();
+            bean7.setName("胶鞋" + "  数量：2");
+            bean7.setNumber("2号应急箱");
+            bean7.setImage_type("g");
+            bean7.setType(1);
+            bean7.setMac("54C9DFF77EA4");
+            slists.add(bean7);
+
+            StationBean bean8 = new StationBean();
+            bean8.setName("水带" + "  数量：2");
+            bean8.setNumber("3号应急箱");
+            bean8.setImage_type("h");
+            bean8.setType(1);
+            bean8.setMac("54C9DFF77EA4");
+            slists.add(bean8);
+
+            StationBean bean9 = new StationBean();
+            bean9.setName("折叠担架" + "  数量：1");
+            bean9.setNumber("3号应急箱");
+            bean9.setImage_type("k");
+            bean9.setType(1);
+            bean9.setMac("54C9DFF77EA4");
+            slists.add(bean9);
+
+            StationBean bean10 = new StationBean();
+            bean10.setName("干粉灭火器" + "  数量：2");
+            bean10.setNumber("4号应急箱");
+            bean10.setImage_type("l");
+            bean10.setType(1);
+            bean10.setMac("54C9DFF77EA4");
+            slists.add(bean10);
+
+            StationBean bean1 = new StationBean();
+            bean1.setName("简易呼吸器" + "  数量：1");
+            bean1.setNumber("1号应急箱");
+            bean1.setImage_type("a");
+            bean1.setType(1);
+            bean1.setMac("54C9DFF77EA4");
+            slists.add(bean1);
+
+            StationBean bean2 = new StationBean();
+            bean2.setName("头盔" + "  数量：2");
+            bean2.setNumber("2号应急箱");
+            bean2.setImage_type("b");
+            bean2.setType(1);
+            bean2.setMac("54C9DFF77EA4");
+            slists.add(bean2);
+
+            StationBean bean3 = new StationBean();
+            bean3.setName("消防服" + "  数量：2");
+            bean3.setNumber("2号应急箱");
+            bean3.setImage_type("c");
+            bean3.setType(1);
+            bean3.setMac("54C9DFF77EA4");
+            slists.add(bean3);
+
+            StationBean bean4 = new StationBean();
+            bean4.setName("手套" + "  数量：2");
+            bean4.setNumber("2号应急箱");
+            bean4.setImage_type("d");
+            bean4.setType(1);
+            bean4.setMac("54C9DFF77EA4");
+            slists.add(bean4);
+        }
+        if(name.equals("砂之船艺术商业广场")) {
+            StationBean bean9 = new StationBean();
+            bean9.setName("折叠担架" + "  数量：1");
+            bean9.setNumber("3号应急箱");
+            bean9.setImage_type("k");
+            bean9.setType(1);
+            bean9.setMac("54C9DFF77EA4");
+            slists.add(bean9);
+
+            StationBean bean10 = new StationBean();
+            bean10.setName("干粉灭火器" + "  数量：2");
+            bean10.setNumber("4号应急箱");
+            bean10.setImage_type("l");
+            bean10.setType(1);
+            bean10.setMac("54C9DFF77EA4");
+            slists.add(bean10);
+
+            StationBean bean1 = new StationBean();
+            bean1.setName("简易呼吸器" + "  数量：1");
+            bean1.setNumber("1号应急箱");
+            bean1.setImage_type("a");
+            bean1.setType(1);
+            bean1.setMac("54C9DFF77EA4");
+            slists.add(bean1);
+
+            StationBean bean2 = new StationBean();
+            bean2.setName("头盔" + "  数量：2");
+            bean2.setNumber("2号应急箱");
+            bean2.setImage_type("b");
+            bean2.setType(1);
+            bean2.setMac("54C9DFF77EA4");
+            slists.add(bean2);
+
+            StationBean bean3 = new StationBean();
+            bean3.setName("消防服" + "  数量：2");
+            bean3.setNumber("2号应急箱");
+            bean3.setImage_type("c");
+            bean3.setType(1);
+            bean3.setMac("54C9DFF77EA4");
+            slists.add(bean3);
+
+            StationBean bean4 = new StationBean();
+            bean4.setName("手套" + "  数量：2");
+            bean4.setNumber("2号应急箱");
+            bean4.setImage_type("d");
+            bean4.setType(1);
+            bean4.setMac("54C9DFF77EA4");
+            slists.add(bean4);
+            StationBean bean5 = new StationBean();
+            bean5.setName("安全绳" + "  数量：2");
+            bean5.setNumber("2号应急箱");
+            bean5.setImage_type("e");
+            bean5.setType(1);
+            bean5.setMac("54C9DFF77EA4");
+            slists.add(bean5);
+
+            StationBean bean6 = new StationBean();
+            bean6.setName("腰帶" + "  数量：1");
+            bean6.setNumber("2号应急箱");
+            bean6.setImage_type("f");
+            bean6.setType(1);
+            bean6.setMac("54C9DFF77EA4");
+            slists.add(bean6);
+
+            StationBean bean7 = new StationBean();
+            bean7.setName("胶鞋" + "  数量：2");
+            bean7.setNumber("2号应急箱");
+            bean7.setImage_type("g");
+            bean7.setType(1);
+            bean7.setMac("54C9DFF77EA4");
+            slists.add(bean7);
+
+            StationBean bean8 = new StationBean();
+            bean8.setName("水带" + "  数量：2");
+            bean8.setNumber("3号应急箱");
+            bean8.setImage_type("h");
+            bean8.setType(1);
+            bean8.setMac("54C9DFF77EA4");
+            slists.add(bean8);
+        }
         ListView listView = (ListView) findViewById(R.id.list_view);
         bottomMenuAdapter = new BottomMenuAdapter(EmergencyRescueActivity.this, slists, name, address, distance, id, mac, m_Handler);
         listView.setAdapter(bottomMenuAdapter);

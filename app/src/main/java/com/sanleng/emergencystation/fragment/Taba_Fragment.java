@@ -96,7 +96,7 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
 //        img.setImageResource(R.drawable.statistics_d);
 //        views.add(img);
 
-        card.commitViews(views, 200);
+        card.commitViews(views, 230);
 
     }
 

@@ -291,7 +291,7 @@ public class ArticleActivity extends Activity {
                         String content = objects.getString("content");
 
                         Intent intent = new Intent(ArticleActivity.this, ArticleItemActivity.class);
-                        intent.putExtra("url", URLs.HOST + content);
+                        intent.putExtra("url", URLs.HOST +"/"+content);
                         intent.putExtra("name", name);
                         intent.putExtra("category", category);
                         intent.putExtra("frequency", frequency);

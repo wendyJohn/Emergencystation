@@ -190,7 +190,6 @@
                 <category android:name="com.sanleng.emergencystation" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

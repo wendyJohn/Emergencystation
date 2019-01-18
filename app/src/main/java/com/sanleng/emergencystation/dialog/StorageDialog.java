@@ -81,6 +81,21 @@ public class StorageDialog extends Dialog {
 		beand.setId("D");
 		onelist.add(beand);
 
+		ArchitectureBean beane = new ArchitectureBean();
+		beane.setName("五号箱");
+		beane.setId("E");
+		onelist.add(beane);
+
+		ArchitectureBean beanf = new ArchitectureBean();
+		beanf.setName("六号箱");
+		beanf.setId("F");
+		onelist.add(beanf);
+
+		ArchitectureBean beang = new ArchitectureBean();
+		beang.setName("七号箱");
+		beang.setId("G");
+		onelist.add(beang);
+
 		allList.addAll(onelist);
 		emergencystationAdapter.bindData(context, allList);
 

@@ -1,11 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:ignore="Orientation">
+
+    <RelativeLayout
+        android:id="@+id/ryout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_size_45"
+        android:background="@color/text_blue">
+
+        <RelativeLayout
+            android:id="@+id/r_back"
+            android:layout_width="@dimen/widget_size_45"
+            android:layout_height="@dimen/widget_size_45"
+            android:background="@color/text_blue">
+
+            <ImageView
+                android:id="@+id/tl_back"
+                android:layout_width="@dimen/widget_size_26"
+                android:layout_height="@dimen/widget_size_26"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/back_icon" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="宣传教育"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
 <android.support.v7.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recycler_view"
     android:layout_width="match_parent"
+    android:layout_below="@+id/ryout"
     android:background="@android:color/white"
     android:layout_height="match_parent"
     tools:context="com.sanleng.emergencystation.activity.VideoPlayerActivity">
 
 </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

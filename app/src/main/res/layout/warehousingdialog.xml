@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="6dp"
                 android:text="请选择要入库的站点"
                 android:textColor="#4a5764"
                 android:textSize="15sp" />
@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="6dp"
                 android:text="请选择要入库的位置"
                 android:textColor="#4a5764"
                 android:textSize="15sp" />

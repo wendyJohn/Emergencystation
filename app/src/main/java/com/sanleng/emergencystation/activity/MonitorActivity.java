@@ -1,9 +1,11 @@
 package com.sanleng.emergencystation.activity;
 
+import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
@@ -18,6 +20,7 @@ public class MonitorActivity extends AppCompatActivity {
     private RelativeLayout r_back;
     private FullVideoView videoa;
     private FullVideoView videob;
+    private boolean fullscreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class MonitorActivity extends AppCompatActivity {
     /**
      * 设置视频参数
      */
+    @SuppressLint("ClickableViewAccessibility")
     private void setVideoa() {
         MediaController mediaController = new MediaController(this);
         mediaController.setVisibility(View.GONE);//隐藏进度条
@@ -53,6 +57,7 @@ public class MonitorActivity extends AppCompatActivity {
             }
         });
     }
+
     /**
      * 设置视频参数
      */
