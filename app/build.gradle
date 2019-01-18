@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "com.sanleng.emergencystation"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -13,9 +13,14 @@ android {
         multiDexEnabled true
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 
-        ndk { //选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        ndk {
+            abiFilters "armeabi"
         }
+
+        packagingOptions {
+            exclude "lib/libgnustl_shared.so"
+        }
+
         manifestPlaceholders = [JPUSH_PKGNAME: applicationId,
                                 JPUSH_APPKEY : "091b53a924519d044e82fb41",  //JPush上注册的包名对应的
                                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
@@ -44,7 +49,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
