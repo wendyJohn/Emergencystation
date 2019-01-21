@@ -135,6 +135,7 @@
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp"
                 android:paddingTop="6dp"
+                android:textColor="@color/black"
                 android:textSize="15sp" />
         </LinearLayout>
     </RelativeLayout>

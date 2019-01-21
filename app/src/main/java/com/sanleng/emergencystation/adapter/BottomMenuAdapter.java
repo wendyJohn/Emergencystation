@@ -141,8 +141,8 @@ public class BottomMenuAdapter extends BaseAdapter {
                 viewholdertwo = (ViewHolderTwo) convertView.getTag();
             }
             //设置参数
-            viewholdertwo.name.setText(mList.get(position).getName());
-            viewholdertwo.address.setText(mList.get(position).getNumber());
+            viewholdertwo.name.setText(mList.get(position).getNumber());
+            viewholdertwo.address.setText(mList.get(position).getName());
             String image_type=mList.get(position).getImage_type();
             if(image_type.equals("a")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.a));

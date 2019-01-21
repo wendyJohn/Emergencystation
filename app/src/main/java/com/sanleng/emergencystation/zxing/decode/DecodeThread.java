@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sanleng.emergencystation.zxing.decoding;
+package com.sanleng.emergencystation.zxing.decode;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -22,7 +22,7 @@ import android.os.Looper;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.ResultPointCallback;
-import com.sanleng.emergencystation.activity.MaterialCaptureActivity;
+import com.sanleng.emergencystation.zxing.activiry.CaptureActivity;
 
 import java.util.Hashtable;
 import java.util.Vector;
@@ -30,43 +30,43 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  * This thread does all the heavy lifting of decoding the images.
- * �����߳�
+ *
+ * @author dswitkin@google.com (Daniel Switkin)
  */
-final class DecodeThread extends Thread {
+public final class DecodeThread extends Thread {
 
-    public static final String BARCODE_BITMAP = "barcode_bitmap";
-    private final MaterialCaptureActivity activity;
+    private final CaptureActivity activity;
     private final Hashtable<DecodeHintType, Object> hints;
+    private final Vector<BarcodeFormat> decodeFormats;
     private Handler handler;
     private final CountDownLatch handlerInitLatch;
 
-    DecodeThread(MaterialCaptureActivity activity,
-                 Vector<BarcodeFormat> decodeFormats,
-                 String characterSet,
-                 ResultPointCallback resultPointCallback) {
+    public DecodeThread(CaptureActivity activity, ResultPointCallback resultPointCallback) {
 
         this.activity = activity;
         handlerInitLatch = new CountDownLatch(1);
 
-        hints = new Hashtable<DecodeHintType, Object>(3);
+        hints = new Hashtable<>();
 
-        if (decodeFormats == null || decodeFormats.isEmpty()) {
-            decodeFormats = new Vector<BarcodeFormat>();
-            decodeFormats.addAll(DecodeFormatManager.ONE_D_FORMATS);
-            decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS);
-            decodeFormats.addAll(DecodeFormatManager.DATA_MATRIX_FORMATS);
+
+        decodeFormats = new Vector<BarcodeFormat>();
+
+
+        /*是否解析有条形码（一维码）*/
+        if (activity.config.isDecodeBarCode()) {
+            decodeFormats.addAll(com.sanleng.emergencystation.zxing.decode.DecodeFormatManager.ONE_D_FORMATS);
+
         }
 
+        decodeFormats.addAll(com.sanleng.emergencystation.zxing.decode.DecodeFormatManager.QR_CODE_FORMATS);
+        decodeFormats.addAll(com.sanleng.emergencystation.zxing.decode.DecodeFormatManager.DATA_MATRIX_FORMATS);
         hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);
-
-        if (characterSet != null) {
-            hints.put(DecodeHintType.CHARACTER_SET, characterSet);
-        }
-
+        hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
         hints.put(DecodeHintType.NEED_RESULT_POINT_CALLBACK, resultPointCallback);
+
     }
 
-    Handler getHandler() {
+    public Handler getHandler() {
         try {
             handlerInitLatch.await();
         } catch (InterruptedException ie) {

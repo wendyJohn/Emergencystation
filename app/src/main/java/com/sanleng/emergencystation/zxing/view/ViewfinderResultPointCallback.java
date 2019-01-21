@@ -21,12 +21,13 @@ import com.google.zxing.ResultPointCallback;
 
 public final class ViewfinderResultPointCallback implements ResultPointCallback {
 
-  private final com.sanleng.emergencystation.zxing.view.ViewfinderView viewfinderView;
+  private final ViewfinderView viewfinderView;
 
-  public ViewfinderResultPointCallback(com.sanleng.emergencystation.zxing.view.ViewfinderView viewfinderView) {
+  public ViewfinderResultPointCallback(ViewfinderView viewfinderView) {
     this.viewfinderView = viewfinderView;
   }
 
+  @Override
   public void foundPossibleResultPoint(ResultPoint point) {
     viewfinderView.addPossibleResultPoint(point);
   }
