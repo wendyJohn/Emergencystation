@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.bean.ArchitectureBean;
 import com.sanleng.emergencystation.bean.StationBean;
+import com.sanleng.emergencystation.dialog.InstructionsDialog;
 
 import java.util.List;
 
@@ -68,9 +70,10 @@ public class MaterialAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.material_item, null);
 			holder = new Holder();
-			holder.name = (TextView) convertView.findViewById(R.id.name);
-			holder.address = (TextView) convertView.findViewById(R.id.address);
+			holder.name = convertView.findViewById(R.id.name);
+			holder.address =convertView.findViewById(R.id.address);
 			holder.icon =convertView.findViewById(R.id.icon);
+			holder.instructions_yout =convertView.findViewById(R.id.instructions_yout);
 
 			convertView.setTag(holder);
 		} else {
@@ -128,6 +131,15 @@ public class MaterialAdapter extends BaseAdapter {
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.p));
 		}
 
+		holder.instructions_yout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String image_type=mList.get(position).getId();
+				InstructionsDialog instructionsDialog = new InstructionsDialog(mContext, image_type);
+				instructionsDialog.show();
+			}
+		});
+
 		return convertView;
 	}
 
@@ -135,5 +147,6 @@ public class MaterialAdapter extends BaseAdapter {
 		TextView name;
 		TextView address;
 		ImageView icon;
+		LinearLayout instructions_yout;
 	}
 }

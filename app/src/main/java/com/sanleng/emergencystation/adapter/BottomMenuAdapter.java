@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.bean.StationBean;
+import com.sanleng.emergencystation.dialog.InstructionsDialog;
 
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class BottomMenuAdapter extends BaseAdapter {
     private int currentType;
 
 
-    public BottomMenuAdapter(Context mContext, List<StationBean> mList, String name, String address, double distance, String id,String mac,Handler handler) {
+    public BottomMenuAdapter(Context mContext, List<StationBean> mList, String name, String address, double distance, String id, String mac, Handler handler) {
         super();
 
         this.mContext = mContext;
@@ -68,7 +71,7 @@ public class BottomMenuAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         currentType = getItemViewType(position);
         if (currentType == TYPE_ONE) { //加载第一种布局
             ViewHolderOne viewHolderOne;
@@ -136,6 +139,8 @@ public class BottomMenuAdapter extends BaseAdapter {
                 viewholdertwo.name = (TextView) convertView.findViewById(R.id.name);
                 viewholdertwo.address = (TextView) convertView.findViewById(R.id.address);
                 viewholdertwo.icon = (ImageView) convertView.findViewById(R.id.icon);
+                viewholdertwo.instructions_yout = convertView.findViewById(R.id.instructions_yout);
+
                 convertView.setTag(viewholdertwo);
             } else {
                 viewholdertwo = (ViewHolderTwo) convertView.getTag();
@@ -143,53 +148,66 @@ public class BottomMenuAdapter extends BaseAdapter {
             //设置参数
             viewholdertwo.name.setText(mList.get(position).getNumber());
             viewholdertwo.address.setText(mList.get(position).getName());
-            String image_type=mList.get(position).getImage_type();
-            if(image_type.equals("a")){
+            String image_type = mList.get(position).getImage_type();
+            if (image_type.equals("a")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.a));
             }
-            if(image_type.equals("b")){
+            if (image_type.equals("b")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.b));
             }
-            if(image_type.equals("c")){
+            if (image_type.equals("c")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.c));
             }
-            if(image_type.equals("d")){
+            if (image_type.equals("d")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.d));
             }
-            if(image_type.equals("e")){
+            if (image_type.equals("e")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.e));
             }
-            if(image_type.equals("f")){
+            if (image_type.equals("f")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.f));
             }
-            if(image_type.equals("g")){
+            if (image_type.equals("g")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.g));
             }
-            if(image_type.equals("h")){
+            if (image_type.equals("h")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.h));
             }
-            if(image_type.equals("i")){
+            if (image_type.equals("i")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.i));
             }
-            if(image_type.equals("j")){
+            if (image_type.equals("j")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.j));
-            }if(image_type.equals("k")){
+            }
+            if (image_type.equals("k")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.k));
             }
-            if(image_type.equals("l")){
+            if (image_type.equals("l")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.l));
             }
-            if(image_type.equals("m")){
+            if (image_type.equals("m")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.m));
             }
-            if(image_type.equals("n")){
+            if (image_type.equals("n")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.n));
-            }if(image_type.equals("o")){
+            }
+            if (image_type.equals("o")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.o));
             }
-            if(image_type.equals("p")) {
+            if (image_type.equals("p")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.p));
             }
+
+            viewholdertwo.instructions_yout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String image_type = mList.get(position).getImage_type();
+                    InstructionsDialog instructionsDialog = new InstructionsDialog(mContext, image_type);
+                    instructionsDialog.show();
+
+                }
+            });
+
         }
         return convertView;
     }
@@ -206,6 +224,8 @@ public class BottomMenuAdapter extends BaseAdapter {
         TextView name;
         TextView address;
         ImageView icon;
+
+        LinearLayout instructions_yout;
     }
 
 

@@ -30,6 +30,7 @@ import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.MaterialCaptureActivity;
 import com.sanleng.emergencystation.dialog.OutofStockDialog;
 import com.sanleng.emergencystation.dialog.ReportLossDialog;
+import com.sanleng.emergencystation.dialog.TipsDialog;
 import com.sanleng.emergencystation.dialog.WarehousingDialog;
 import com.sanleng.emergencystation.net.NetCallBack;
 import com.sanleng.emergencystation.net.RequestUtils;
@@ -453,9 +454,25 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
                     break;
                 // 取消报损
                 case 35269:
-
                     try {
                         continuePreview();
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                        e.printStackTrace();
+                    }
+                    break;
+                //继续
+                case 22260:
+                    try {
+                        continuePreview();
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                        e.printStackTrace();
+                    }
+                    break;
+                case 22261:
+                    try {
+                        finish();
                     } catch (Exception e) {
                         // TODO: handle exception
                         e.printStackTrace();
@@ -493,8 +510,10 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
                     return;
                 }
                 System.out.println("数据请求成功" + result);
-                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("入库成功");
-                continuePreview();
+                TipsDialog tipsDialog=new TipsDialog(CaptureActivity.this,"入库成功,是否继续？",mHandler);
+                tipsDialog.show();
+//                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("入库成功");
+//                continuePreview();
             }
 
             @Override
@@ -529,8 +548,11 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
                 if (result == null || result.length() == 0) {
                     return;
                 }
+
                 System.out.println("数据请求成功" + result);
-                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("出库成功");
+                TipsDialog tipsDialog=new TipsDialog(CaptureActivity.this,"出库成功,是否继续？",mHandler);
+                tipsDialog.show();
+//                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("出库成功");
                 continuePreview();
             }
 
@@ -569,7 +591,9 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
                     return;
                 }
                 System.out.println("数据请求成功" + result);
-                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("报损成功");
+                TipsDialog tipsDialog=new TipsDialog(CaptureActivity.this,"报损成功,是否继续？",mHandler);
+                tipsDialog.show();
+//                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("报损成功");
                 continuePreview();
             }
 
