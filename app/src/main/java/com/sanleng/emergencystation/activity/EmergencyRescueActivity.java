@@ -726,29 +726,30 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                             object = (JSONObject) array.get(i);
 //                          String lat = object.getString("lat");
 //                          String lng = object.getString("lng");
+                            String examineResult = object.getString("examineResult");
 
-                            //测试
-                            String lat = "31.87368";
-                            String lng = "118.83358";
+                            if(examineResult.equals("1")) {
+                                //测试
+                                String lat = "31.87368";
+                                String lng = "118.83358";
 
-                            bean.setName("SOS求救");
-                            bean.setAddress("南京市-江宁区-秣周东路12号");
-                            bean.setE_mylatitude(Double.parseDouble(lat));
-                            bean.setE_mylongitude(Double.parseDouble(lng));
-                            bean.setType(2);
-
-                            bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
-
-                            // 构建MarkerOption，用于在地图上添加Marker
-                            LatLng llA = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                            MarkerOptions option = new MarkerOptions().position(llA).icon(bdA);
-                            Marker marker = (Marker) mBaiduMap.addOverlay(option);
-                            // 将信息保存
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("marker", bean);
-                            marker.setExtraInfo(bundle);
-                            mBaiduMap.addOverlays(listoption);
-                            slistsos.add(bean);
+                                bean.setName("SOS求救");
+                                bean.setAddress("南京市-江宁区-秣周东路12号");
+                                bean.setE_mylatitude(Double.parseDouble(lat));
+                                bean.setE_mylongitude(Double.parseDouble(lng));
+                                bean.setType(2);
+                                bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
+                                // 构建MarkerOption，用于在地图上添加Marker
+                                LatLng llA = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+                                MarkerOptions option = new MarkerOptions().position(llA).icon(bdA);
+                                Marker marker = (Marker) mBaiduMap.addOverlay(option);
+                                // 将信息保存
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("marker", bean);
+                                marker.setExtraInfo(bundle);
+                                mBaiduMap.addOverlays(listoption);
+                                slistsos.add(bean);
+                            }
                         }
 
                         soslistview = findViewById(R.id.soslistview);
