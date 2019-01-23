@@ -1,5 +1,6 @@
 package com.sanleng.emergencystation.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.net.NetCallBack;
 import com.sanleng.emergencystation.net.RequestUtils;
@@ -40,11 +42,13 @@ public class EmergencyUnlockingActivity extends Activity implements OnClickListe
 	private String str;
 	private int i = 0;// 次数
 
+	@SuppressLint("ResourceAsColor")
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		this.setContentView(R.layout.open_door);
+		StatusBarUtil.setColor(EmergencyUnlockingActivity.this,R.color.translucency);
 		initview();
 
 		list.add("A");

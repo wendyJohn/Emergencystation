@@ -1,5 +1,6 @@
 package com.sanleng.emergencystation.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 
 /**
@@ -27,10 +30,12 @@ public class ArticleItemActivity extends Activity {
 	private String category;
 	private String frequency;
 
+	@SuppressLint("ResourceAsColor")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_articleitem);
+		StatusBarUtil.setColor(ArticleItemActivity.this,R.color.translucency);
 		intview();
 	}
 

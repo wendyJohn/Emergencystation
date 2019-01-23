@@ -107,6 +107,21 @@
         android:paddingTop="8dp" >
 
         <TextView
+            android:id="@+id/eliminate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/select_center"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/avoid_sos"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:visibility="gone"
+            android:text="开始救助"
+            android:textColor="@color/gray"
+            android:textSize="15sp" />
+
+        <TextView
             android:id="@+id/walknavigation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

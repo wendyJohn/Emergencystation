@@ -84,44 +84,47 @@ public class SosDialog extends Dialog implements View.OnClickListener {
 
     // 一键求救
     private void CryForHelp() {
-        RequestParams params = new RequestParams();
-        params.put("lat", lat+"");
-        params.put("lng", lng+"");
-        params.put("name", address);
-        params.put("unitCode", PreferenceUtils.getString(context, "unitcode"));
-        params.put("username", PreferenceUtils.getString(context, "EmergencyStation_username"));
-        params.put("platformkey", "app_firecontrol_owner");
-        RequestUtils.ClientPost(URLs.CryForHelp_URL, params, new NetCallBack() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
+        if (lat == 0.0 && lng == 0.0) {
+            new SVProgressHUD(context).showErrorWithStatus("获取位置信息失败，请重新获取");
+        } else {
+            RequestParams params = new RequestParams();
+            params.put("lat", lat + "");
+            params.put("lng", lng + "");
+            params.put("name", address);
+            params.put("unitCode", PreferenceUtils.getString(context, "unitcode"));
+            params.put("username", PreferenceUtils.getString(context, "EmergencyStation_username"));
+            params.put("platformkey", "app_firecontrol_owner");
+            RequestUtils.ClientPost(URLs.CryForHelp_URL, params, new NetCallBack() {
+                @Override
+                public void onStart() {
+                    super.onStart();
                 }
-                System.out.println("数据请求成功" + result);
-                try {
-                    JSONObject JSONObject=new JSONObject(result);
-                    String msg=JSONObject.getString("msg");
-                    if(msg.equals("申请成功")){
-                        new SVProgressHUD(context).showSuccessWithStatus("发送成功");
-                    }else{
-                        new SVProgressHUD(context).showErrorWithStatus(msg);
+
+                @Override
+                public void onMySuccess(String result) {
+                    if (result == null || result.length() == 0) {
+                        return;
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    System.out.println("数据请求成功" + result);
+                    try {
+                        JSONObject JSONObject = new JSONObject(result);
+                        String msg = JSONObject.getString("msg");
+                        if (msg.equals("申请成功")) {
+                            new SVProgressHUD(context).showSuccessWithStatus("发送成功");
+                        } else {
+                            new SVProgressHUD(context).showErrorWithStatus(msg);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void onMyFailure(Throwable arg0) {
-                new SVProgressHUD(context).showErrorWithStatus("物资信息加载失败");
-            }
-        });
-
+                @Override
+                public void onMyFailure(Throwable arg0) {
+                    new SVProgressHUD(context).showErrorWithStatus("物资信息加载失败");
+                }
+            });
+        }
     }
 
 
@@ -172,8 +175,8 @@ public class SosDialog extends Dialog implements View.OnClickListener {
         public void onReceiveLocation(BDLocation location) {
             lat = location.getLatitude();
             lng = location.getLongitude();
-            address=location.getAddrStr();
-            System.out.println("====================="+address);
+            address = location.getAddrStr();
+            System.out.println("=====================" + address);
         }
     }
 }

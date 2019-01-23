@@ -1,5 +1,6 @@
 package com.sanleng.emergencystation.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.EmergencystationAdapter;
@@ -50,11 +52,13 @@ public class EmergencyStationActivity extends Activity {
     private boolean finish = true;// 是否加载完成;
     private String mode;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle arg0) {
         // TODO Auto-generated method stub
         super.onCreate(arg0);
         this.setContentView(R.layout.emergencystationactivity);
+        StatusBarUtil.setColor(EmergencyStationActivity.this,R.color.translucency);
         initview();
         loadData(pageNo);
     }

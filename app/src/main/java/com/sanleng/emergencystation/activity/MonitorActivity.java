@@ -16,6 +16,7 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.view.FullVideoView;
 
@@ -30,10 +31,12 @@ public class MonitorActivity extends AppCompatActivity {
     private boolean fullscreen;
     private int orientation;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.monitoractivity);
+        StatusBarUtil.setColor(MonitorActivity.this,R.color.translucency);
         r_back = findViewById(R.id.r_back);
         ryout= findViewById(R.id.ryout);
         r_back.setOnClickListener(new View.OnClickListener() {

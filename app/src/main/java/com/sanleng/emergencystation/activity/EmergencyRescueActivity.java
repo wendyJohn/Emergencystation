@@ -70,6 +70,7 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
+import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.BottomMenuAdapter;
@@ -77,7 +78,6 @@ import com.sanleng.emergencystation.adapter.StationAdapter;
 import com.sanleng.emergencystation.baidumap.DemoGuideActivity;
 import com.sanleng.emergencystation.baidumap.NormalUtils;
 import com.sanleng.emergencystation.baidumap.WNaviGuideActivity;
-import com.sanleng.emergencystation.bean.ArchitectureBean;
 import com.sanleng.emergencystation.bean.StationBean;
 import com.sanleng.emergencystation.dialog.E_StationDialog;
 import com.sanleng.emergencystation.net.NetCallBack;
@@ -100,8 +100,10 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * 应急救援
+ *
  * @author qiaoshi
  */
 public class EmergencyRescueActivity extends AppCompatActivity implements OnClickListener {
@@ -174,12 +176,15 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     private AutoCompleteTextView search_edit;
     private E_StationDialog e_stationDialog;
     private String Mac;//开锁的MAC地址
+    private String sos_ids;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle arg0) {
         // TODO Auto-generated method stub
         super.onCreate(arg0);
         this.setContentView(R.layout.emergencyrescueactivity);
+        StatusBarUtil.setColor(EmergencyRescueActivity.this, R.color.translucency);
         RequestPermission();
         requestPermissions();
         SpeechUtility.createUtility(EmergencyRescueActivity.this, SpeechConstant.APPID + "=5c2ef470");
@@ -260,6 +265,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                     mScrollLayout.setVisibility(View.VISIBLE);
                 }
                 if (type == 2) {
+                    sos_ids = ids;
                     // 获得marker中的数据
                     e_stationDialog = new E_StationDialog(EmergencyRescueActivity.this, names, addresss, clickListener);
                     e_stationDialog.show();
@@ -726,9 +732,10 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                             object = (JSONObject) array.get(i);
 //                          String lat = object.getString("lat");
 //                          String lng = object.getString("lng");
+                            String ids = object.getString("ids");
                             String examineResult = object.getString("examineResult");
 
-                            if(examineResult.equals("1")) {
+                            if (examineResult.equals("1")) {
                                 //测试
                                 String lat = "31.87368";
                                 String lng = "118.83358";
@@ -738,6 +745,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                                 bean.setE_mylatitude(Double.parseDouble(lat));
                                 bean.setE_mylongitude(Double.parseDouble(lng));
                                 bean.setType(2);
+                                bean.setId(ids);
                                 bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
                                 // 构建MarkerOption，用于在地图上添加Marker
                                 LatLng llA = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
@@ -761,6 +769,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 E_mylatitude = slistsos.get(position).getE_mylatitude();
                                 E_mylongitude = slistsos.get(position).getE_mylongitude();
+                                sos_ids = slistsos.get(position).getId();
 
                                 String names = slistsos.get(position).getName();
                                 String addresss = slistsos.get(position).getAddress();
@@ -775,12 +784,50 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
                             }
                         });
-                    } else {
+                    }
+                    else {
+
+
                     }
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onMyFailure(Throwable arg0) {
+
+            }
+        });
+    }
+
+
+    //清除SOS
+    private void Eliminate_sos() {
+        RequestParams params = new RequestParams();
+        params.put("ids", sos_ids);
+        params.put("examineResult", "0");
+        RequestUtils.ClientPost(URLs.SOSEliminate_URL, params, new NetCallBack() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onMySuccess(String result) {
+                if (result == null || result.length() == 0) {
+                    return;
+                }
+                System.out.println("========================"+result);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(result);
+//                    String msg = jsonObject.getString("msg");
+//
+//                } catch (JSONException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
             }
 
             @Override
@@ -887,7 +934,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         StationBean beana = new StationBean();
         beana.setType(0);
         slists.add(beana);
-        if(name.equals("三棱科技应急站A")) {
+        if (name.equals("三棱科技应急站A")) {
             StationBean bean1 = new StationBean();
             bean1.setName("简易呼吸器" + "  数量：1");
             bean1.setNumber("1号应急箱");
@@ -945,7 +992,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
             slists.add(beanf2);
 
         }
-        if(name.equals("紫金幽谷应急站")) {
+        if (name.equals("紫金幽谷应急站")) {
             StationBean bean5 = new StationBean();
             bean5.setName("安全绳" + "  数量：2");
             bean5.setNumber("2号应急箱");
@@ -1026,7 +1073,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
             bean4.setMac("54C9DFF77EA4");
             slists.add(bean4);
         }
-        if(name.equals("砂之船艺术商业广场")) {
+        if (name.equals("砂之船艺术商业广场")) {
             StationBean bean9 = new StationBean();
             bean9.setName("折叠担架" + "  数量：1");
             bean9.setNumber("3号应急箱");
@@ -1601,6 +1648,10 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         public void onClick(View v) {
             // TODO Auto-generated method stub
             switch (v.getId()) {
+                //到达现场,清除SOS
+                case R.id.eliminate:
+                    Eliminate_sos();
+                    break;
                 //步行导航
                 case R.id.walknavigation:
                     //初始化导航数据

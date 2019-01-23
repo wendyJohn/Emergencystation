@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.BottomAdapter;
 import com.sanleng.emergencystation.fragment.Taba_Fragment;
@@ -28,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String BROADCAST_ACTION_DISC = "com.permissions.mye_broadcast";
     private Receivers receivers;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StatusBarUtil.setColor(MainActivity.this,R.color.translucency);
         initView();
         //数据填充
         setupViewPager(mVp);

@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.MaterialAdapter;
@@ -55,11 +56,13 @@ public class MaterialActivity extends Activity {
     private boolean finish = true;// 是否加载完成;
     private String ids;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle arg0) {
         // TODO Auto-generated method stub
         super.onCreate(arg0);
         this.setContentView(R.layout.materialactivity);
+        StatusBarUtil.setColor(MaterialActivity.this,R.color.translucency);
         initview();
         loadData(pageNo);
     }

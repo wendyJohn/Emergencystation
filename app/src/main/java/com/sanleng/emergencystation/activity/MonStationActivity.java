@@ -1,5 +1,6 @@
 package com.sanleng.emergencystation.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RelativeLayout;
+
+import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.FunctionAdapter;
 import com.sanleng.emergencystation.view.MyGridView;
@@ -23,9 +26,11 @@ public class MonStationActivity extends Activity implements OnClickListener, OnI
 	private FunctionAdapter adapter;
 	private RelativeLayout r_back;
 
+	@SuppressLint("ResourceAsColor")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.monstationactivity);
+		StatusBarUtil.setColor(MonStationActivity.this,R.color.translucency);
 		initView();
 	}
 

@@ -40,6 +40,8 @@ public class URLs {
     public static String CryForHelp_URL = HOST + "/kspf/app/stationassistant/add";
     // SOS列表
     public static String SOSITEM_URL = HOST + "/kspf/app/stationassistant/list";
+    // SOS消除
+    public static String SOSEliminate_URL = HOST + "/kspf/emergencystationassistant/update";
     // 监控视频
     public static String Monitor_URL ="http://hls.open.ys7.com/openlive/ff814ef5eacf479c8ee045a24fbc21a7.hd.m3u8";
 }

@@ -1,10 +1,12 @@
 package com.sanleng.emergencystation.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 
 /**
@@ -14,10 +16,12 @@ import com.sanleng.emergencystation.R;
  */
 
 public class WelcomeActivity extends AppCompatActivity {
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.welcome_activity);
+        StatusBarUtil.setColor(WelcomeActivity.this,R.color.translucency);
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);

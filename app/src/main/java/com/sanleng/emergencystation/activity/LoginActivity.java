@@ -1,5 +1,6 @@
 package com.sanleng.emergencystation.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.dialog.PromptDialog;
@@ -48,11 +50,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
     private PromptDialog promptDialog;
 
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.login_activity);
+        StatusBarUtil.setColor(LoginActivity.this,R.color.translucency);
         initView();
     }
 

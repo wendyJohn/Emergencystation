@@ -15,6 +15,7 @@ public class E_StationDialog extends Dialog {
     Context context;
     private TextView name;
     private TextView address;
+    private TextView eliminate;
     private TextView walknavigation;
     private TextView drivenavigation;
 
@@ -50,11 +51,12 @@ public class E_StationDialog extends Dialog {
         address = findViewById(R.id.address);
         name.setText("名称：" + names);
         address.setText("地址：" + addresses);
-
+        eliminate = findViewById(R.id.eliminate);
         walknavigation = findViewById(R.id.walknavigation);
         drivenavigation = findViewById(R.id.drivenavigation);
         canle = findViewById(R.id.canles);
 
+        eliminate.setOnClickListener(clickListener2);
         walknavigation.setOnClickListener(clickListener2);
         drivenavigation.setOnClickListener(clickListener2);
         canle.setOnClickListener(clickListener2);

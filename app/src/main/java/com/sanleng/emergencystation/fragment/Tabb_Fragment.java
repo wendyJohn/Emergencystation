@@ -693,7 +693,6 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                                 bean.setE_mylatitude(Double.parseDouble(lat));
                                 bean.setE_mylongitude(Double.parseDouble(lng));
                                 bean.setType(2);
-
                                 bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
 
                                 // 构建MarkerOption，用于在地图上添加Marker

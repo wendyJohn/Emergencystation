@@ -25,8 +25,10 @@ import android.widget.Toast;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.google.zxing.Result;
+import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
+import com.sanleng.emergencystation.activity.MainActivity;
 import com.sanleng.emergencystation.activity.MaterialCaptureActivity;
 import com.sanleng.emergencystation.dialog.OutofStockDialog;
 import com.sanleng.emergencystation.dialog.ReportLossDialog;
@@ -43,6 +45,9 @@ import com.sanleng.emergencystation.zxing.decode.DecodeImgCallback;
 import com.sanleng.emergencystation.zxing.decode.DecodeImgThread;
 import com.sanleng.emergencystation.zxing.decode.ImageUtil;
 import com.sanleng.emergencystation.zxing.view.ViewfinderView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -95,6 +100,7 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,9 +123,8 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
         if (config == null) {
             config = new ZxingConfig();
         }
-
         setContentView(R.layout.activity_captures);
-
+        StatusBarUtil.setColor(CaptureActivity.this, R.color.translucency);
 
         initView();
         Intent intent = getIntent();
@@ -487,122 +492,169 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
 
     // 提交入库数据信息
     private void Warehousing() {
-        RequestParams params = new RequestParams();
-        params.put("ids", ids);
-        params.put("agentName", PreferenceUtils.getString(CaptureActivity.this, "agentName"));
-        params.put("agentId", PreferenceUtils.getString(CaptureActivity.this, "ids"));
-        params.put("stationName", stationName);
-        params.put("stationId", stationId);
-        params.put("storageLocation", storageLocation);
-        params.put("state", "emergencystation_in");
-        params.put("username", PreferenceUtils.getString(CaptureActivity.this, "EmergencyStation_username"));
-        params.put("platformkey", "app_firecontrol_owner");
+        if(stationName==null||"".equals(stationName)){
+            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，入库失败");
+            continuePreview();
+        }else {
+            RequestParams params = new RequestParams();
+            params.put("ids", ids);
+            params.put("agentName", PreferenceUtils.getString(CaptureActivity.this, "agentName"));
+            params.put("agentId", PreferenceUtils.getString(CaptureActivity.this, "ids"));
+            params.put("stationName", stationName);
+            params.put("stationId", stationId);
+            params.put("storageLocation", storageLocation);
+            params.put("state", "emergencystation_in");
+            params.put("username", PreferenceUtils.getString(CaptureActivity.this, "EmergencyStation_username"));
+            params.put("platformkey", "app_firecontrol_owner");
 
-        RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
+            RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
+                @Override
+                public void onStart() {
+                    super.onStart();
                 }
-                System.out.println("数据请求成功" + result);
-                TipsDialog tipsDialog=new TipsDialog(CaptureActivity.this,"入库成功,是否继续？",mHandler);
-                tipsDialog.show();
+
+                @Override
+                public void onMySuccess(String result) {
+                    if (result == null || result.length() == 0) {
+                        return;
+                    }
+                    try {
+                        JSONObject jSONObject = new JSONObject(result);
+                        String message = jSONObject.getString("msg");
+                        if (message.equals("修改成功")) {
+                            TipsDialog tipsDialog = new TipsDialog(CaptureActivity.this, "入库成功,是否继续？", mHandler);
+                            tipsDialog.show();
+                        } else {
+                            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，入库失败");
+                            continuePreview();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
 //                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("入库成功");
 //                continuePreview();
-            }
+                }
 
-            @Override
-            public void onMyFailure(Throwable arg0) {
-                new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("入库失败");
-            }
-        });
+                @Override
+                public void onMyFailure(Throwable arg0) {
+                    new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("入库失败");
 
+                }
+            });
+        }
     }
 
     // 提交出库数据信息
     private void OutOfStock() {
-        RequestParams params = new RequestParams();
-        params.put("ids", ids);
-        params.put("agentName", PreferenceUtils.getString(CaptureActivity.this, "agentName"));
-        params.put("agentId", PreferenceUtils.getString(CaptureActivity.this, "ids"));
-        params.put("stationName", stationName);
-        params.put("stationId", stationId);
-        params.put("storageLocation", storageLocation);
-        params.put("state", "emergencystation_out");
-        params.put("username", PreferenceUtils.getString(CaptureActivity.this, "EmergencyStation_username"));
-        params.put("platformkey", "app_firecontrol_owner");
+        if(stationName==null||"".equals(stationName)){
+            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，出库失败");
+            continuePreview();
+        }else {
+            RequestParams params = new RequestParams();
+            params.put("ids", ids);
+            params.put("agentName", PreferenceUtils.getString(CaptureActivity.this, "agentName"));
+            params.put("agentId", PreferenceUtils.getString(CaptureActivity.this, "ids"));
+            params.put("stationName", stationName);
+            params.put("stationId", stationId);
+            params.put("storageLocation", storageLocation);
+            params.put("state", "emergencystation_out");
+            params.put("username", PreferenceUtils.getString(CaptureActivity.this, "EmergencyStation_username"));
+            params.put("platformkey", "app_firecontrol_owner");
 
-        RequestUtils.ClientPost(URLs.Outofstock_URL, params, new NetCallBack() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
+            RequestUtils.ClientPost(URLs.Outofstock_URL, params, new NetCallBack() {
+                @Override
+                public void onStart() {
+                    super.onStart();
                 }
 
-                System.out.println("数据请求成功" + result);
-                TipsDialog tipsDialog=new TipsDialog(CaptureActivity.this,"出库成功,是否继续？",mHandler);
-                tipsDialog.show();
+                @Override
+                public void onMySuccess(String result) {
+                    if (result == null || result.length() == 0) {
+                        return;
+                    }
+
+                    try {
+                        JSONObject jSONObject = new JSONObject(result);
+                        String message = jSONObject.getString("msg");
+                        if (message.equals("修改成功")) {
+                            TipsDialog tipsDialog = new TipsDialog(CaptureActivity.this, "出库成功,是否继续？", mHandler);
+                            tipsDialog.show();
+                        } else {
+                            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，出库失败");
+                            continuePreview();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
 //                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("出库成功");
-                continuePreview();
-            }
+//                continuePreview();
+                }
 
-            @Override
-            public void onMyFailure(Throwable arg0) {
-                new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("出库失败");
-            }
-        });
-
+                @Override
+                public void onMyFailure(Throwable arg0) {
+                    new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("出库失败");
+                }
+            });
+        }
     }
 
     // 提交报损数据信息
     private void ReportLoss() {
-        RequestParams params = new RequestParams();
-        params.put("ids", ids);
-        params.put("agentName", PreferenceUtils.getString(CaptureActivity.this, "agentName"));
-        params.put("agentId", PreferenceUtils.getString(CaptureActivity.this, "ids"));
-        params.put("stationName", stationName);
-        params.put("stationId", stationId);
-        params.put("storageLocation", storageLocation);
-        params.put("state", "emergencystation_break");
-        params.put("reason", reason);
+        if(stationName==null||"".equals(stationName)){
+            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，报损失败");
+            continuePreview();
+        }else {
+            RequestParams params = new RequestParams();
+            params.put("ids", ids);
+            params.put("agentName", PreferenceUtils.getString(CaptureActivity.this, "agentName"));
+            params.put("agentId", PreferenceUtils.getString(CaptureActivity.this, "ids"));
+            params.put("stationName", stationName);
+            params.put("stationId", stationId);
+            params.put("storageLocation", storageLocation);
+            params.put("state", "emergencystation_break");
+            params.put("reason", reason);
 
-        params.put("username", PreferenceUtils.getString(CaptureActivity.this, "EmergencyStation_username"));
-        params.put("platformkey", "app_firecontrol_owner");
+            params.put("username", PreferenceUtils.getString(CaptureActivity.this, "EmergencyStation_username"));
+            params.put("platformkey", "app_firecontrol_owner");
 
-        RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
+            RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
+                @Override
+                public void onStart() {
+                    super.onStart();
                 }
-                System.out.println("数据请求成功" + result);
-                TipsDialog tipsDialog=new TipsDialog(CaptureActivity.this,"报损成功,是否继续？",mHandler);
-                tipsDialog.show();
+
+                @Override
+                public void onMySuccess(String result) {
+                    if (result == null || result.length() == 0) {
+                        return;
+                    }
+
+                    try {
+                        JSONObject jSONObject = new JSONObject(result);
+                        String message = jSONObject.getString("msg");
+                        if (message.equals("修改成功")) {
+                            TipsDialog tipsDialog = new TipsDialog(CaptureActivity.this, "报损成功,是否继续？", mHandler);
+                            tipsDialog.show();
+                        } else {
+                            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，报损失败");
+                            continuePreview();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
 //                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("报损成功");
-                continuePreview();
-            }
 
-            @Override
-            public void onMyFailure(Throwable arg0) {
-                new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("报损失败");
-            }
-        });
+                }
 
+                @Override
+                public void onMyFailure(Throwable arg0) {
+                    new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("报损失败");
+                }
+            });
+        }
     }
 
     //重复扫码
