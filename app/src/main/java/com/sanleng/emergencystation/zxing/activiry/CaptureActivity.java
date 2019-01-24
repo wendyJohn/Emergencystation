@@ -28,8 +28,6 @@ import com.google.zxing.Result;
 import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.activity.MainActivity;
-import com.sanleng.emergencystation.activity.MaterialCaptureActivity;
 import com.sanleng.emergencystation.dialog.OutofStockDialog;
 import com.sanleng.emergencystation.dialog.ReportLossDialog;
 import com.sanleng.emergencystation.dialog.TipsDialog;
@@ -492,10 +490,6 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
 
     // 提交入库数据信息
     private void Warehousing() {
-        if(stationName==null||"".equals(stationName)){
-            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，入库失败");
-            continuePreview();
-        }else {
             RequestParams params = new RequestParams();
             params.put("ids", ids);
             params.put("agentName", PreferenceUtils.getString(CaptureActivity.this, "agentName"));
@@ -520,8 +514,8 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
                     }
                     try {
                         JSONObject jSONObject = new JSONObject(result);
-                        String message = jSONObject.getString("msg");
-                        if (message.equals("修改成功")) {
+                        String message = jSONObject.getString("state");
+                        if (message.equals("ok")) {
                             TipsDialog tipsDialog = new TipsDialog(CaptureActivity.this, "入库成功,是否继续？", mHandler);
                             tipsDialog.show();
                         } else {
@@ -542,7 +536,6 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
 
                 }
             });
-        }
     }
 
     // 提交出库数据信息

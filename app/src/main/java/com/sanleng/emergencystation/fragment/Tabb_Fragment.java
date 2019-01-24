@@ -75,8 +75,6 @@ import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.EmergencyRescueActivity;
 import com.sanleng.emergencystation.activity.EmergencyStationActivity;
-import com.sanleng.emergencystation.activity.MainActivity;
-import com.sanleng.emergencystation.activity.MaterialCaptureActivity;
 import com.sanleng.emergencystation.activity.MonitorActivity;
 import com.sanleng.emergencystation.adapter.BottomMenuAdapter;
 import com.sanleng.emergencystation.adapter.StationAdapter;
@@ -90,17 +88,19 @@ import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
 import com.sanleng.emergencystation.utils.ScreenUtil;
+import com.sanleng.emergencystation.zxing.bean.ZxingConfig;
+import com.sanleng.emergencystation.zxing.common.Constant;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 import com.yinglan.scrolllayout.ScrollLayout;
 import com.yzq.zxinglibrary.android.CaptureActivity;
-import com.yzq.zxinglibrary.bean.ZxingConfig;
-import com.yzq.zxinglibrary.common.Constant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -493,15 +493,55 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                 break;
             //领物资
             case R.id.receivingmaterials_linyout:
-                Intent intent_OutOfStock = new Intent(getActivity(), MaterialCaptureActivity.class);
-                intent_OutOfStock.putExtra("mode", "OutOfStock");
-                startActivity(intent_OutOfStock);
+                AndPermission.with(getActivity())
+                        .permission(Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE)
+                        .onGranted(new Action() {
+                            @Override
+                            public void onAction(List<String> permissions) {
+                                Intent intent_OutOfStock = new Intent(getActivity(), com.sanleng.emergencystation.zxing.activiry.CaptureActivity.class);
+                                ZxingConfig config = new ZxingConfig();
+                                config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
+                                intent_OutOfStock.putExtra(Constant.INTENT_ZXING_CONFIG, config);
+                                intent_OutOfStock.putExtra("mode", "OutOfStock");
+                                startActivity(intent_OutOfStock);
+                            }
+                        })
+                        .onDenied(new Action() {
+                            @Override
+                            public void onAction(List<String> permissions) {
+                                Uri packageURI = Uri.parse("package:" + getActivity().getPackageName());
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                Toast.makeText(getActivity(), "没有权限无法扫描", Toast.LENGTH_LONG).show();
+                            }
+                        }).start();
                 break;
             //还物资
             case R.id.returnsupplies_linyout:
-                Intent intent_Warehousing = new Intent(getActivity(), MaterialCaptureActivity.class);
-                intent_Warehousing.putExtra("mode", "Warehousing");
-                startActivity(intent_Warehousing);
+                AndPermission.with(getActivity())
+                        .permission(Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE)
+                        .onGranted(new Action() {
+                            @Override
+                            public void onAction(List<String> permissions) {
+                                Intent intent_Warehousing = new Intent(getActivity(), com.sanleng.emergencystation.zxing.activiry.CaptureActivity.class);
+                                ZxingConfig config = new ZxingConfig();
+                                config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
+                                intent_Warehousing.putExtra(Constant.INTENT_ZXING_CONFIG, config);
+                                intent_Warehousing.putExtra("mode", "Warehousing");
+                                startActivity(intent_Warehousing);
+                            }
+                        })
+                        .onDenied(new Action() {
+                            @Override
+                            public void onAction(List<String> permissions) {
+                                Uri packageURI = Uri.parse("package:" + getActivity().getPackageName());
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                Toast.makeText(getActivity(), "没有权限无法扫描", Toast.LENGTH_LONG).show();
+                            }
+                        }).start();
                 break;
             //查看视频
             case R.id.monitor:
@@ -1158,21 +1198,81 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                     break;
                 //还物资
                 case 5859591:
-                    Intent intent_Warehousing = new Intent(getActivity(), MaterialCaptureActivity.class);
-                    intent_Warehousing.putExtra("mode", "Warehousing");
-                    startActivity(intent_Warehousing);
+                    AndPermission.with(getActivity())
+                            .permission(Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE)
+                            .onGranted(new Action() {
+                                @Override
+                                public void onAction(List<String> permissions) {
+                                    Intent intent_Warehousing = new Intent(getActivity(), com.sanleng.emergencystation.zxing.activiry.CaptureActivity.class);
+                                    ZxingConfig config = new ZxingConfig();
+                                    config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
+                                    intent_Warehousing.putExtra(Constant.INTENT_ZXING_CONFIG, config);
+                                    intent_Warehousing.putExtra("mode", "Warehousing");
+                                    startActivity(intent_Warehousing);
+                                }
+                            })
+                            .onDenied(new Action() {
+                                @Override
+                                public void onAction(List<String> permissions) {
+                                    Uri packageURI = Uri.parse("package:" + getActivity().getPackageName());
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    Toast.makeText(getActivity(), "没有权限无法扫描", Toast.LENGTH_LONG).show();
+                                }
+                            }).start();
                     break;
                 //领物质
                 case 5859592:
-                    Intent intent_OutOfStock = new Intent(getActivity(), MaterialCaptureActivity.class);
-                    intent_OutOfStock.putExtra("mode", "OutOfStock");
-                    startActivity(intent_OutOfStock);
+                    AndPermission.with(getActivity())
+                            .permission(Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE)
+                            .onGranted(new Action() {
+                                @Override
+                                public void onAction(List<String> permissions) {
+                                    Intent intent_OutOfStock = new Intent(getActivity(), com.sanleng.emergencystation.zxing.activiry.CaptureActivity.class);
+                                    ZxingConfig config = new ZxingConfig();
+                                    config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
+                                    intent_OutOfStock.putExtra(Constant.INTENT_ZXING_CONFIG, config);
+                                    intent_OutOfStock.putExtra("mode", "OutOfStock");
+                                    startActivity(intent_OutOfStock);
+                                }
+                            })
+                            .onDenied(new Action() {
+                                @Override
+                                public void onAction(List<String> permissions) {
+                                    Uri packageURI = Uri.parse("package:" + getActivity().getPackageName());
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    Toast.makeText(getContext(), "没有权限无法扫描", Toast.LENGTH_LONG).show();
+                                }
+                            }).start();
                     break;
                 //报损
                 case 5859593:
-                    Intent intent_Reportloss = new Intent(getActivity(), MaterialCaptureActivity.class);
-                    intent_Reportloss.putExtra("mode", "Reportloss");
-                    startActivity(intent_Reportloss);
+                    AndPermission.with(getActivity())
+                            .permission(Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE)
+                            .onGranted(new Action() {
+                                @Override
+                                public void onAction(List<String> permissions) {
+                                    Intent intent_Reportloss = new Intent(getActivity(), com.sanleng.emergencystation.zxing.activiry.CaptureActivity.class);
+                                    ZxingConfig config = new ZxingConfig();
+                                    config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
+                                    intent_Reportloss.putExtra(Constant.INTENT_ZXING_CONFIG, config);
+                                    intent_Reportloss.putExtra("mode", "Reportloss");
+                                    startActivity(intent_Reportloss);
+                                }
+                            })
+                            .onDenied(new Action() {
+                                @Override
+                                public void onAction(List<String> permissions) {
+                                    Uri packageURI = Uri.parse("package:" + getActivity().getPackageName());
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    Toast.makeText(getActivity(), "没有权限无法扫描", Toast.LENGTH_LONG).show();
+                                }
+                            }).start();
                     break;
                 default:
                     break;

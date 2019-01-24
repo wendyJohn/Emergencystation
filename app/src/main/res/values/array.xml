@@ -19,8 +19,8 @@
 
     <!-- function items -->
     <string-array name="material_management_item">
-        <item>还物资</item>
-        <item>取物资</item>
+        <item>入库</item>
+        <item>出库</item>
         <item>物资查询</item>
         <item>报损</item>
         <item>站点详情</item>

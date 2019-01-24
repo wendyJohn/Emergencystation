@@ -128,9 +128,6 @@
             android:name=".activity.MonStationActivity"
             android:screenOrientation="portrait" />
         <!-- 物资管理扫码-->
-        <activity
-            android:name=".activity.MaterialCaptureActivity"
-            android:screenOrientation="portrait" />
         <!--文章-->
         <activity
             android:name=".activity.ArticleActivity"
