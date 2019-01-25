@@ -45,7 +45,6 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.taba_fragment, null);
         initView();
         listener();
-        statistics();
         return view;
     }
 
@@ -74,6 +73,7 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         addNews(1);
+        statistics();
         super.onResume();
     }
 
