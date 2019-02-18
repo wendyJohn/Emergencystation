@@ -155,12 +155,12 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
 
                                 new Handler().postDelayed(new Runnable() {
                                     public void run() {
-                                        // 等待2000毫秒后销毁此页面，并提示登陆成功
+                                        // 等待800毫秒后销毁此页面，并提示登陆成功
                                         Intent intent_pwdchange = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent_pwdchange);
                                         finish();
                                     }
-                                }, 1000);
+                                }, 800);
                             } else {
                                 promptDialog.showError(msg);
                             }

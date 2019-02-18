@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -32,6 +36,12 @@ public class SosDialog extends Dialog implements View.OnClickListener {
     private Context context;
     private TextView notice;
     private TextView cancle;
+
+    private EditText name;
+    private EditText phone;
+    private EditText identitycrad;
+    private String type;
+
     private double lat;// 纬度
     private double lng;// 经度
     private String address;
@@ -59,9 +69,31 @@ public class SosDialog extends Dialog implements View.OnClickListener {
         this.setCancelable(false);// 设置点击屏幕Dialog不消失
         notice = (TextView) findViewById(R.id.notice);
         cancle = (TextView) findViewById(R.id.cancle);
-
+        name = (EditText) findViewById(R.id.name);
+        phone = (EditText) findViewById(R.id.phone);
+        identitycrad = (EditText) findViewById(R.id.identitycrad);
         notice.setOnClickListener(this);
         cancle.setOnClickListener(this);
+        RadioGroup group = (RadioGroup) this.findViewById(R.id.radioGroup);
+        // 绑定一个匿名监听器
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup arg0, int arg1) {
+                // TODO Auto-generated method stub
+                // 获取变更后的选中项的ID
+                int radioButtonId = arg0.getCheckedRadioButtonId();
+                // 根据ID获取RadioButton的实例
+                RadioButton rb = (RadioButton) findViewById(radioButtonId);
+                String s = rb.getText().toString();
+                if (s.equals("火警")) {
+                    type = "firecontrol";
+                }
+                if (s.equals("医疗")) {
+                    type = "medicalcare";
+                }
+            }
+        });
     }
 
     @Override
@@ -71,7 +103,6 @@ public class SosDialog extends Dialog implements View.OnClickListener {
             // 确认求救
             case R.id.notice:
                 CryForHelp();
-                dismiss();
                 break;
             // 取消
             case R.id.cancle:
@@ -86,11 +117,19 @@ public class SosDialog extends Dialog implements View.OnClickListener {
     private void CryForHelp() {
         if (lat == 0.0 && lng == 0.0) {
             new SVProgressHUD(context).showErrorWithStatus("获取位置信息失败，请重新获取");
+        } else if ("".equals(name.getText().toString().trim()) || "".equals(phone.getText().toString().trim()) || "".equals(identitycrad.getText().toString().trim()) || name.getText().toString().trim() == null || phone.getText().toString().trim() == null || identitycrad.getText().toString().trim() == null
+                ||"".equals(type)||type==null) {
+            Toast.makeText(context,"请填写完求救信息！",Toast.LENGTH_SHORT).show();
         } else {
+            dismiss();
             RequestParams params = new RequestParams();
             params.put("lat", lat + "");
             params.put("lng", lng + "");
-            params.put("name", address);
+            params.put("name", name.getText().toString().trim());
+            params.put("phone", phone.getText().toString().trim());
+            params.put("identitycrad", identitycrad.getText().toString().trim());
+            params.put("type", type);
+            params.put("address", address);
             params.put("unitCode", PreferenceUtils.getString(context, "unitcode"));
             params.put("username", PreferenceUtils.getString(context, "EmergencyStation_username"));
             params.put("platformkey", "app_firecontrol_owner");

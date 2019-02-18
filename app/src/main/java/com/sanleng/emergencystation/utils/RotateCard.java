@@ -203,7 +203,7 @@ public class RotateCard extends FrameLayout {
 		public void resetPositionAndScale() {
 			// 设置大小
 			float angleDiff = getAngleDiffWith90();
-			float scale = (float) ((1.0 * angleDiff / 180) * 0.75 + 0.25);
+			float scale = (float) ((1.0 * angleDiff / 160) * 0.75 + 0.25);
 			mView.setScaleX(scale);
 			mView.setScaleY(scale);
 

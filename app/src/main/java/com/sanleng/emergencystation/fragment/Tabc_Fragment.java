@@ -15,8 +15,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.LoginActivity;
+import com.sanleng.emergencystation.activity.MainActivity;
+import com.sanleng.emergencystation.activity.PwdChangeActivity;
+import com.sanleng.emergencystation.utils.DataCleanManager;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
 
 import java.io.File;
@@ -40,6 +44,7 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener 
     private File cameraFile;
     private TextView item_search_addb;
 
+    private DataCleanManager dm;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.mine_fragment, null);
@@ -75,6 +80,14 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener 
         tv_user_headname = (TextView) view.findViewById(R.id.tv_user_headname);
         item_search_addb = (TextView) view.findViewById(R.id.item_search_addb);
 
+        try {
+            //缓存大小
+            item_search_addb.setText(dm.getTotalCacheSize(getActivity()));
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         String uesrname = PreferenceUtils.getString(getActivity(), "EmergencyStation_username");
         tv_user_headname.setText(uesrname);
 
@@ -108,28 +121,29 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             // 修改密码
             case R.id.changepassword:
-//                startActivity(new Intent(getActivity().getApplicationContext(), PwdChangeActivity.class));
+                startActivity(new Intent(getActivity().getApplicationContext(), PwdChangeActivity.class));
                 break;
             // 清除缓存
             case R.id.scavengingcaching:
-
-
+                //清理缓存
+                dm.clearAllCache(getActivity());
+                new SVProgressHUD(getActivity()).showSuccessWithStatus("清理成功");
+                //缓存大小
+                item_search_addb.setText("0.0");
                 break;
-
             // 数据更新
             case R.id.dataupdate:
-
+                new SVProgressHUD(getActivity()).showInfoWithStatus("暂无数据更新");
                 break;
 
             // 版本更新
             case R.id.versionupdate:
-
-
+                new SVProgressHUD(getActivity()).showInfoWithStatus("已是最新版本");
                 break;
 
             // 关于我们
             case R.id.aboutus:
-
+                new SVProgressHUD(getActivity()).showInfoWithStatus("江苏三棱智慧物联发展有限公司\nCopyright©2018-2019 江苏三棱智慧物联发展股份有限公司版权所有");
                 break;
 
             case R.id.login_out:
@@ -173,4 +187,7 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener 
         }
         super.onDestroyView();
     }
+
+
+
 }

@@ -152,6 +152,10 @@
         <activity
             android:name=".activity.ArticleItemActivity"
             android:screenOrientation="portrait" />
+        <!--密码修改-->
+        <activity
+            android:name=".activity.PwdChangeActivity"
+            android:screenOrientation="portrait" />
         <!--视频监控-->
         <activity
             android:name=".activity.MonitorActivity"

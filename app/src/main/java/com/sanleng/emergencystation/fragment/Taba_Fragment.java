@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.ArticleActivity;
 import com.sanleng.emergencystation.activity.EmergencyRescueActivity;
@@ -28,17 +29,15 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
     private View view;
     private MarqueeViews marqueeviews;
     private List<String> info;
-    private RotateCard card;
     private ArrayList<View> views;
     private ImageView img;
-
+    private RotateCard card;
     private LinearLayout administration;//应急站管理
     private LinearLayout rescue;//应急救援
     private LinearLayout dangerous;//危化品柜
     private LinearLayout smallprogram;//应急小程序
     private LinearLayout article;//文章
     private LinearLayout video;//视频
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,14 +50,13 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
     //初始化
     private void initView() {
         marqueeviews = view.findViewById(R.id.marqueeviews);
-        card = view.findViewById(R.id.card);
         administration = view.findViewById(R.id.administration);//应急站管理
         rescue = view.findViewById(R.id.rescue);//应急救援
         dangerous = view.findViewById(R.id.dangerous);//危化品柜
         smallprogram = view.findViewById(R.id.smallprogram);//应急小程序
         article = view.findViewById(R.id.article);//文章
         video = view.findViewById(R.id.video);//视频
-
+        card = view.findViewById(R.id.card);
     }
 
     private void listener() {
@@ -79,7 +77,7 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
 
     //绘制特效菜单
     private void statistics() {
-        views = new ArrayList<View>();
+        views = new ArrayList<>();
         img = new ImageView(getActivity());
         img.setImageResource(R.drawable.statistics_a);
         views.add(img);
@@ -92,20 +90,15 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
         img.setImageResource(R.drawable.statistics_e);
         views.add(img);
 
-//        img = new ImageView(getActivity());
-//        img.setImageResource(R.drawable.statistics_d);
-//        views.add(img);
-
         card.commitViews(views, 230);
-
     }
-
 
     //获取信息
     private void addNews(int page) {
         info = new ArrayList<>();
-        info.add("江苏三棱4号楼应急柜物资缺少");
-        info.add("南京市江宁区秣周东路4号楼需紧急求救");
+//        info.add("江苏三棱4号楼应急柜物资缺少");
+//        info.add("南京市江宁区秣周东路4号楼需紧急求救");
+        info.add("暂无通知信息");
         marqueeviews.startWithList(info);
 //        RequestParams params = new RequestParams();
 //        params.put("event_no", "142");
@@ -176,7 +169,7 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
                 break;
             //危化品柜
             case R.id.dangerous:
-
+                new SVProgressHUD(getActivity()).showInfoWithStatus("正在努力研发中...");
                 break;
             //应急小程序
             case R.id.smallprogram:
