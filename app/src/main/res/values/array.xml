@@ -2,19 +2,32 @@
 <resources>
     <!-- function items -->
     <string-array name="myfunction_name_items">
-        <item>物资管理</item>
+        <!--<item>物资管理</item>-->
+
+        <item>入库</item>
+        <item>出库</item>
         <item>应急开门</item>
-        <item>SOS事件</item>
-        <item>在线求助</item>
-        <item>授权中心</item>
+        <item>物资查询</item>
+        <item>报损</item>
+
+
+        <!--<item>SOS事件</item>-->
+        <!--<item>在线求助</item>-->
+        <!--<item>授权中心</item>-->
     </string-array>
 
     <string-array name="myfunction_icon_items">
-        <item>@drawable/material</item>
+        <!--<item>@drawable/material</item>-->
+
+        <item>@drawable/warehousings</item>
+        <item>@drawable/outofstock</item>
         <item>@drawable/dooropening</item>
-        <item>@drawable/defecttreatment</item>
-        <item>@drawable/seekhelp</item>
-        <item>@drawable/authorization</item>
+        <item>@drawable/materialinquiries</item>
+        <item>@drawable/reportloss</item>
+
+        <!--<item>@drawable/defecttreatment</item>-->
+        <!--<item>@drawable/seekhelp</item>-->
+        <!--<item>@drawable/authorization</item>-->
     </string-array>
 
     <!-- function items -->

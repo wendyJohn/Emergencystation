@@ -730,16 +730,13 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                         for (int i = 0; i < array.length(); i++) {
                             StationBean bean = new StationBean();
                             object = (JSONObject) array.get(i);
-//                          String lat = object.getString("lat");
-//                          String lng = object.getString("lng");
+                            String lat = object.getString("lat");
+                            String lng = object.getString("lng");
                             String ids = object.getString("ids");
                             String examineResult = object.getString("examineResult");
 
                             if (examineResult.equals("1")) {
                                 //测试
-                                String lat = "31.87368";
-                                String lng = "118.83358";
-
                                 bean.setName("SOS求救");
                                 bean.setAddress("南京市-江宁区-秣周东路12号");
                                 bean.setE_mylatitude(Double.parseDouble(lat));
