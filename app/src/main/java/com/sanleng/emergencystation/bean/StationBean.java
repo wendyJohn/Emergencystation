@@ -17,6 +17,8 @@ public class StationBean implements Serializable {
     private String number;
     private String image_type;
     private String mac;
+    private String channel_one;
+    private String channel_two;
 
     private int type;//布局样式
 
@@ -98,5 +100,21 @@ public class StationBean implements Serializable {
 
     public void setMac(String mac) {
         this.mac = mac;
+    }
+
+    public String getChannel_one() {
+        return channel_one;
+    }
+
+    public void setChannel_one(String channel_one) {
+        this.channel_one = channel_one;
+    }
+
+    public String getChannel_two() {
+        return channel_two;
+    }
+
+    public void setChannel_two(String channel_two) {
+        this.channel_two = channel_two;
     }
 }

@@ -6,9 +6,10 @@
 
         <item>入库</item>
         <item>出库</item>
+        <item>报损</item>
+        <item>视频监控</item>
         <item>应急开门</item>
         <item>物资查询</item>
-        <item>报损</item>
 
 
         <!--<item>SOS事件</item>-->
@@ -21,9 +22,10 @@
 
         <item>@drawable/warehousings</item>
         <item>@drawable/outofstock</item>
+        <item>@drawable/reportloss</item>
+        <item>@drawable/videosurveillance</item>
         <item>@drawable/dooropening</item>
         <item>@drawable/materialinquiries</item>
-        <item>@drawable/reportloss</item>
 
         <!--<item>@drawable/defecttreatment</item>-->
         <!--<item>@drawable/seekhelp</item>-->

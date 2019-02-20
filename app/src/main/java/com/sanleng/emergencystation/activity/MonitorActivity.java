@@ -2,6 +2,7 @@ package com.sanleng.emergencystation.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
@@ -30,6 +31,8 @@ public class MonitorActivity extends AppCompatActivity {
     private FullVideoView videob;
     private boolean fullscreen;
     private int orientation;
+    private String channel_two;
+    private String channel_one;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -47,6 +50,9 @@ public class MonitorActivity extends AppCompatActivity {
         });
         videoa = findViewById(R.id.videoa);
         videob = findViewById(R.id.videob);
+        Intent inten =getIntent();
+        channel_one=inten.getStringExtra("channel_one");
+        channel_two=inten.getStringExtra("channel_two");
         setVideoa();
         setVideob();
     }
@@ -59,7 +65,7 @@ public class MonitorActivity extends AppCompatActivity {
         MediaController mediaController = new MediaController(this);
         mediaController.setVisibility(View.GONE);//隐藏进度条
         videoa.setMediaController(mediaController);
-        videoa.setVideoURI(Uri.parse("http://hls.open.ys7.com/openlive/ff814ef5eacf479c8ee045a24fbc21a7.m3u8"));
+        videoa.setVideoURI(Uri.parse(channel_one));
         videoa.start();
         videoa.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -140,7 +146,7 @@ public class MonitorActivity extends AppCompatActivity {
         MediaController mediaController = new MediaController(this);
         mediaController.setVisibility(View.GONE);//隐藏进度条
         videob.setMediaController(mediaController);
-        videob.setVideoURI(Uri.parse("http://hls.open.ys7.com/openlive/0914d875ae71473ca7dad4edd27690e8.m3u8"));
+        videob.setVideoURI(Uri.parse(channel_two));
         videob.start();
         videob.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

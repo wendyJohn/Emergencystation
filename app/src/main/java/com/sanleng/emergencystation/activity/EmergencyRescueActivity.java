@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
@@ -78,8 +79,10 @@ import com.sanleng.emergencystation.adapter.StationAdapter;
 import com.sanleng.emergencystation.baidumap.DemoGuideActivity;
 import com.sanleng.emergencystation.baidumap.NormalUtils;
 import com.sanleng.emergencystation.baidumap.WNaviGuideActivity;
+import com.sanleng.emergencystation.bean.ArchitectureBean;
 import com.sanleng.emergencystation.bean.StationBean;
 import com.sanleng.emergencystation.dialog.E_StationDialog;
+import com.sanleng.emergencystation.dialog.MaterialDetailsDialog;
 import com.sanleng.emergencystation.net.NetCallBack;
 import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
@@ -177,6 +180,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     private E_StationDialog e_stationDialog;
     private String Mac;//开锁的MAC地址
     private String sos_ids;
+    private String channel_two;
+    private String channel_one;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -254,6 +259,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 String names = bean.getName();
                 String addresss = bean.getAddress();
                 double distances = bean.getDistance();
+                channel_one=bean.getChannel_one();
+                channel_two=bean.getChannel_two();
                 int type = bean.getType();
                 name.setText(names);
                 address.setText(addresss);
@@ -512,6 +519,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                                 config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                                 intent_OutOfStock.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                                 intent_OutOfStock.putExtra("mode", "OutOfStock");
+                                intent_OutOfStock.putExtra("title", "领物资");
                                 startActivity(intent_OutOfStock);
                             }
                         })
@@ -539,6 +547,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                                 config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                                 intent_Warehousing.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                                 intent_Warehousing.putExtra("mode", "Warehousing");
+                                intent_Warehousing.putExtra("title", "还物资");
                                 startActivity(intent_Warehousing);
                             }
                         })
@@ -557,6 +566,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
             //查看视频
             case R.id.monitor:
                 Intent intent_Monitor = new Intent(EmergencyRescueActivity.this, MonitorActivity.class);
+                intent_Monitor.putExtra("channel_one",channel_one);
+                intent_Monitor.putExtra("channel_two",channel_two);
                 startActivity(intent_Monitor);
                 break;
             //视频
@@ -634,6 +645,9 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                             String ids = object.getString("ids");
                             String lat = object.getString("lat");
                             String lng = object.getString("lng");
+                            String channel_two = object.getString("channel_two");
+                            String channel_one = object.getString("channel_one");
+
 
                             bean.setId(ids);
                             bean.setName(name);
@@ -642,7 +656,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                             bean.setE_mylongitude(Double.parseDouble(lng));
                             bean.setMac(mac);
                             bean.setType(1);
-
+                            bean.setChannel_one(channel_one);
+                            bean.setChannel_two(channel_two);
                             bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
 
                             // 构建MarkerOption，用于在地图上添加Marker
@@ -665,12 +680,13 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 E_mylatitude = slist.get(position).getE_mylatitude();
                                 E_mylongitude = slist.get(position).getE_mylongitude();
-
                                 String ids = slist.get(position).getId();
                                 String names = slist.get(position).getName();
                                 String addresss = slist.get(position).getAddress();
                                 String mac = slist.get(position).getMac();
                                 double distances = slist.get(position).getDistance();
+                                channel_one=slist.get(position).getChannel_one();
+                                channel_two=slist.get(position).getChannel_two();
                                 name.setText(names);
                                 address.setText(addresss);
                                 distance.setText("距您 " + distances + "m");
@@ -931,228 +947,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         StationBean beana = new StationBean();
         beana.setType(0);
         slists.add(beana);
-        if (name.equals("三棱科技应急站A")) {
-            StationBean bean1 = new StationBean();
-            bean1.setName("简易呼吸器" + "  数量：1");
-            bean1.setNumber("1号应急箱");
-            bean1.setImage_type("a");
-            bean1.setType(1);
-            bean1.setMac("54C9DFF77EA4");
-            slists.add(bean1);
-
-            StationBean bean3 = new StationBean();
-            bean3.setName("消防服" + "  数量：2");
-            bean3.setNumber("2号应急箱");
-            bean3.setImage_type("c");
-            bean3.setType(1);
-            bean3.setMac("54C9DFF77EA4");
-            slists.add(bean3);
-
-            StationBean bean8 = new StationBean();
-            bean8.setName("水带" + "  数量：2");
-            bean8.setNumber("3号应急箱");
-            bean8.setImage_type("h");
-            bean8.setType(1);
-            bean8.setMac("54C9DFF77EA4");
-            slists.add(bean8);
-
-            StationBean beanc2 = new StationBean();
-            beanc2.setName("消防枪头" + "  数量：2");
-            beanc2.setNumber("3号应急箱");
-            beanc2.setImage_type("i");
-            beanc2.setType(1);
-            beanc2.setMac("54C9DFF77EA4");
-            slists.add(beanc2);
-
-            StationBean beanc3 = new StationBean();
-            beanc3.setName("水带接头" + "  数量：4");
-            beanc3.setNumber("3号应急箱");
-            beanc3.setImage_type("j");
-            beanc3.setType(1);
-            beanc3.setMac("54C9DFF77EA4");
-            slists.add(beanc3);
-
-            StationBean bean10 = new StationBean();
-            bean10.setName("干粉灭火器" + "  数量：2");
-            bean10.setNumber("4号应急箱");
-            bean10.setImage_type("l");
-            bean10.setType(1);
-            bean10.setMac("54C9DFF77EA4");
-            slists.add(bean10);
-
-            StationBean beanf2 = new StationBean();
-            beanf2.setName("扩音喇叭" + "  数量：2");
-            beanf2.setNumber("6号应急箱");
-            beanf2.setImage_type("o");
-            beanf2.setType(1);
-            beanf2.setMac("54C9DFF77EA4");
-            slists.add(beanf2);
-
-        }
-        if (name.equals("紫金幽谷应急站")) {
-            StationBean bean5 = new StationBean();
-            bean5.setName("安全绳" + "  数量：2");
-            bean5.setNumber("2号应急箱");
-            bean5.setImage_type("e");
-            bean5.setType(1);
-            bean5.setMac("54C9DFF77EA4");
-            slists.add(bean5);
-
-            StationBean bean6 = new StationBean();
-            bean6.setName("腰帶" + "  数量：1");
-            bean6.setNumber("2号应急箱");
-            bean6.setImage_type("f");
-            bean6.setType(1);
-            bean6.setMac("54C9DFF77EA4");
-            slists.add(bean6);
-
-            StationBean bean7 = new StationBean();
-            bean7.setName("胶鞋" + "  数量：2");
-            bean7.setNumber("2号应急箱");
-            bean7.setImage_type("g");
-            bean7.setType(1);
-            bean7.setMac("54C9DFF77EA4");
-            slists.add(bean7);
-
-            StationBean bean8 = new StationBean();
-            bean8.setName("水带" + "  数量：2");
-            bean8.setNumber("3号应急箱");
-            bean8.setImage_type("h");
-            bean8.setType(1);
-            bean8.setMac("54C9DFF77EA4");
-            slists.add(bean8);
-
-            StationBean bean9 = new StationBean();
-            bean9.setName("折叠担架" + "  数量：1");
-            bean9.setNumber("3号应急箱");
-            bean9.setImage_type("k");
-            bean9.setType(1);
-            bean9.setMac("54C9DFF77EA4");
-            slists.add(bean9);
-
-            StationBean bean10 = new StationBean();
-            bean10.setName("干粉灭火器" + "  数量：2");
-            bean10.setNumber("4号应急箱");
-            bean10.setImage_type("l");
-            bean10.setType(1);
-            bean10.setMac("54C9DFF77EA4");
-            slists.add(bean10);
-
-            StationBean bean1 = new StationBean();
-            bean1.setName("简易呼吸器" + "  数量：1");
-            bean1.setNumber("1号应急箱");
-            bean1.setImage_type("a");
-            bean1.setType(1);
-            bean1.setMac("54C9DFF77EA4");
-            slists.add(bean1);
-
-            StationBean bean2 = new StationBean();
-            bean2.setName("头盔" + "  数量：2");
-            bean2.setNumber("2号应急箱");
-            bean2.setImage_type("b");
-            bean2.setType(1);
-            bean2.setMac("54C9DFF77EA4");
-            slists.add(bean2);
-
-            StationBean bean3 = new StationBean();
-            bean3.setName("消防服" + "  数量：2");
-            bean3.setNumber("2号应急箱");
-            bean3.setImage_type("c");
-            bean3.setType(1);
-            bean3.setMac("54C9DFF77EA4");
-            slists.add(bean3);
-
-            StationBean bean4 = new StationBean();
-            bean4.setName("手套" + "  数量：2");
-            bean4.setNumber("2号应急箱");
-            bean4.setImage_type("d");
-            bean4.setType(1);
-            bean4.setMac("54C9DFF77EA4");
-            slists.add(bean4);
-        }
-        if (name.equals("砂之船艺术商业广场")) {
-            StationBean bean9 = new StationBean();
-            bean9.setName("折叠担架" + "  数量：1");
-            bean9.setNumber("3号应急箱");
-            bean9.setImage_type("k");
-            bean9.setType(1);
-            bean9.setMac("54C9DFF77EA4");
-            slists.add(bean9);
-
-            StationBean bean10 = new StationBean();
-            bean10.setName("干粉灭火器" + "  数量：2");
-            bean10.setNumber("4号应急箱");
-            bean10.setImage_type("l");
-            bean10.setType(1);
-            bean10.setMac("54C9DFF77EA4");
-            slists.add(bean10);
-
-            StationBean bean1 = new StationBean();
-            bean1.setName("简易呼吸器" + "  数量：1");
-            bean1.setNumber("1号应急箱");
-            bean1.setImage_type("a");
-            bean1.setType(1);
-            bean1.setMac("54C9DFF77EA4");
-            slists.add(bean1);
-
-            StationBean bean2 = new StationBean();
-            bean2.setName("头盔" + "  数量：2");
-            bean2.setNumber("2号应急箱");
-            bean2.setImage_type("b");
-            bean2.setType(1);
-            bean2.setMac("54C9DFF77EA4");
-            slists.add(bean2);
-
-            StationBean bean3 = new StationBean();
-            bean3.setName("消防服" + "  数量：2");
-            bean3.setNumber("2号应急箱");
-            bean3.setImage_type("c");
-            bean3.setType(1);
-            bean3.setMac("54C9DFF77EA4");
-            slists.add(bean3);
-
-            StationBean bean4 = new StationBean();
-            bean4.setName("手套" + "  数量：2");
-            bean4.setNumber("2号应急箱");
-            bean4.setImage_type("d");
-            bean4.setType(1);
-            bean4.setMac("54C9DFF77EA4");
-            slists.add(bean4);
-            StationBean bean5 = new StationBean();
-            bean5.setName("安全绳" + "  数量：2");
-            bean5.setNumber("2号应急箱");
-            bean5.setImage_type("e");
-            bean5.setType(1);
-            bean5.setMac("54C9DFF77EA4");
-            slists.add(bean5);
-
-            StationBean bean6 = new StationBean();
-            bean6.setName("腰帶" + "  数量：1");
-            bean6.setNumber("2号应急箱");
-            bean6.setImage_type("f");
-            bean6.setType(1);
-            bean6.setMac("54C9DFF77EA4");
-            slists.add(bean6);
-
-            StationBean bean7 = new StationBean();
-            bean7.setName("胶鞋" + "  数量：2");
-            bean7.setNumber("2号应急箱");
-            bean7.setImage_type("g");
-            bean7.setType(1);
-            bean7.setMac("54C9DFF77EA4");
-            slists.add(bean7);
-
-            StationBean bean8 = new StationBean();
-            bean8.setName("水带" + "  数量：2");
-            bean8.setNumber("3号应急箱");
-            bean8.setImage_type("h");
-            bean8.setType(1);
-            bean8.setMac("54C9DFF77EA4");
-            slists.add(bean8);
-        }
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        bottomMenuAdapter = new BottomMenuAdapter(EmergencyRescueActivity.this, slists, name, address, distance, id, mac, m_Handler);
-        listView.setAdapter(bottomMenuAdapter);
+        loadData(name,address,distance,id,mac);
     }
 
     private ScrollLayout.OnScrollChangedListener mOnScrollChangedListener = new ScrollLayout.OnScrollChangedListener() {
@@ -1233,6 +1028,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                                     config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                                     intent_Warehousing.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                                     intent_Warehousing.putExtra("mode", "Warehousing");
+                                    intent_Warehousing.putExtra("title", "还物资");
                                     startActivity(intent_Warehousing);
                                 }
                             })
@@ -1259,6 +1055,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                                     config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                                     intent_OutOfStock.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                                     intent_OutOfStock.putExtra("mode", "OutOfStock");
+                                    intent_OutOfStock.putExtra("title", "领物质");
                                     startActivity(intent_OutOfStock);
                                 }
                             })
@@ -1285,6 +1082,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                                     config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                                     intent_Reportloss.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                                     intent_Reportloss.putExtra("mode", "Reportloss");
+                                    intent_Reportloss.putExtra("title", "报损");
                                     startActivity(intent_Reportloss);
                                 }
                             })
@@ -1674,4 +1472,69 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
             }
         }
     };
+
+    // 加载物质数据
+    private void loadData(final String name, final String address, final double  distance, final String id, final String mac) {
+        RequestParams params = new RequestParams();
+        params.put("stationId", id);
+        params.put("pageNum", "1");
+        params.put("pageSize", "100");
+        params.put("unit_code", PreferenceUtils.getString(EmergencyRescueActivity.this, "unitcode"));
+        params.put("username", PreferenceUtils.getString(EmergencyRescueActivity.this, "EmergencyStation_username"));
+        params.put("platformkey", "app_firecontrol_owner");
+
+        RequestUtils.ClientPost(URLs.Material_URL, params, new NetCallBack() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onMySuccess(String result) {
+                if (result == null || result.length() == 0) {
+                    return;
+                }
+                System.out.println("数据请求成功" + result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String msg = jsonObject.getString("msg");
+                    if (msg.equals("获取成功")) {
+                        String data = jsonObject.getString("data");
+                        JSONObject objects = new JSONObject(data);
+                        String list = objects.getString("list");
+                        JSONArray array = new JSONArray(list);
+                        JSONObject object;
+                        for (int i = 0; i < array.length(); i++) {
+                            StationBean bean = new StationBean();
+                            object = (JSONObject) array.get(i);
+                            String myname = object.getString("name");
+                            String specification = object.getString("specification");
+                            String model = object.getString("model");
+                            String storageLocation = object.getString("storageLocation");
+
+                            bean.setName(myname + "  数量:"+specification);
+                            bean.setNumber(storageLocation+"号应急箱");
+                            bean.setImage_type(model);
+                            bean.setType(1);
+                            bean.setMac(mac);
+                            slists.add(bean);
+                        }
+                        ListView listView = findViewById(R.id.list_view);
+                        bottomMenuAdapter = new BottomMenuAdapter(EmergencyRescueActivity.this, slists, name, address, distance, id, mac, m_Handler);
+                        listView.setAdapter(bottomMenuAdapter);
+                    }
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onMyFailure(Throwable arg0) {
+
+            }
+        });
+
+    }
 }

@@ -180,6 +180,8 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
     private E_StationDialog e_stationDialog;
     private String Mac;//开锁的MAC地址
     private View view;
+    private String channel_two;
+    private String channel_one;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -253,6 +255,8 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                 String names = bean.getName();
                 String addresss = bean.getAddress();
                 double distances = bean.getDistance();
+                channel_one = bean.getChannel_one();
+                channel_two = bean.getChannel_two();
                 int type = bean.getType();
                 name.setText(names);
                 address.setText(addresss);
@@ -270,11 +274,9 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                     mScrollLayout.setVisibility(View.GONE);
                 }
                 return true;
-
             }
 
         });
-
     }
 
     //配置定位SDK参数
@@ -391,7 +393,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
         /**设置 setting*/
         mScrollLayout.setMinOffset(0);
         mScrollLayout.setMaxOffset((int) (ScreenUtil.getScreenHeight(getActivity()) * 0.6));
-        mScrollLayout.setExitOffset(ScreenUtil.dip2px(getActivity(), 110));
+        mScrollLayout.setExitOffset(ScreenUtil.dip2px(getActivity(), 165));
         mScrollLayout.setIsSupportExit(true);
         mScrollLayout.setAllowHorizontalScroll(true);
         mScrollLayout.setOnScrollChangedListener(mOnScrollChangedListener);
@@ -411,7 +413,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
         more_linyout = view.findViewById(R.id.more_linyout);//更多
 
         voicesearch_image = view.findViewById(R.id.voicesearch_image);//语音搜索
-        search_edit =view.findViewById(R.id.search_edit);//搜索输入框
+        search_edit = view.findViewById(R.id.search_edit);//搜索输入框
 
         myr_back = (RelativeLayout) view.findViewById(R.id.r_back);
 
@@ -419,6 +421,10 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
         mylist.add("B");
         mylist.add("C");
         mylist.add("D");
+        mylist.add("E");
+        mylist.add("F");
+        mylist.add("G");
+
         myr_back.setOnClickListener(this);
         walkingnavigation.setOnClickListener(this);
         viewdetails.setOnClickListener(this);
@@ -442,7 +448,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
         @Override
         public void run() {
             // TODO Auto-generated method stub
-            if (i == 4) {
+            if (i == 7) {
                 handler.removeCallbacks(runnable);
             } else {
                 str = mylist.get(i).toString().trim();
@@ -503,6 +509,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                                 config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                                 intent_OutOfStock.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                                 intent_OutOfStock.putExtra("mode", "OutOfStock");
+                                intent_OutOfStock.putExtra("title", "领物资");
                                 startActivity(intent_OutOfStock);
                             }
                         })
@@ -529,6 +536,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                                 config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                                 intent_Warehousing.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                                 intent_Warehousing.putExtra("mode", "Warehousing");
+                                intent_Warehousing.putExtra("title", "还物资");
                                 startActivity(intent_Warehousing);
                             }
                         })
@@ -546,6 +554,8 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
             //查看视频
             case R.id.monitor:
                 Intent intent_Monitor = new Intent(getActivity(), MonitorActivity.class);
+                intent_Monitor.putExtra("channel_one", channel_one);
+                intent_Monitor.putExtra("channel_two", channel_two);
                 startActivity(intent_Monitor);
                 break;
             //视频
@@ -599,7 +609,6 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
             public void onStart() {
                 super.onStart();
             }
-
             @Override
             public void onMySuccess(String result) {
                 if (result == null || result.length() == 0) {
@@ -623,6 +632,8 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                             String ids = object.getString("ids");
                             String lat = object.getString("lat");
                             String lng = object.getString("lng");
+                            String channel_two = object.getString("channel_two");
+                            String channel_one = object.getString("channel_one");
 
                             bean.setId(ids);
                             bean.setName(name);
@@ -631,6 +642,8 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                             bean.setE_mylongitude(Double.parseDouble(lng));
                             bean.setMac(mac);
                             bean.setType(1);
+                            bean.setChannel_one(channel_one);
+                            bean.setChannel_two(channel_two);
 
                             bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
 
@@ -660,6 +673,9 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                                 String addresss = slist.get(position).getAddress();
                                 String mac = slist.get(position).getMac();
                                 double distances = slist.get(position).getDistance();
+                                channel_one = slist.get(position).getChannel_one();
+                                channel_two = slist.get(position).getChannel_two();
+
                                 name.setText(names);
                                 address.setText(addresss);
                                 distance.setText("距您 " + distances + "m");
@@ -719,15 +735,11 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                         for (int i = 0; i < array.length(); i++) {
                             StationBean bean = new StationBean();
                             object = (JSONObject) array.get(i);
-//                          String lat = object.getString("lat");
-//                          String lng = object.getString("lng");
+                            String lat = object.getString("lat");
+                            String lng = object.getString("lng");
                             String examineResult = object.getString("examineResult");
 
                             if (examineResult.equals("1")) {
-                                //测试
-                                String lat = "31.87368";
-                                String lng = "118.83358";
-
                                 bean.setName("SOS求救");
                                 bean.setAddress("南京市-江宁区-秣周东路12号");
                                 bean.setE_mylatitude(Double.parseDouble(lat));
@@ -825,12 +837,10 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                 }
                 walkParam.stPt(startPt).endPt(endPt);
             }
-
             public void onMarkerDragStart(Marker marker) {
             }
         });
     }
-
     /**
      * 开始步行导航
      */
@@ -840,9 +850,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                 @Override
                 public void engineInitSuccess() {
                     routePlanWithWalkParam();
-
                 }
-
                 @Override
                 public void engineInitFail() {
                 }
@@ -860,18 +868,15 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
             @Override
             public void onRoutePlanStart() {
             }
-
             @Override
             public void onRoutePlanSuccess() {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), WNaviGuideActivity.class);
                 startActivity(intent);
             }
-
             @Override
             public void onRoutePlanFail(WalkRoutePlanError error) {
             }
-
         });
 
     }
@@ -882,252 +887,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
         StationBean beana = new StationBean();
         beana.setType(0);
         slists.add(beana);
-        if(name.equals("三棱科技应急站A")) {
-            StationBean bean1 = new StationBean();
-            bean1.setName("简易呼吸器" + "  数量：1");
-            bean1.setNumber("1号应急箱");
-            bean1.setImage_type("a");
-            bean1.setType(1);
-            bean1.setMac("54C9DFF77EA4");
-            slists.add(bean1);
-
-            StationBean bean2 = new StationBean();
-            bean2.setName("头盔" + "  数量：2");
-            bean2.setNumber("2号应急箱");
-            bean2.setImage_type("b");
-            bean2.setType(1);
-            bean2.setMac("54C9DFF77EA4");
-            slists.add(bean2);
-
-            StationBean bean3 = new StationBean();
-            bean3.setName("消防服" + "  数量：2");
-            bean3.setNumber("2号应急箱");
-            bean3.setImage_type("c");
-            bean3.setType(1);
-            bean3.setMac("54C9DFF77EA4");
-            slists.add(bean3);
-
-            StationBean bean4 = new StationBean();
-            bean4.setName("手套" + "  数量：2");
-            bean4.setNumber("2号应急箱");
-            bean4.setImage_type("d");
-            bean4.setType(1);
-            bean4.setMac("54C9DFF77EA4");
-            slists.add(bean4);
-
-            StationBean bean5 = new StationBean();
-            bean5.setName("安全绳" + "  数量：2");
-            bean5.setNumber("2号应急箱");
-            bean5.setImage_type("e");
-            bean5.setType(1);
-            bean5.setMac("54C9DFF77EA4");
-            slists.add(bean5);
-
-            StationBean bean6 = new StationBean();
-            bean6.setName("腰帶" + "  数量：1");
-            bean6.setNumber("2号应急箱");
-            bean6.setImage_type("f");
-            bean6.setType(1);
-            bean6.setMac("54C9DFF77EA4");
-            slists.add(bean6);
-
-            StationBean bean7 = new StationBean();
-            bean7.setName("胶鞋" + "  数量：2");
-            bean7.setNumber("2号应急箱");
-            bean7.setImage_type("g");
-            bean7.setType(1);
-            bean7.setMac("54C9DFF77EA4");
-            slists.add(bean7);
-
-            StationBean bean8 = new StationBean();
-            bean8.setName("水带" + "  数量：2");
-            bean8.setNumber("3号应急箱");
-            bean8.setImage_type("h");
-            bean8.setType(1);
-            bean8.setMac("54C9DFF77EA4");
-            slists.add(bean8);
-
-            StationBean bean9 = new StationBean();
-            bean9.setName("折叠担架" + "  数量：1");
-            bean9.setNumber("3号应急箱");
-            bean9.setImage_type("k");
-            bean9.setType(1);
-            bean9.setMac("54C9DFF77EA4");
-            slists.add(bean9);
-
-            StationBean bean10 = new StationBean();
-            bean10.setName("干粉灭火器" + "  数量：2");
-            bean10.setNumber("4号应急箱");
-            bean10.setImage_type("l");
-            bean10.setType(1);
-            bean10.setMac("54C9DFF77EA4");
-            slists.add(bean10);
-        }
-        if(name.equals("紫金幽谷应急站")) {
-            StationBean bean5 = new StationBean();
-            bean5.setName("安全绳" + "  数量：2");
-            bean5.setNumber("2号应急箱");
-            bean5.setImage_type("e");
-            bean5.setType(1);
-            bean5.setMac("54C9DFF77EA4");
-            slists.add(bean5);
-
-            StationBean bean6 = new StationBean();
-            bean6.setName("腰帶" + "  数量：1");
-            bean6.setNumber("2号应急箱");
-            bean6.setImage_type("f");
-            bean6.setType(1);
-            bean6.setMac("54C9DFF77EA4");
-            slists.add(bean6);
-
-            StationBean bean7 = new StationBean();
-            bean7.setName("胶鞋" + "  数量：2");
-            bean7.setNumber("2号应急箱");
-            bean7.setImage_type("g");
-            bean7.setType(1);
-            bean7.setMac("54C9DFF77EA4");
-            slists.add(bean7);
-
-            StationBean bean8 = new StationBean();
-            bean8.setName("水带" + "  数量：2");
-            bean8.setNumber("3号应急箱");
-            bean8.setImage_type("h");
-            bean8.setType(1);
-            bean8.setMac("54C9DFF77EA4");
-            slists.add(bean8);
-
-            StationBean bean9 = new StationBean();
-            bean9.setName("折叠担架" + "  数量：1");
-            bean9.setNumber("3号应急箱");
-            bean9.setImage_type("k");
-            bean9.setType(1);
-            bean9.setMac("54C9DFF77EA4");
-            slists.add(bean9);
-
-            StationBean bean10 = new StationBean();
-            bean10.setName("干粉灭火器" + "  数量：2");
-            bean10.setNumber("4号应急箱");
-            bean10.setImage_type("l");
-            bean10.setType(1);
-            bean10.setMac("54C9DFF77EA4");
-            slists.add(bean10);
-
-            StationBean bean1 = new StationBean();
-            bean1.setName("简易呼吸器" + "  数量：1");
-            bean1.setNumber("1号应急箱");
-            bean1.setImage_type("a");
-            bean1.setType(1);
-            bean1.setMac("54C9DFF77EA4");
-            slists.add(bean1);
-
-            StationBean bean2 = new StationBean();
-            bean2.setName("头盔" + "  数量：2");
-            bean2.setNumber("2号应急箱");
-            bean2.setImage_type("b");
-            bean2.setType(1);
-            bean2.setMac("54C9DFF77EA4");
-            slists.add(bean2);
-
-            StationBean bean3 = new StationBean();
-            bean3.setName("消防服" + "  数量：2");
-            bean3.setNumber("2号应急箱");
-            bean3.setImage_type("c");
-            bean3.setType(1);
-            bean3.setMac("54C9DFF77EA4");
-            slists.add(bean3);
-
-            StationBean bean4 = new StationBean();
-            bean4.setName("手套" + "  数量：2");
-            bean4.setNumber("2号应急箱");
-            bean4.setImage_type("d");
-            bean4.setType(1);
-            bean4.setMac("54C9DFF77EA4");
-            slists.add(bean4);
-        }
-        if(name.equals("砂之船艺术商业广场")) {
-            StationBean bean9 = new StationBean();
-            bean9.setName("折叠担架" + "  数量：1");
-            bean9.setNumber("3号应急箱");
-            bean9.setImage_type("k");
-            bean9.setType(1);
-            bean9.setMac("54C9DFF77EA4");
-            slists.add(bean9);
-
-            StationBean bean10 = new StationBean();
-            bean10.setName("干粉灭火器" + "  数量：2");
-            bean10.setNumber("4号应急箱");
-            bean10.setImage_type("l");
-            bean10.setType(1);
-            bean10.setMac("54C9DFF77EA4");
-            slists.add(bean10);
-
-            StationBean bean1 = new StationBean();
-            bean1.setName("简易呼吸器" + "  数量：1");
-            bean1.setNumber("1号应急箱");
-            bean1.setImage_type("a");
-            bean1.setType(1);
-            bean1.setMac("54C9DFF77EA4");
-            slists.add(bean1);
-
-            StationBean bean2 = new StationBean();
-            bean2.setName("头盔" + "  数量：2");
-            bean2.setNumber("2号应急箱");
-            bean2.setImage_type("b");
-            bean2.setType(1);
-            bean2.setMac("54C9DFF77EA4");
-            slists.add(bean2);
-
-            StationBean bean3 = new StationBean();
-            bean3.setName("消防服" + "  数量：2");
-            bean3.setNumber("2号应急箱");
-            bean3.setImage_type("c");
-            bean3.setType(1);
-            bean3.setMac("54C9DFF77EA4");
-            slists.add(bean3);
-
-            StationBean bean4 = new StationBean();
-            bean4.setName("手套" + "  数量：2");
-            bean4.setNumber("2号应急箱");
-            bean4.setImage_type("d");
-            bean4.setType(1);
-            bean4.setMac("54C9DFF77EA4");
-            slists.add(bean4);
-            StationBean bean5 = new StationBean();
-            bean5.setName("安全绳" + "  数量：2");
-            bean5.setNumber("2号应急箱");
-            bean5.setImage_type("e");
-            bean5.setType(1);
-            bean5.setMac("54C9DFF77EA4");
-            slists.add(bean5);
-
-            StationBean bean6 = new StationBean();
-            bean6.setName("腰帶" + "  数量：1");
-            bean6.setNumber("2号应急箱");
-            bean6.setImage_type("f");
-            bean6.setType(1);
-            bean6.setMac("54C9DFF77EA4");
-            slists.add(bean6);
-
-            StationBean bean7 = new StationBean();
-            bean7.setName("胶鞋" + "  数量：2");
-            bean7.setNumber("2号应急箱");
-            bean7.setImage_type("g");
-            bean7.setType(1);
-            bean7.setMac("54C9DFF77EA4");
-            slists.add(bean7);
-
-            StationBean bean8 = new StationBean();
-            bean8.setName("水带" + "  数量：2");
-            bean8.setNumber("3号应急箱");
-            bean8.setImage_type("h");
-            bean8.setType(1);
-            bean8.setMac("54C9DFF77EA4");
-            slists.add(bean8);
-        }
-
-        ListView listView = (ListView) view.findViewById(R.id.list_view);
-        bottomMenuAdapter = new BottomMenuAdapter(getActivity(), slists, name, address, distance, id, mac, m_Handler);
-        listView.setAdapter(bottomMenuAdapter);
+        loadData(name,address,distance,id,mac);
     }
 
     private ScrollLayout.OnScrollChangedListener mOnScrollChangedListener = new ScrollLayout.OnScrollChangedListener() {
@@ -1208,6 +968,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                                     config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                                     intent_Warehousing.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                                     intent_Warehousing.putExtra("mode", "Warehousing");
+                                    intent_Warehousing.putExtra("title", "还物资");
                                     startActivity(intent_Warehousing);
                                 }
                             })
@@ -1234,6 +995,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                                     config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                                     intent_OutOfStock.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                                     intent_OutOfStock.putExtra("mode", "OutOfStock");
+                                    intent_OutOfStock.putExtra("title", "领物质");
                                     startActivity(intent_OutOfStock);
                                 }
                             })
@@ -1260,6 +1022,7 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                                     config.setFullScreenScan(false);//是否全屏扫描  默认为true  设为false则只会在扫描框中扫描
                                     intent_Reportloss.putExtra(Constant.INTENT_ZXING_CONFIG, config);
                                     intent_Reportloss.putExtra("mode", "Reportloss");
+                                    intent_Reportloss.putExtra("title", "报损");
                                     startActivity(intent_Reportloss);
                                 }
                             })
@@ -1378,17 +1141,13 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                 new IBNTTSManager.IOnTTSPlayStateChangedListener() {
                     @Override
                     public void onPlayStart() {
-                        Log.e("BNSDKDemo", "ttsCallback.onPlayStart");
                     }
-
                     @Override
                     public void onPlayEnd(String speechId) {
-                        Log.e("BNSDKDemo", "ttsCallback.onPlayEnd");
                     }
 
                     @Override
                     public void onPlayError(int code, String message) {
-                        Log.e("BNSDKDemo", "ttsCallback.onPlayError");
                     }
                 }
         );
@@ -1398,7 +1157,6 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
                 new Handler(Looper.getMainLooper()) {
                     @Override
                     public void handleMessage(Message msg) {
-                        Log.e("BNSDKDemo", "ttsHandler.msg.what=" + msg.what);
                         int type = msg.what;
                         switch (type) {
                             case BaiduNaviManager.TTSPlayMsgType.PLAY_START_MSG: {
@@ -1645,4 +1403,69 @@ public class Tabb_Fragment extends Fragment implements OnClickListener {
             }
         }
     };
+
+    // 加载物质数据
+    private void loadData(final String name, final String address, final double  distance, final String id, final String mac) {
+        RequestParams params = new RequestParams();
+        params.put("stationId", id);
+        params.put("pageNum", "1");
+        params.put("pageSize", "100");
+        params.put("unit_code", PreferenceUtils.getString(getActivity(), "unitcode"));
+        params.put("username", PreferenceUtils.getString(getActivity(), "EmergencyStation_username"));
+        params.put("platformkey", "app_firecontrol_owner");
+
+        RequestUtils.ClientPost(URLs.Material_URL, params, new NetCallBack() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onMySuccess(String result) {
+                if (result == null || result.length() == 0) {
+                    return;
+                }
+                System.out.println("数据请求成功" + result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String msg = jsonObject.getString("msg");
+                    if (msg.equals("获取成功")) {
+                        String data = jsonObject.getString("data");
+                        JSONObject objects = new JSONObject(data);
+                        String list = objects.getString("list");
+                        JSONArray array = new JSONArray(list);
+                        JSONObject object;
+                        for (int i = 0; i < array.length(); i++) {
+                            StationBean bean = new StationBean();
+                            object = (JSONObject) array.get(i);
+                            String myname = object.getString("name");
+                            String specification = object.getString("specification");
+                            String model = object.getString("model");
+                            String storageLocation = object.getString("storageLocation");
+
+                            bean.setName(myname + "  数量:"+specification);
+                            bean.setNumber(storageLocation+"号应急箱");
+                            bean.setImage_type(model);
+                            bean.setType(1);
+                            bean.setMac(mac);
+                            slists.add(bean);
+                        }
+                        ListView listView = view.findViewById(R.id.list_view);
+                        bottomMenuAdapter = new BottomMenuAdapter(getActivity(), slists, name, address, distance, id, mac, m_Handler);
+                        listView.setAdapter(bottomMenuAdapter);
+                    }
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onMyFailure(Throwable arg0) {
+
+            }
+        });
+
+    }
 }

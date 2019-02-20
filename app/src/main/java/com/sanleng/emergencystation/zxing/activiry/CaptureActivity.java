@@ -67,6 +67,8 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
     private SurfaceHolder surfaceHolder;
+    private TextView text_title;
+    private String  title;
 
     //类型
     private String mode;
@@ -102,44 +104,37 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // 保持Activity处于唤醒状态
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(Color.BLACK);
         }
-
         /*先获取配置信息*/
         try {
             config = (ZxingConfig) getIntent().getExtras().get(Constant.INTENT_ZXING_CONFIG);
         } catch (Exception e) {
-
-            Log.i("config", e.toString());
         }
-
         if (config == null) {
             config = new ZxingConfig();
         }
         setContentView(R.layout.activity_captures);
         StatusBarUtil.setColor(CaptureActivity.this, R.color.translucency);
-
         initView();
-        Intent intent = getIntent();
-        mode = intent.getStringExtra("mode");
-
         hasSurface = false;
-
         inactivityTimer = new InactivityTimer(this);
         beepManager = new BeepManager(this);
         beepManager.setPlayBeep(config.isPlayBeep());
         beepManager.setVibrate(config.isShake());
-
-
     }
 
 
     private void initView() {
+        Intent intent = getIntent();
+        mode = intent.getStringExtra("mode");
+        title= intent.getStringExtra("title");
+        text_title = findViewById(R.id.text_title);
+        text_title.setText(title);
         previewView = findViewById(R.id.preview_view);
         previewView.setOnClickListener(this);
 

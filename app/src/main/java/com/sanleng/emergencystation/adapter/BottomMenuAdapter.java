@@ -149,52 +149,50 @@ public class BottomMenuAdapter extends BaseAdapter {
             viewholdertwo.name.setText(mList.get(position).getNumber());
             viewholdertwo.address.setText(mList.get(position).getName());
             String image_type = mList.get(position).getImage_type();
-            if (image_type.equals("a")) {
+            if(image_type.equals("JYHXQ")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.a));
             }
-            if (image_type.equals("b")) {
+            if(image_type.equals("TK")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.b));
             }
-            if (image_type.equals("c")) {
+            if(image_type.equals("XFF")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.c));
             }
-            if (image_type.equals("d")) {
+            if(image_type.equals("ST")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.d));
             }
-            if (image_type.equals("e")) {
+            if(image_type.equals("AQS")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.e));
             }
-            if (image_type.equals("f")) {
+            if(image_type.equals("YD")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.f));
             }
-            if (image_type.equals("g")) {
+            if(image_type.equals("JX")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.g));
             }
-            if (image_type.equals("h")) {
+            if(image_type.equals("SD")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.h));
             }
-            if (image_type.equals("i")) {
+            if(image_type.equals("XFQT")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.i));
             }
-            if (image_type.equals("j")) {
+            if(image_type.equals("SDJT")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.j));
-            }
-            if (image_type.equals("k")) {
+            }if(image_type.equals("ZDDJ")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.k));
             }
-            if (image_type.equals("l")) {
+            if(image_type.equals("GFMHQ")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.l));
             }
-            if (image_type.equals("m")) {
+            if(image_type.equals("TSYJX")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.m));
             }
-            if (image_type.equals("n")) {
+            if(image_type.equals("XFT")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.n));
-            }
-            if (image_type.equals("o")) {
+            }if(image_type.equals("KYLB")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.o));
             }
-            if (image_type.equals("p")) {
+            if(image_type.equals("LY")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.p));
             }
 

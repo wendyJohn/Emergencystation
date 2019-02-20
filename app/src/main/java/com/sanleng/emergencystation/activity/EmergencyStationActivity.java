@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 物资列表
+ * 站点列表
  *
  * @author Qiaoshi
  */
@@ -51,6 +51,8 @@ public class EmergencyStationActivity extends Activity {
     private boolean is_divPage;// 是否进行分页操作
     private boolean finish = true;// 是否加载完成;
     private String mode;
+    private String channel_two;
+    private String channel_one;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -120,12 +122,16 @@ public class EmergencyStationActivity extends Activity {
                             String name = object.getString("name");
                             String mac = object.getString("mac");
                             String ids = object.getString("ids");
+                            String channel_one= object.getString("channel_one");
+                            String channel_two= object.getString("channel_two");
 
                             String address = object.getString("address");
                             bean.setName(name);
                             bean.setAddress(address);
                             bean.setMac(mac);
                             bean.setId(ids);
+                            bean.setChannel_one(channel_one);
+                            bean.setChannel_two(channel_two);
                             onelist.add(bean);
                         }
 
@@ -182,6 +188,9 @@ public class EmergencyStationActivity extends Activity {
                                 ArchitectureBean bean = allList.get(position);
                                 String mac = bean.getMac();
                                 String ids = bean.getId();
+                                channel_one=bean.getChannel_one();
+                                channel_two=bean.getChannel_two();
+
                                 if (mode.equals("应急开门")) {
                                     Intent intent = new Intent(EmergencyStationActivity.this,
                                             EmergencyUnlockingActivity.class);
@@ -198,6 +207,12 @@ public class EmergencyStationActivity extends Activity {
                                     Intent intent = new Intent(EmergencyStationActivity.this, MaterialActivity.class);
                                     intent.putExtra("ids", ids);
                                     startActivity(intent);
+                                }
+                                if (mode.equals("视频监控")) {
+                                    Intent intent_Monitor = new Intent(EmergencyStationActivity.this, MonitorActivity.class);
+                                    intent_Monitor.putExtra("channel_one",channel_one);
+                                    intent_Monitor.putExtra("channel_two",channel_two);
+                                    startActivity(intent_Monitor);
                                 }
                             }
                         });
