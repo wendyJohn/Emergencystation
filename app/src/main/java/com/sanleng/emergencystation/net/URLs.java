@@ -6,14 +6,17 @@ package com.sanleng.emergencystation.net;
 public class URLs {
 
     //云平台地址
-    public static String HOST_IP = "47.100.192.169";
-    public static String HOST_PORT = "8080";
+//    public static String HOST_IP = "47.100.192.169";
+//    public static String HOST_PORT = "8080";
 
     //调试地址
 //    public static String HOST_IP = "10.101.80.113";
 //    public static String HOST_PORT = "8080";
 
-    public static String HOST = "http://" + HOST_IP + ":" + HOST_PORT;
+    public static String HOST = "https://slyj.slicity.com";
+
+//    public static String HOST = "http://" + HOST_IP + ":" + HOST_PORT;
+
     // 登陆
     public static String BULOGIN_URL = HOST + "/kspf/app/user/login";
     // 文章视频

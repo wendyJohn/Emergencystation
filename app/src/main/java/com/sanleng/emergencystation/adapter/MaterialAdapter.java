@@ -26,8 +26,6 @@ public class MaterialAdapter extends BaseAdapter {
 
 	private List<ArchitectureBean> mList;
 	private Context mContext;
-	private Handler handler;
-
 
 //	public MaterialAdapter(Context mContext, List<ArchitectureBean> mList,Handler handler) {
 //		super();
@@ -81,16 +79,16 @@ public class MaterialAdapter extends BaseAdapter {
 		}
 
 		holder.name.setText(mList.get(position).getName());
-		holder.address.setText(mList.get(position).getAddress());
+		holder.address.setText("位置："+ mList.get(position).getAddress()+" 号箱");
 
 		String image_type=mList.get(position).getType();
-		if(image_type.equals("JYHXQ")){
+		if(image_type.equals("ZJHXQ")||image_type.equals("HXQ")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.a));
 		}
-		if(image_type.equals("TK")){
+		 if(image_type.equals("XFTK")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.b));
 		}
-		if(image_type.equals("XFF")){
+		 if(image_type.equals("XFF")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.c));
 		}
 		if(image_type.equals("ST")){
@@ -99,38 +97,66 @@ public class MaterialAdapter extends BaseAdapter {
 		if(image_type.equals("AQS")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.e));
 		}
-		if(image_type.equals("YD")){
+		 if(image_type.equals("YD")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.f));
 		}
-		if(image_type.equals("JX")){
+		 if(image_type.equals("JX")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.g));
 		}
-		if(image_type.equals("SD")){
+		 if(image_type.equals("SD")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.h));
 		}
-		if(image_type.equals("XFQT")){
+		 if(image_type.equals("XFQT")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.i));
 		}
-		if(image_type.equals("SDJT")){
+		 if(image_type.equals("SDJT")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.j));
-		}if(image_type.equals("ZDDJ")){
+		}
+		 if(image_type.equals("ZDDJ")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.k));
 		}
-		if(image_type.equals("GFMHQ")){
+		 if(image_type.equals("MHQ")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.l));
 		}
-		if(image_type.equals("TSYJX")){
+		 if(image_type.equals("TSYJX")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.m));
 		}
-		if(image_type.equals("XFT")){
+		 if(image_type.equals("XFT")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.n));
-		}if(image_type.equals("KYLB")){
+		}
+		 if(image_type.equals("KYLB")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.o));
 		}
-		if(image_type.equals("LY")) {
+		 if(image_type.equals("LY")) {
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.p));
 		}
-
+		if(image_type.equals("JJX")) {
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.jjx));
+		}
+		if(image_type.equals("YYYQD")) {
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.yyyqd));
+		}
+		if(image_type.equals("FDMJ")) {
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.fdmj));
+		}
+		if(image_type.equals("MHT")) {
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.mht));
+		}
+		if(image_type.equals("JTZ")) {
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.jtz));
+		}
+		if(image_type.equals("FBSD")) {
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.fbsd));
+		}
+		if(image_type.equals("XFJBS")) {
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.xfjbs));
+		}
+		if(image_type.equals("XFC")) {
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.xfc));
+		}
+		if(image_type.equals("XFF")) {
+			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.xff));
+		}
 		holder.instructions_yout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

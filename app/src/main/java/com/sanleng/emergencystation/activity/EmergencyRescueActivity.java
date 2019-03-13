@@ -137,6 +137,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     private ListView soslistview;
     private StationAdapter stationAdapter;
     WalkNaviLaunchParam walkParam;
+    private BitmapDescriptor mCurrentMarker;
     /*导航起终点Marker，可拖动改变起终点的坐标*/
     private Marker mStartMarker;
     private Marker mEndMarker;
@@ -259,8 +260,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 String names = bean.getName();
                 String addresss = bean.getAddress();
                 double distances = bean.getDistance();
-                channel_one=bean.getChannel_one();
-                channel_two=bean.getChannel_two();
+                channel_one = bean.getChannel_one();
+                channel_two = bean.getChannel_two();
                 int type = bean.getType();
                 name.setText(names);
                 address.setText(addresss);
@@ -283,7 +284,32 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
             }
 
         });
+        //拖拽定位
+        mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
+            @Override
+            public void onMapStatusChangeStart(MapStatus mapStatus) {
 
+            }
+
+            @Override
+            public void onMapStatusChangeStart(MapStatus mapStatus, int i) {
+
+            }
+
+            @Override
+            public void onMapStatusChange(MapStatus mapStatus) {
+
+            }
+
+            @Override
+            public void onMapStatusChangeFinish(MapStatus mapStatus) {
+                //改变结束之后，获取地图可视范围的中心点坐标
+                S_mylatitude = mapStatus.target.latitude;
+                S_mylongitude = mapStatus.target.longitude;
+                System.out.println("===============" + S_mylatitude + S_mylongitude);
+                NearbyEmergencyStation();
+            }
+        });
     }
 
     //配置定位SDK参数
@@ -323,19 +349,24 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
             latLng = new LatLng(location.getLatitude(), location.getLongitude());
             S_mylatitude = location.getLatitude();
             S_mylongitude = location.getLongitude();
-            // 构造定位数据
+//            // 构造定位数据
             MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(100).latitude(location.getLatitude()).longitude(location.getLongitude()).build();
+                    .direction(0).latitude(location.getLatitude()).longitude(location.getLongitude()).build();
             // 设置定位数据
             mBaiduMap.setMyLocationData(locData);
+//            // 设置定位图层的配置（定位模式，是否允许方向信息，用户自定义定位图标）
+//            mCurrentMarker = BitmapDescriptorFactory.fromResource(R.drawable.mypation);
+//            MyLocationConfiguration config = new MyLocationConfiguration(
+//                    com.baidu.mapapi.map.MyLocationConfiguration.LocationMode.FOLLOWING, true, mCurrentMarker);
+//            mBaiduMap.setMyLocationConfigeration(config);
             // 当不需要定位图层时关闭定位图层
             mBaiduMap.setMyLocationEnabled(true);
             if (isFirstLoc) {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(18.0f);
+                builder.target(ll).zoom(17.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                 if (location.getLocType() == BDLocation.TypeGpsLocation) {
                     // GPS定位结果
@@ -566,8 +597,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
             //查看视频
             case R.id.monitor:
                 Intent intent_Monitor = new Intent(EmergencyRescueActivity.this, MonitorActivity.class);
-                intent_Monitor.putExtra("channel_one",channel_one);
-                intent_Monitor.putExtra("channel_two",channel_two);
+                intent_Monitor.putExtra("channel_one", channel_one);
+                intent_Monitor.putExtra("channel_two", channel_two);
                 startActivity(intent_Monitor);
                 break;
             //视频
@@ -685,8 +716,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                                 String addresss = slist.get(position).getAddress();
                                 String mac = slist.get(position).getMac();
                                 double distances = slist.get(position).getDistance();
-                                channel_one=slist.get(position).getChannel_one();
-                                channel_two=slist.get(position).getChannel_two();
+                                channel_one = slist.get(position).getChannel_one();
+                                channel_two = slist.get(position).getChannel_two();
                                 name.setText(names);
                                 address.setText(addresss);
                                 distance.setText("距您 " + distances + "m");
@@ -797,8 +828,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
 
                             }
                         });
-                    }
-                    else {
+                    } else {
 
 
                     }
@@ -832,7 +862,7 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                 if (result == null || result.length() == 0) {
                     return;
                 }
-                System.out.println("========================"+result);
+                System.out.println("========================" + result);
 //                try {
 //                    JSONObject jsonObject = new JSONObject(result);
 //                    String msg = jsonObject.getString("msg");
@@ -942,12 +972,13 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     }
 
     //底部菜单
-    private void BottomMenu(String name, String address, double distance, String id, String mac) {
+    private void BottomMenu(String name, String address, double distance, String id, String
+            mac) {
         slists = new ArrayList<>();
         StationBean beana = new StationBean();
         beana.setType(0);
         slists.add(beana);
-        loadData(name,address,distance,id,mac);
+        loadData(name, address, distance, id, mac);
     }
 
     private ScrollLayout.OnScrollChangedListener mOnScrollChangedListener = new ScrollLayout.OnScrollChangedListener() {
@@ -1310,7 +1341,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == ArCameraView.WALK_AR_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
@@ -1474,7 +1506,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
     };
 
     // 加载物质数据
-    private void loadData(final String name, final String address, final double  distance, final String id, final String mac) {
+    private void loadData(final String name, final String address, final double distance,
+                          final String id, final String mac) {
         RequestParams params = new RequestParams();
         params.put("stationId", id);
         params.put("pageNum", "1");
@@ -1512,8 +1545,8 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
                             String model = object.getString("model");
                             String storageLocation = object.getString("storageLocation");
 
-                            bean.setName(myname + "  数量:"+specification);
-                            bean.setNumber(storageLocation+"号应急箱");
+                            bean.setName(myname + "  数量:" + specification);
+                            bean.setNumber(storageLocation + "号应急箱");
                             bean.setImage_type(model);
                             bean.setType(1);
                             bean.setMac(mac);

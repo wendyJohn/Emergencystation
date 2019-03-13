@@ -255,12 +255,12 @@ public class MaterialActivity extends Activity {
 							ArchitectureBean bean = new ArchitectureBean();
 							object = (JSONObject) array.get(i);
 							String name = object.getString("name");
-							String number = object.getString("number");
+							String storageLocation = object.getString("storageLocation");
 							String ids = object.getString("ids");
 							String model = object.getString("model");
 
 							bean.setName(name);
-							bean.setAddress(number);
+							bean.setAddress(storageLocation);
 							bean.setId(ids);
 							bean.setType(model);
 							onelist.add(bean);

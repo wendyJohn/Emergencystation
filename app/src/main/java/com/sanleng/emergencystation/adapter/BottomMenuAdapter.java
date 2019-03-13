@@ -149,10 +149,11 @@ public class BottomMenuAdapter extends BaseAdapter {
             viewholdertwo.name.setText(mList.get(position).getNumber());
             viewholdertwo.address.setText(mList.get(position).getName());
             String image_type = mList.get(position).getImage_type();
-            if(image_type.equals("JYHXQ")){
+            System.out.println("================"+image_type);
+            if(image_type.equals("ZJHXQ")||image_type.equals("HXQ")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.a));
             }
-            if(image_type.equals("TK")){
+            if(image_type.equals("XFTK")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.b));
             }
             if(image_type.equals("XFF")){
@@ -178,10 +179,11 @@ public class BottomMenuAdapter extends BaseAdapter {
             }
             if(image_type.equals("SDJT")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.j));
-            }if(image_type.equals("ZDDJ")){
+            }
+            if(image_type.equals("ZDDJ")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.k));
             }
-            if(image_type.equals("GFMHQ")){
+            if(image_type.equals("MHQ")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.l));
             }
             if(image_type.equals("TSYJX")){
@@ -189,11 +191,39 @@ public class BottomMenuAdapter extends BaseAdapter {
             }
             if(image_type.equals("XFT")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.n));
-            }if(image_type.equals("KYLB")){
+            }
+            if(image_type.equals("KYLB")){
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.o));
             }
             if(image_type.equals("LY")) {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.p));
+            }
+            if(image_type.equals("JJX")) {
+                viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.jjx));
+            }
+            if(image_type.equals("YYYQD")) {
+                viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.yyyqd));
+            }
+            if(image_type.equals("FDMJ")) {
+                viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.fdmj));
+            }
+            if(image_type.equals("MHT")) {
+                viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.mht));
+            }
+            if(image_type.equals("JTZ")) {
+                viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.jtz));
+            }
+            if(image_type.equals("FBSD")) {
+                viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.fbsd));
+            }
+            if(image_type.equals("XFJBS")) {
+                viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.xfjbs));
+            }
+            if(image_type.equals("XFC")) {
+                viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.xfc));
+            }
+            if(image_type.equals("XFF")) {
+                viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.xff));
             }
 
             viewholdertwo.instructions_yout.setOnClickListener(new View.OnClickListener() {

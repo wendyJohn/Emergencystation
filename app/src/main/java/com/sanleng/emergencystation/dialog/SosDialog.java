@@ -160,7 +160,7 @@ public class SosDialog extends Dialog implements View.OnClickListener {
 
                 @Override
                 public void onMyFailure(Throwable arg0) {
-                    new SVProgressHUD(context).showErrorWithStatus("物资信息加载失败");
+                    new SVProgressHUD(context).showErrorWithStatus("求救失败");
                 }
             });
         }

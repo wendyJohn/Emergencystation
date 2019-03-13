@@ -126,10 +126,10 @@ public class MaterialDetailsDialog extends Dialog implements View.OnClickListene
 					specification.setText("物资数量：" + myspecification);
 					model.setText("物资型号：" + mymodel);
 
-					stationName.setText("站点名称：" + "南京站点一");
+					stationName.setText("站点名称：" + mystationName);
 					effective.setText("有效期：" + myeffective);
-					stationAddress.setText("站点地址：" + "江苏省南京市江宁区秣陵街道三棱科技（集团）有限公司");
-					storageLocation.setText("存储位置：" + "一号箱");
+//					stationAddress.setText("站点地址：" + "江苏省南京市江宁区秣陵街道三棱科技（集团）有限公司");
+					storageLocation.setText("存储位置：" + mystorageLocation+"号箱");
 
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block

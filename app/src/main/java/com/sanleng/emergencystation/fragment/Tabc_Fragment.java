@@ -88,8 +88,8 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener 
             e.printStackTrace();
         }
 
-        String uesrname = PreferenceUtils.getString(getActivity(), "EmergencyStation_username");
-        tv_user_headname.setText(uesrname);
+        String agentName = PreferenceUtils.getString(getActivity(), "agentName");
+        tv_user_headname.setText(agentName);
 
         // 头像
         iv_userhead = (ImageView) view.findViewById(R.id.iv_userhead);
