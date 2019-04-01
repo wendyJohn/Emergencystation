@@ -6,16 +6,12 @@ package com.sanleng.emergencystation.net;
 public class URLs {
 
     //云平台地址
-//    public static String HOST_IP = "47.100.192.169";
-//    public static String HOST_PORT = "8080";
-
-    //调试地址
-//    public static String HOST_IP = "10.101.80.113";
-//    public static String HOST_PORT = "8080";
-
     public static String HOST = "https://slyj.slicity.com";
 
-//    public static String HOST = "http://" + HOST_IP + ":" + HOST_PORT;
+    //调试地址
+//        public static String HOST_PORT = "8080";
+//        public static String HOST_IP = "10.101.80.177";
+//        public static String HOST = "http://" + HOST_IP + ":" + HOST_PORT;
 
     // 登陆
     public static String BULOGIN_URL = HOST + "/kspf/app/user/login";
@@ -46,5 +42,8 @@ public class URLs {
     // SOS消除
     public static String SOSEliminate_URL = HOST + "/kspf/emergencystationassistant/update";
     // 监控视频
-    public static String Monitor_URL ="http://hls.open.ys7.com/openlive/ff814ef5eacf479c8ee045a24fbc21a7.hd.m3u8";
+    public static String Monitor_URL = "http://hls.open.ys7.com/openlive/ff814ef5eacf479c8ee045a24fbc21a7.hd.m3u8";
+
+    // 获取版本号与下载链接
+    public static String VerSion_URL = HOST + "/kspf/app/version/getApk";
 }

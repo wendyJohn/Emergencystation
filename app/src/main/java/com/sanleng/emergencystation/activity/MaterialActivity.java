@@ -16,8 +16,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
-import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.MaterialAdapter;
@@ -41,7 +39,7 @@ import java.util.List;
  *
  * @author Qiaoshi
  */
-public class MaterialActivity extends Activity {
+public class MaterialActivity extends BaseActivity {
 
     private RelativeLayout r_back;
     private ListView materiallistview;
@@ -62,12 +60,16 @@ public class MaterialActivity extends Activity {
         // TODO Auto-generated method stub
         super.onCreate(arg0);
         this.setContentView(R.layout.materialactivity);
-        StatusBarUtil.setColor(MaterialActivity.this,R.color.translucency);
         initview();
         loadData(pageNo);
     }
 
-    private void initview() {
+	@Override
+	protected int getLayoutRes() {
+		return R.layout.materialactivity;
+	}
+
+	private void initview() {
         Intent intent = getIntent();
         ids = intent.getStringExtra("ids");
         // 创建对象

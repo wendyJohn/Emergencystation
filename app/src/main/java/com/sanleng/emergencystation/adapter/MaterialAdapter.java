@@ -88,7 +88,7 @@ public class MaterialAdapter extends BaseAdapter {
 		 if(image_type.equals("XFTK")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.b));
 		}
-		 if(image_type.equals("XFF")){
+		 if(image_type.equals("FHF")){
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.c));
 		}
 		if(image_type.equals("ST")){

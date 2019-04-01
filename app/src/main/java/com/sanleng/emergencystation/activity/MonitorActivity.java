@@ -1,10 +1,8 @@
 package com.sanleng.emergencystation.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,19 +10,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.view.FullVideoView;
 
 /**
  * 视频监控
  */
-public class MonitorActivity extends AppCompatActivity {
+public class MonitorActivity extends BaseActivity {
     private RelativeLayout r_back;
     private RelativeLayout ryout;
     private FullVideoView videoa;
@@ -39,9 +34,12 @@ public class MonitorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.monitoractivity);
-        StatusBarUtil.setColor(MonitorActivity.this,R.color.translucency);
+        initview();
+    }
+
+    private void initview() {
         r_back = findViewById(R.id.r_back);
-        ryout= findViewById(R.id.ryout);
+        ryout = findViewById(R.id.ryout);
         r_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,11 +48,16 @@ public class MonitorActivity extends AppCompatActivity {
         });
         videoa = findViewById(R.id.videoa);
         videob = findViewById(R.id.videob);
-        Intent inten =getIntent();
-        channel_one=inten.getStringExtra("channel_one");
-        channel_two=inten.getStringExtra("channel_two");
+        Intent inten = getIntent();
+        channel_one = inten.getStringExtra("channel_one");
+        channel_two = inten.getStringExtra("channel_two");
         setVideoa();
         setVideob();
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.monitoractivity;
     }
 
     /**

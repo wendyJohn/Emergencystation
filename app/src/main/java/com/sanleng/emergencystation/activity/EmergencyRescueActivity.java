@@ -23,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
@@ -71,7 +70,6 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
-import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.BottomMenuAdapter;
@@ -79,10 +77,8 @@ import com.sanleng.emergencystation.adapter.StationAdapter;
 import com.sanleng.emergencystation.baidumap.DemoGuideActivity;
 import com.sanleng.emergencystation.baidumap.NormalUtils;
 import com.sanleng.emergencystation.baidumap.WNaviGuideActivity;
-import com.sanleng.emergencystation.bean.ArchitectureBean;
 import com.sanleng.emergencystation.bean.StationBean;
 import com.sanleng.emergencystation.dialog.E_StationDialog;
-import com.sanleng.emergencystation.dialog.MaterialDetailsDialog;
 import com.sanleng.emergencystation.net.NetCallBack;
 import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
@@ -109,7 +105,7 @@ import java.util.List;
  *
  * @author qiaoshi
  */
-public class EmergencyRescueActivity extends AppCompatActivity implements OnClickListener {
+public class EmergencyRescueActivity extends BaseActivity implements OnClickListener {
     private LocationClient mLocationClient = null; // 定位对象
     private BDLocationListener myListener = new MyLocationListener(); // 定位监听
     private RelativeLayout myr_back;
@@ -190,7 +186,6 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         // TODO Auto-generated method stub
         super.onCreate(arg0);
         this.setContentView(R.layout.emergencyrescueactivity);
-        StatusBarUtil.setColor(EmergencyRescueActivity.this, R.color.translucency);
         RequestPermission();
         requestPermissions();
         SpeechUtility.createUtility(EmergencyRescueActivity.this, SpeechConstant.APPID + "=5c2ef470");
@@ -199,6 +194,11 @@ public class EmergencyRescueActivity extends AppCompatActivity implements OnClic
         if (initDirs()) {
             initNavi();
         }
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.emergencyrescueactivity;
     }
 
 

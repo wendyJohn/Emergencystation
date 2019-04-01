@@ -13,7 +13,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.FunctionAdapter;
 import com.sanleng.emergencystation.view.MyGridView;
@@ -31,7 +30,7 @@ import java.util.List;
  * @author 作者 : Qiaoshi
  *
  */
-public class MonStationActivity extends Activity implements OnClickListener, OnItemClickListener {
+public class MonStationActivity extends BaseActivity implements OnClickListener, OnItemClickListener {
 
 	private MyGridView itemGrid;
 	private FunctionAdapter adapter;
@@ -41,8 +40,12 @@ public class MonStationActivity extends Activity implements OnClickListener, OnI
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.monstationactivity);
-		StatusBarUtil.setColor(MonStationActivity.this,R.color.translucency);
 		initView();
+	}
+
+	@Override
+	protected int getLayoutRes() {
+		return R.layout.monstationactivity;
 	}
 
 	// 初始化

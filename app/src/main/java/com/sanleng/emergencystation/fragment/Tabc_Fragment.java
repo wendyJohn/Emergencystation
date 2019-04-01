@@ -2,8 +2,11 @@ package com.sanleng.emergencystation.fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,15 +23,20 @@ import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.LoginActivity;
 import com.sanleng.emergencystation.activity.MainActivity;
 import com.sanleng.emergencystation.activity.PwdChangeActivity;
+import com.sanleng.emergencystation.data.Version_mag;
+import com.sanleng.emergencystation.dialog.CustomDialog;
+import com.sanleng.emergencystation.net.UpdateRequest;
+import com.sanleng.emergencystation.service.UpdateService;
 import com.sanleng.emergencystation.utils.DataCleanManager;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
+import com.sanleng.emergencystation.utils.UpdatePresenter;
 
 import java.io.File;
 
 /**
  * 首页
  */
-public class Tabc_Fragment extends BaseFragment implements View.OnClickListener {
+public class Tabc_Fragment extends BaseFragment implements View.OnClickListener, UpdatePresenter {
     private View view;
     private TextView login_out;
     public static final String ACTION_IMGHEAD_PORTRAIT = "image_head";
@@ -45,6 +53,7 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener 
     private TextView item_search_addb;
 
     private DataCleanManager dm;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.mine_fragment, null);
@@ -138,7 +147,7 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener 
 
             // 版本更新
             case R.id.versionupdate:
-                new SVProgressHUD(getActivity()).showInfoWithStatus("已是最新版本");
+                UpdateRequest.GetUpdate(Tabc_Fragment.this, getActivity(), "os_android", Version_mag.platformkey);
                 break;
 
             // 关于我们
@@ -148,8 +157,8 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener 
 
             case R.id.login_out:
                 // 清空sharepre中的用户名和密码
-                PreferenceUtils.setString(getActivity(), "EmergencyStation_username", "");
-                PreferenceUtils.setString(getActivity(), "EmergencyStation_password", "");
+                PreferenceUtils.setString(getActivity(), "EmergencyStation_usernames", "");
+                PreferenceUtils.setString(getActivity(), "EmergencyStation_passwords", "");
                 Intent loginOutIntent = new Intent(getActivity(), LoginActivity.class);
                 loginOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(loginOutIntent);
@@ -189,5 +198,64 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener 
     }
 
 
+    public static int getLocalVersion(Context ctx) {
+        int localVersion = 0;
+        try {
+            PackageInfo packageInfo = ctx.getApplicationContext()
+                    .getPackageManager()
+                    .getPackageInfo(ctx.getPackageName(), 0);
+            localVersion = packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return localVersion;
+    }
 
+    /**
+     * 获取本地软件版本号名称
+     */
+    public static String getLocalVersionName(Context ctx) {
+        String localVersion = "";
+        try {
+            PackageInfo packageInfo = ctx.getApplicationContext().getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
+            localVersion = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return localVersion;
+    }
+
+    @Override
+    public void UpdateSuccess(String version, String path) {
+//        int versions=Integer.parseInt(version);
+        int versions = 1;
+        if (versions > getLocalVersion(getActivity())) {
+            // 是否更新
+            CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
+            String msg = Version_mag.update_mag;
+            String messageitems = "发现新的版本,更新内容如下：" + msg;
+            builder.setMessage(messageitems);
+            builder.setTitle("检测到新的版本信息");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    getActivity().startService(new Intent(getActivity(), UpdateService.class));
+                    new SVProgressHUD(getActivity()).showWithStatus("版本正在更新...");
+                }
+            });
+            builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        } else {
+            new SVProgressHUD(getActivity()).showInfoWithStatus("当前版本：" + getLocalVersionName(getActivity()) + "\n已是最新版本");
+        }
+    }
+
+    @Override
+    public void UpdateFailed() {
+        new SVProgressHUD(getActivity()).showErrorWithStatus("更新失败");
+    }
 }

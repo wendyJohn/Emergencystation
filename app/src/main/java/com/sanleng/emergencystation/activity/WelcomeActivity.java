@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 
 /**
@@ -15,13 +13,12 @@ import com.sanleng.emergencystation.R;
  * @date 创建时间：2019年01月07日
  */
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends BaseActivity {
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.welcome_activity);
-        StatusBarUtil.setColor(WelcomeActivity.this,R.color.translucency);
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
@@ -30,5 +27,10 @@ public class WelcomeActivity extends AppCompatActivity {
                     }
                 }, 1000);
 
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.welcome_activity;
     }
 }

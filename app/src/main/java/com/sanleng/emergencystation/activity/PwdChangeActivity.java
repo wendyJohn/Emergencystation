@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,10 +12,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.baidu.navisdk.ui.routeguide.mapmode.subview.P;
 import com.bigkoo.svprogresshud.SVProgressHUD;
-import com.bigkoo.svprogresshud.SVProgressHUDAnimateUtil;
-import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.net.NetCallBack;
@@ -28,7 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class PwdChangeActivity extends AppCompatActivity implements OnClickListener {
+public class PwdChangeActivity extends BaseActivity implements OnClickListener {
 
     private EditText originalpassword;// 原密码
     private EditText newpassword;// 新密码
@@ -41,9 +37,13 @@ public class PwdChangeActivity extends AppCompatActivity implements OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.passwordmodificationactivity);
-        StatusBarUtil.setColor(PwdChangeActivity.this,R.color.translucency);
         initView();
         initListener();
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.passwordmodificationactivity;
     }
 
     private void initView() {

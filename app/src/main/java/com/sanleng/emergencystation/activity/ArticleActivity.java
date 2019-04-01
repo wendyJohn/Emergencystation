@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.ArticleAdapter;
@@ -46,7 +45,7 @@ import java.util.Map;
  *
  * @author Qiaoshi
  */
-public class ArticleActivity extends Activity {
+public class ArticleActivity extends BaseActivity {
     private ListView listView;
     private ArticleAdapter articleAdapter;
     private ProgressDialog dialog;
@@ -63,8 +62,6 @@ public class ArticleActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-
-        StatusBarUtil.setColor(ArticleActivity.this,R.color.translucency);
 
         listView = (ListView) findViewById(R.id.listview);
         r_back = (RelativeLayout) findViewById(R.id.r_back);
@@ -119,6 +116,11 @@ public class ArticleActivity extends Activity {
                 loadData(myid, name, category, frequency);
             }
         });
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.activity_article;
     }
 
     /**

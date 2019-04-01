@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/text_blue"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -37,60 +39,66 @@
             android:textSize="@dimen/text_size_16" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_one"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:drawableLeft="@drawable/door_a"
-        android:text="开启一号箱" />
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_two"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/door_b"
-        android:text="开启二号箱" />
+        <Button
+            android:id="@+id/btn_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/door_a"
+            android:text="开启一号箱" />
 
-    <Button
-        android:id="@+id/btn_three"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/door_c"
-        android:text="开启三号箱" />
+        <Button
+            android:id="@+id/btn_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/door_b"
+            android:text="开启二号箱" />
 
-    <Button
-        android:id="@+id/btn_four"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/door_d"
-        android:text="开启四号箱" />
+        <Button
+            android:id="@+id/btn_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/door_c"
+            android:text="开启三号箱" />
 
-    <Button
-        android:id="@+id/btn_five"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/door_e"
-        android:text="开启五号箱" />
+        <Button
+            android:id="@+id/btn_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/door_d"
+            android:text="开启四号箱" />
 
-    <Button
-        android:id="@+id/btn_six"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/door_f"
-        android:text="开启六号箱" />
+        <Button
+            android:id="@+id/btn_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/door_e"
+            android:text="开启五号箱" />
 
-    <Button
-        android:id="@+id/btn_seven"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/door_g"
-        android:text="开启七号箱" />
+        <Button
+            android:id="@+id/btn_six"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/door_f"
+            android:text="开启六号箱" />
 
-    <Button
-        android:id="@+id/btn_onekey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="一键开启" />
+        <Button
+            android:id="@+id/btn_seven"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/door_g"
+            android:text="开启七号箱" />
 
+        <Button
+            android:id="@+id/btn_onekey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="一键开启" />
+    </LinearLayout>
 </LinearLayout>

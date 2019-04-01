@@ -10,7 +10,6 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 
 /**
@@ -18,7 +17,7 @@ import com.sanleng.emergencystation.R;
  *
  * @author Qiaoshi
  */
-public class ArticleItemActivity extends Activity {
+public class ArticleItemActivity extends BaseActivity {
 	private RelativeLayout r_back;
 	private WebView webView;
 	private TextView t_name;
@@ -35,8 +34,12 @@ public class ArticleItemActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_articleitem);
-		StatusBarUtil.setColor(ArticleItemActivity.this,R.color.translucency);
 		intview();
+	}
+
+	@Override
+	protected int getLayoutRes() {
+		return R.layout.activity_article;
 	}
 
 	private void intview() {

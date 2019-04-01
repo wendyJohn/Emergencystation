@@ -5,13 +5,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.net.NetCallBack;
 import com.sanleng.emergencystation.net.RequestUtils;
@@ -26,7 +24,7 @@ import java.util.List;
  * @author qiaoshi
  *
  */
-public class EmergencyUnlockingActivity extends Activity implements OnClickListener {
+public class EmergencyUnlockingActivity extends BaseActivity implements OnClickListener {
 	private String mac;
 	private Button btn_one;
 	private Button btn_two;
@@ -48,16 +46,12 @@ public class EmergencyUnlockingActivity extends Activity implements OnClickListe
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		this.setContentView(R.layout.open_door);
-		StatusBarUtil.setColor(EmergencyUnlockingActivity.this,R.color.translucency);
 		initview();
+	}
 
-		list.add("A");
-		list.add("B");
-		list.add("C");
-		list.add("D");
-		list.add("E");
-		list.add("F");
-		list.add("G");
+	@Override
+	protected int getLayoutRes() {
+		return R.layout.open_door;
 	}
 
 	private void initview() {
@@ -81,6 +75,13 @@ public class EmergencyUnlockingActivity extends Activity implements OnClickListe
 		btn_onekey.setOnClickListener(this);
 		r_back = (RelativeLayout) findViewById(R.id.r_back);
 		r_back.setOnClickListener(this);
+		list.add("A");
+		list.add("B");
+		list.add("C");
+		list.add("D");
+		list.add("E");
+		list.add("F");
+		list.add("G");
 	}
 
 	@Override

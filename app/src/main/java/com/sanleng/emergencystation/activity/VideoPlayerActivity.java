@@ -2,13 +2,11 @@ package com.sanleng.emergencystation.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.VideoAdapter;
 import com.sanleng.emergencystation.adapter.VideoViewHolder;
@@ -21,7 +19,7 @@ import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
  *
  * @author Qiaoshi
  */
-public class VideoPlayerActivity extends AppCompatActivity {
+public class VideoPlayerActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
     private RelativeLayout r_back;
 
@@ -30,8 +28,12 @@ public class VideoPlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
-        StatusBarUtil.setColor(VideoPlayerActivity.this,R.color.translucency);
         init();
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.activity_video;
     }
 
     private void init() {

@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.EmergencystationAdapter;
@@ -37,7 +36,7 @@ import java.util.List;
  *
  * @author Qiaoshi
  */
-public class EmergencyStationActivity extends Activity {
+public class EmergencyStationActivity extends BaseActivity {
 
     private RelativeLayout r_back;
     private ListView eslistview;
@@ -60,9 +59,13 @@ public class EmergencyStationActivity extends Activity {
         // TODO Auto-generated method stub
         super.onCreate(arg0);
         this.setContentView(R.layout.emergencystationactivity);
-        StatusBarUtil.setColor(EmergencyStationActivity.this,R.color.translucency);
         initview();
         loadData(pageNo);
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.emergencystationactivity;
     }
 
     private void initview() {

@@ -1,7 +1,6 @@
 package com.sanleng.emergencystation.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.FunctionAdapter;
 import com.sanleng.emergencystation.view.MyGridView;
@@ -32,7 +30,7 @@ import java.util.List;
  * @author 作者 : Qiaoshi
  *
  */
-public class MaterialManagementActivity extends Activity implements OnClickListener, OnItemClickListener {
+public class MaterialManagementActivity extends BaseActivity implements OnClickListener, OnItemClickListener {
 
 	private MyGridView itemGrid;
 	private FunctionAdapter adapter;
@@ -42,8 +40,12 @@ public class MaterialManagementActivity extends Activity implements OnClickListe
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.materialmanagementactivity);
-		StatusBarUtil.setColor(MaterialManagementActivity.this,R.color.translucency);
 		initView();
+	}
+
+	@Override
+	protected int getLayoutRes() {
+		return R.layout.materialmanagementactivity;
 	}
 
 	// 初始化

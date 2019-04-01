@@ -3,25 +3,38 @@ package com.sanleng.emergencystation.activity;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 
-import com.jaeger.library.StatusBarUtil;
+import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.sanleng.emergencystation.MyApplication;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.BottomAdapter;
+import com.sanleng.emergencystation.data.Version_mag;
+import com.sanleng.emergencystation.dialog.CustomDialog;
 import com.sanleng.emergencystation.fragment.Taba_Fragment;
 import com.sanleng.emergencystation.fragment.Tabb_Fragment;
 import com.sanleng.emergencystation.fragment.Tabc_Fragment;
+import com.sanleng.emergencystation.net.UpdateRequest;
+import com.sanleng.emergencystation.service.UpdateService;
+import com.sanleng.emergencystation.utils.PreferenceUtils;
+import com.sanleng.emergencystation.utils.UpdatePresenter;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends BaseActivity implements UpdatePresenter {
     private ViewPager mVp;
     private BottomNavigationView mBv;
     public static final String ROUTE_PLAN_NODE = "routePlanNode";
@@ -34,10 +47,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        StatusBarUtil.setColor(MainActivity.this,R.color.translucency);
         initView();
         //数据填充
         setupViewPager(mVp);
+        checkPermission();//7.0以上添加存储与相机的权限
+        //获取版本号与下载链接
+        UpdateRequest.GetUpdate(MainActivity.this, getApplicationContext(), "os_android", Version_mag.platformkey);
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.activity_main;
     }
 
     //初始化数据
@@ -103,6 +123,41 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+
+    @Override
+    public void UpdateSuccess(String version, final String path) {
+//        int versions = Integer.parseInt(version);
+        int versions = 3;
+        if (versions > getLocalVersion(MainActivity.this)) {
+            // 是否更新
+            CustomDialog.Builder builder = new CustomDialog.Builder(this);
+            String msg = Version_mag.update_mag;
+            String messageitems = "发现新的版本,更新内容如下：" + msg;
+            builder.setMessage(messageitems);
+            builder.setTitle("检测到新的版本信息");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Intent i = new Intent(MainActivity.this, UpdateService.class);
+                    i.putExtra("apkurl", "https://slyj.slicity.com" + path);
+                    startService(i);
+                    new SVProgressHUD(MainActivity.this).showWithStatus("版本正在更新...");
+                }
+            });
+            builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        }
+    }
+
+    @Override
+    public void UpdateFailed() {
+        new SVProgressHUD(MainActivity.this).showErrorWithStatus("更新失败");
+    }
+
     public class Receivers extends BroadcastReceiver {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -118,5 +173,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         unregisterReceiver(receivers);
         super.onDestroy();
+    }
+
+    public static int getLocalVersion(Context ctx) {
+        int localVersion = 0;
+        try {
+            PackageInfo packageInfo = ctx.getApplicationContext()
+                    .getPackageManager()
+                    .getPackageInfo(ctx.getPackageName(), 0);
+            localVersion = packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return localVersion;
+    }
+
+    /**
+     * 获取本地软件版本号名称
+     */
+    public static String getLocalVersionName(Context ctx) {
+        String localVersion = "";
+        try {
+            PackageInfo packageInfo = ctx.getApplicationContext().getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
+            localVersion = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return localVersion;
     }
 }

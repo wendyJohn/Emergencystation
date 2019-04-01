@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.google.zxing.Result;
-import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.dialog.OutofStockDialog;
@@ -119,7 +118,6 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
             config = new ZxingConfig();
         }
         setContentView(R.layout.activity_captures);
-        StatusBarUtil.setColor(CaptureActivity.this, R.color.translucency);
         initView();
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);

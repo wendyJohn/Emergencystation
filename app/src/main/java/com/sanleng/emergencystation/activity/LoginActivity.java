@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
@@ -17,7 +16,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.dialog.PromptDialog;
@@ -38,7 +36,7 @@ import cn.jpush.android.api.JPushInterface;
  *
  * @author qiaoshi
  */
-public class LoginActivity extends AppCompatActivity implements OnClickListener{
+public class LoginActivity extends BaseActivity implements OnClickListener{
     private EditText login_number;
     private EditText login_password;
     private Button login_btn;
@@ -58,8 +56,12 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
         super.onCreate(arg0);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.login_activity);
-        StatusBarUtil.setColor(LoginActivity.this,R.color.translucency);
         initView();
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.login_activity;
     }
 
     private void initView() {
@@ -95,11 +97,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
+        login_number.setText(PreferenceUtils.getString(this, "EmergencyStation_username"));
+        login_password.setText(PreferenceUtils.getString(this, "EmergencyStation_password"));
         int state = PreferenceUtils.getInt(LoginActivity.this, "EmergencyStation_state");
         if (state == 1) {
             // 记住上次登录的信息
-            lastAccount = PreferenceUtils.getString(this, "EmergencyStation_username");
-            lastPwd = PreferenceUtils.getString(this, "EmergencyStation_password");
+            lastAccount = PreferenceUtils.getString(this, "EmergencyStation_usernames");
+            lastPwd = PreferenceUtils.getString(this, "EmergencyStation_passwords");
             if (!StringUtils.isEmpty(lastAccount) && !StringUtils.isEmpty(lastPwd)) {
                 login_number.setText(lastAccount);
                 login_password.setText(lastPwd);
@@ -153,6 +157,11 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
                                 // 存入数据库中（登录名称和密码）
                                 PreferenceUtils.setString(LoginActivity.this, "EmergencyStation_username", userName);
                                 PreferenceUtils.setString(LoginActivity.this, "EmergencyStation_password", password);
+
+                                // 存入数据库中（登录名称和密码用来判断是否需要重新登录问题）
+                                PreferenceUtils.setString(LoginActivity.this, "EmergencyStation_usernames", userName);
+                                PreferenceUtils.setString(LoginActivity.this, "EmergencyStation_passwords", password);
+
                                 // 单位ID
                                 PreferenceUtils.setString(LoginActivity.this, "unitcode", unitcode);
                                 // 人员名称

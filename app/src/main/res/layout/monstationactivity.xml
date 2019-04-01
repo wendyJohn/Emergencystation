@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/text_blue"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -38,14 +39,19 @@
             android:textSize="@dimen/text_size_16" />
     </RelativeLayout>
 
-    <com.sanleng.emergencystation.view.MyGridView
-        android:id="@+id/item_grid"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:horizontalSpacing="0dp"
-        android:listSelector="#00000000"
-        android:numColumns="3"
-        android:verticalSpacing="0dp" />
+        android:background="@color/white">
 
+        <com.sanleng.emergencystation.view.MyGridView
+            android:id="@+id/item_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:horizontalSpacing="0dp"
+            android:listSelector="#00000000"
+            android:numColumns="3"
+            android:verticalSpacing="0dp" />
+    </LinearLayout>
 </LinearLayout>
