@@ -191,7 +191,6 @@ public class EmergencyStationActivity extends BaseActivity {
                                 ArchitectureBean bean = allList.get(position);
                                 String mac = bean.getMac();
                                 String ids = bean.getId();
-                                System.out.println("=================="+ids);
                                 channel_one=bean.getChannel_one();
                                 channel_two=bean.getChannel_two();
 

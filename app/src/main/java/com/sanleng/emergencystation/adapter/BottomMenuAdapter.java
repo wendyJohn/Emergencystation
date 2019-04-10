@@ -226,16 +226,6 @@ public class BottomMenuAdapter extends BaseAdapter {
                 viewholdertwo.icon.setBackground(mContext.getResources().getDrawable(R.drawable.xff));
             }
 
-            viewholdertwo.instructions_yout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String image_type = mList.get(position).getImage_type();
-                    InstructionsDialog instructionsDialog = new InstructionsDialog(mContext, image_type);
-                    instructionsDialog.show();
-
-                }
-            });
-
         }
         return convertView;
     }

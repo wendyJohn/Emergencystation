@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -28,6 +29,7 @@ public class MonitorActivity extends BaseActivity {
     private int orientation;
     private String channel_two;
     private String channel_one;
+    private int i = -1;
 
     @SuppressLint("ResourceAsColor")
     @Override

@@ -157,14 +157,14 @@ public class MaterialAdapter extends BaseAdapter {
 		if(image_type.equals("XFF")) {
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.xff));
 		}
-		holder.instructions_yout.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String image_type=mList.get(position).getId();
-				InstructionsDialog instructionsDialog = new InstructionsDialog(mContext, image_type);
-				instructionsDialog.show();
-			}
-		});
+//		holder.instructions_yout.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				String image_type=mList.get(position).getId();
+//				InstructionsDialog instructionsDialog = new InstructionsDialog(mContext, image_type);
+//				instructionsDialog.show();
+//			}
+//		});
 
 		return convertView;
 	}

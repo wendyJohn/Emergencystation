@@ -18,6 +18,8 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +65,7 @@ import com.baidu.navisdk.adapter.IBNTTSManager;
 import com.baidu.navisdk.adapter.IBaiduNaviManager;
 import com.baidu.navisdk.adapter.impl.BaiduNaviManager;
 import com.baidu.platform.comapi.walknavi.widget.ArCameraView;
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.google.gson.Gson;
 import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechConstant;
@@ -179,6 +182,7 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
     private String sos_ids;
     private String channel_two;
     private String channel_one;
+    private String stationname;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -349,6 +353,10 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
             latLng = new LatLng(location.getLatitude(), location.getLongitude());
             S_mylatitude = location.getLatitude();
             S_mylongitude = location.getLongitude();
+            if (S_mylatitude == 0.0 && S_mylongitude == 0.0) {
+                new SVProgressHUD(EmergencyRescueActivity.this).showErrorWithStatus("当前网络不通畅，请重新获取");
+            }
+
 //            // 构造定位数据
             MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
@@ -455,7 +463,26 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
 
         voicesearch_image = findViewById(R.id.voicesearch_image);//语音搜索
         search_edit = findViewById(R.id.search_edit);//搜索输入框
+        search_edit.addTextChangedListener(new TextWatcher() {
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+                stationname=s.toString();
+                NearbyEmergencyStation();
+            }
+        });
         myr_back = (RelativeLayout) findViewById(R.id.r_back);
 
         mylist.add("A");
@@ -645,6 +672,7 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
         params.put("lng", S_mylongitude + "");
         params.put("pageNum", "1");
         params.put("pageSize", "100");
+        params.put("name", stationname);
         params.put("username", PreferenceUtils.getString(EmergencyRescueActivity.this, "EmergencyStation_username"));
         params.put("platformkey", "app_firecontrol_owner");
         RequestUtils.ClientPost(URLs.NearbyEmergencyStation_URL, params, new NetCallBack() {
@@ -781,11 +809,11 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
                             String lng = object.getString("lng");
                             String ids = object.getString("ids");
                             String examineResult = object.getString("examineResult");
+                            String address = object.getString("address");
 
                             if (examineResult.equals("1")) {
-                                //测试
                                 bean.setName("SOS求救");
-                                bean.setAddress("南京市-江宁区-秣周东路12号");
+                                bean.setAddress(address);
                                 bean.setE_mylatitude(Double.parseDouble(lat));
                                 bean.setE_mylongitude(Double.parseDouble(lng));
                                 bean.setType(2);
@@ -1380,9 +1408,8 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
                 if (!isLast) {
                     //解析语音返回的result为识别后的汉字,直接赋值到TextView上即可
                     String result = parseVoice(recognizerResult.getResultString());
-//                    search_edit.setText(result);
+                    search_edit.setText(result);
                     mBaiduMap.clear();
-
                     if (result.equals("消防应急站") || result.equals("救援") || result.equals("消防")) {
                         NearbyEmergencyStation();
                     }

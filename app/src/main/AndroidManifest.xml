@@ -161,7 +161,6 @@
             android:name=".activity.MonitorActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-
         <!--宣传视频-->
         <activity
             android:name=".activity.VideoPlayerActivity"

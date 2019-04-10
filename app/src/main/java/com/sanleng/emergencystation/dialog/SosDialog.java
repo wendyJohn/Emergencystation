@@ -86,7 +86,7 @@ public class SosDialog extends Dialog implements View.OnClickListener {
                 // 根据ID获取RadioButton的实例
                 RadioButton rb = (RadioButton) findViewById(radioButtonId);
                 String s = rb.getText().toString();
-                if (s.equals("火警")) {
+                if (s.equals("火灾")) {
                     type = "firecontrol";
                 }
                 if (s.equals("医疗")) {
@@ -149,7 +149,7 @@ public class SosDialog extends Dialog implements View.OnClickListener {
                         JSONObject JSONObject = new JSONObject(result);
                         String msg = JSONObject.getString("msg");
                         if (msg.equals("申请成功")) {
-                            new SVProgressHUD(context).showSuccessWithStatus("发送成功");
+                            new SVProgressHUD(context).showSuccessWithStatus("求救成功");
                         } else {
                             new SVProgressHUD(context).showErrorWithStatus(msg);
                         }
