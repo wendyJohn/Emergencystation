@@ -226,20 +226,21 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener,
     }
 
     @Override
-    public void UpdateSuccess(String version, String path) {
+    public void UpdateSuccess(String version, final String path, String appDescribe) {
 //        int versions=Integer.parseInt(version);
         int versions = 1;
         if (versions > getLocalVersion(getActivity())) {
             // 是否更新
             CustomDialog.Builder builder = new CustomDialog.Builder(getActivity());
-            String msg = Version_mag.update_mag;
-            String messageitems = "发现新的版本,更新内容如下：" + msg;
+            String messageitems = "发现新的版本,更新内容如下：" + appDescribe;
             builder.setMessage(messageitems);
             builder.setTitle("检测到新的版本信息");
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    getActivity().startService(new Intent(getActivity(), UpdateService.class));
+                    Intent i = new Intent(getActivity(), UpdateService.class);
+                    i.putExtra("apkurl", "https://slyj.slicity.com" + path);
+                    getActivity().startService(i);
                     new SVProgressHUD(getActivity()).showWithStatus("版本正在更新...");
                 }
             });

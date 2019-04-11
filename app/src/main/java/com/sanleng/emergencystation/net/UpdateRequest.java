@@ -34,7 +34,8 @@ public class UpdateRequest {
                     JSONObject objects=new JSONObject(data);
                     String appVersion=objects.getString("appVersion");
                     String downloadUrl=objects.getString("downloadUrl");
-                    updatePresenter.UpdateSuccess(appVersion,downloadUrl);
+                    String appDescribe=objects.getString("appDescribe");
+                    updatePresenter.UpdateSuccess(appVersion,downloadUrl,appDescribe);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
