@@ -16,6 +16,7 @@ import com.sanleng.emergencystation.activity.EmergencyRescueActivity;
 import com.sanleng.emergencystation.activity.MonStationActivity;
 import com.sanleng.emergencystation.activity.VideoPlayerActivity;
 import com.sanleng.emergencystation.dialog.SosDialog;
+import com.sanleng.emergencystation.utils.PreferenceUtils;
 import com.sanleng.emergencystation.utils.RotateCard;
 import com.sanleng.emergencystation.view.MarqueeViews;
 
@@ -98,7 +99,7 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
         info = new ArrayList<>();
 //        info.add("江苏三棱4号楼应急柜物资缺少");
 //        info.add("南京市江宁区秣周东路4号楼需紧急求救");
-        info.add("暂无通知信息");
+        info.add( PreferenceUtils.getString(getActivity(),"news"));
         marqueeviews.startWithList(info);
 //        RequestParams params = new RequestParams();
 //        params.put("event_no", "142");

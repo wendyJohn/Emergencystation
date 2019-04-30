@@ -150,9 +150,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                                 String unitcode = object.getString("unitcode");
                                 String agentName = object.getString("name");
                                 String ids = object.getString("ids");
-
+                                System.out.println("==================="+ ids);
                                 //绑定唯一标识
-                                JPushInterface.setAlias(LoginActivity.this, 1, unitcode);
+                                JPushInterface.setAlias(LoginActivity.this, 1, ids);
 
                                 // 存入数据库中（登录名称和密码）
                                 PreferenceUtils.setString(LoginActivity.this, "EmergencyStation_username", userName);

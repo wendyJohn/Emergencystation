@@ -71,7 +71,7 @@ public class MaterialAdapter extends BaseAdapter {
 			holder.name = convertView.findViewById(R.id.name);
 			holder.address =convertView.findViewById(R.id.address);
 			holder.icon =convertView.findViewById(R.id.icon);
-			holder.instructions_yout =convertView.findViewById(R.id.instructions_yout);
+			holder.instructions =convertView.findViewById(R.id.instructions);
 
 			convertView.setTag(holder);
 		} else {
@@ -80,6 +80,7 @@ public class MaterialAdapter extends BaseAdapter {
 
 		holder.name.setText(mList.get(position).getName());
 		holder.address.setText("位置："+ mList.get(position).getAddress()+" 号箱");
+		holder.instructions.setText("物品缺失");
 
 		String image_type=mList.get(position).getType();
 		if(image_type.equals("ZJHXQ")||image_type.equals("HXQ")){
@@ -157,14 +158,8 @@ public class MaterialAdapter extends BaseAdapter {
 		if(image_type.equals("XFF")) {
 			holder.icon.setBackground(mContext.getResources().getDrawable(R.drawable.xff));
 		}
-//		holder.instructions_yout.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				String image_type=mList.get(position).getId();
-//				InstructionsDialog instructionsDialog = new InstructionsDialog(mContext, image_type);
-//				instructionsDialog.show();
-//			}
-//		});
+
+
 
 		return convertView;
 	}
@@ -173,6 +168,6 @@ public class MaterialAdapter extends BaseAdapter {
 		TextView name;
 		TextView address;
 		ImageView icon;
-		LinearLayout instructions_yout;
+		TextView instructions;
 	}
 }

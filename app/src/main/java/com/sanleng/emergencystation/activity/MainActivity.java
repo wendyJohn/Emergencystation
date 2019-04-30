@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity implements UpdatePresenter {
         if (versions > getLocalVersion(MainActivity.this)) {
             // 是否更新
             CustomDialog.Builder builder = new CustomDialog.Builder(this);
-            String messageitems = "发现新的版本,更新内容如下：" + appDescribe;
+            String messageitems = "更新内容如下：" + appDescribe;
             builder.setMessage(messageitems);
             builder.setTitle("检测到新的版本信息");
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {

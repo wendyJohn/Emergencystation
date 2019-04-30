@@ -559,7 +559,6 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
                     if (result == null || result.length() == 0) {
                         return;
                     }
-
                     try {
                         JSONObject jSONObject = new JSONObject(result);
                         String message = jSONObject.getString("msg");
@@ -573,11 +572,7 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-//                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("出库成功");
-//                continuePreview();
                 }
-
                 @Override
                 public void onMyFailure(Throwable arg0) {
                     new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("出库失败");

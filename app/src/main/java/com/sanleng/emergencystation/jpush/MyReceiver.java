@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.sanleng.emergencystation.activity.MainActivity;
+import com.sanleng.emergencystation.utils.PreferenceUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +52,7 @@ public class MyReceiver extends BroadcastReceiver {
 
                 Intent myintent = new Intent(BROADCAST_ACTION_DISC);
                 myintent.putExtra("str_test", str_test);
+                PreferenceUtils.setString(context,"news",str_test);
                 context.sendBroadcast(myintent, BROADCAST_PERMISSION_DISC);
 
                 Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
