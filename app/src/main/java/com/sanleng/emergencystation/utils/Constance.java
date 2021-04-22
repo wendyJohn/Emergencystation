@@ -28,6 +28,10 @@ public class Constance {
 	public final static String SWITCH_AUTO_UPDATE = "switch_auto_update";
 
 
-	
+	public final class UserInfo{
+		public static final String NAME = "user_nick_name";
+		public static final String GENDER = "user_gender";
+		public static final String HEAD_IMAGE = "user_head_uri";
+	}
 
 }

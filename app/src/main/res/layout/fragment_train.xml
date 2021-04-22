@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_thin">
+
+    <RelativeLayout
+        android:id="@+id/rea_train"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_size_45"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="教育培训"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
+    <com.sanleng.emergencystation.view.PullToRefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_below="@id/rea_train"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/refresh_head" />
+        <!-- 支持所有实现Pullable接口的View -->
+
+        <com.sanleng.emergencystation.view.pullableview.PullableListView
+            android:id="@+id/content_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/widget_size_5"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:dividerHeight="1.0px"
+            android:drawSelectorOnTop="false"
+            android:listSelector="@android:color/transparent"  />
+
+        <include layout="@layout/load_more" />
+
+    </com.sanleng.emergencystation.view.PullToRefreshLayout>
+
+
+</RelativeLayout>

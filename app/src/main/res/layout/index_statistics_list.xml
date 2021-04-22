@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageView_item"
         android:layout_width="match_parent"
-        android:background="@drawable/sketchmap"
-        android:layout_height="@dimen/widget_size_60" />
+        android:layout_height="@dimen/widget_size_60"
+        android:background="@drawable/sketchmap" />
 
     <com.sanleng.emergencystation.utils.RotateCard
         android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="120dp">
-    </com.sanleng.emergencystation.utils.RotateCard>
+        android:layout_height="120dp"
+        android:visibility="gone"></com.sanleng.emergencystation.utils.RotateCard>
 
+    <com.dalong.library.view.LoopRotarySwitchView
+        android:id="@+id/mLoopRotarySwitchView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        app:direction="right">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/statistics_a" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/statistics_b" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/statistics_c" />
+
+    </com.dalong.library.view.LoopRotarySwitchView>
 
 </LinearLayout>

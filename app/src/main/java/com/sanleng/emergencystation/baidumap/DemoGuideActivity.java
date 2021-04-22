@@ -17,7 +17,7 @@ import com.baidu.navisdk.adapter.IBNRouteGuideManager;
 import com.baidu.navisdk.adapter.map.BNItemizedOverlay;
 import com.baidu.navisdk.adapter.map.BNOverlayItem;
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.activity.MainActivity;
+import com.sanleng.emergencystation.activity.MainTabActivity;
 
 /**
  * 诱导界面
@@ -48,7 +48,7 @@ public class DemoGuideActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 mBNRoutePlanNode = (BNRoutePlanNode)
-                        bundle.getSerializable(MainActivity.ROUTE_PLAN_NODE);
+                        bundle.getSerializable(MainTabActivity.ROUTE_PLAN_NODE);
             }
         }
 

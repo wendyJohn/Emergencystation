@@ -48,5 +48,26 @@
         <item>@drawable/reportloss</item>
         <item>@drawable/sitedetails</item>
     </array>
-
+    <!--tab选项名称-->
+    <string-array name="tab_namea">
+        <item>一号柜</item>
+    </string-array>
+    <!--tab选项名称-->
+    <string-array name="tab_nameb">
+        <item>一号柜</item>
+        <item>二号柜</item>
+    </string-array>
+    <!--tab选项名称-->
+    <string-array name="tab_namec">
+        <item>一号柜</item>
+        <item>二号柜</item>
+        <item>三号柜</item>
+    </string-array>
+    <!--tab选项名称-->
+    <string-array name="tab_named">
+        <item>全部</item>
+        <item>一号柜</item>
+        <item>二号柜</item>
+        <item>三号柜</item>
+    </string-array>
 </resources>

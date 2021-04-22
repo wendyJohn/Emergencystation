@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_thin"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/linyears"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:padding="@dimen/widget_size_10">
+
+            <ImageView
+                android:id="@+id/backs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@mipmap/back_icon"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="物资库存"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_16"
+                 />
+
+        </RelativeLayout>
+
+
+        <!-- 主界面的布局 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_thin"
+            android:layout_above="@id/usagerecord"
+            android:layout_below="@id/linyears"
+            android:orientation="vertical">
+
+            <com.sanleng.emergencystation.view.PagerSlidingTab
+                android:id="@+id/pagerSlidingTab"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_45" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:background="@color/gray_thin"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/usagerecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="@dimen/widget_size_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查看使用记录"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

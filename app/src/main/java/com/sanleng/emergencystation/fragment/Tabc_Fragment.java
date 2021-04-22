@@ -21,11 +21,10 @@ import android.widget.TextView;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.LoginActivity;
-import com.sanleng.emergencystation.activity.MainActivity;
 import com.sanleng.emergencystation.activity.PwdChangeActivity;
 import com.sanleng.emergencystation.data.Version_mag;
 import com.sanleng.emergencystation.dialog.CustomDialog;
-import com.sanleng.emergencystation.net.UpdateRequest;
+import com.sanleng.emergencystation.presenter.UpdateRequest;
 import com.sanleng.emergencystation.service.UpdateService;
 import com.sanleng.emergencystation.utils.DataCleanManager;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
@@ -43,9 +42,7 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener,
 
     private RelativeLayout changepassword;
     private RelativeLayout scavengingcaching;
-    private RelativeLayout dataupdate;
     private RelativeLayout versionupdate;
-    private RelativeLayout aboutus;
 
     private TextView tv_user_headname;
     private ImageView iv_userhead;
@@ -82,9 +79,7 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener,
 
         changepassword = (RelativeLayout) view.findViewById(R.id.changepassword);
         scavengingcaching = (RelativeLayout) view.findViewById(R.id.scavengingcaching);
-        dataupdate = (RelativeLayout) view.findViewById(R.id.dataupdate);
         versionupdate = (RelativeLayout) view.findViewById(R.id.versionupdate);
-        aboutus = (RelativeLayout) view.findViewById(R.id.aboutus);
 
         tv_user_headname = (TextView) view.findViewById(R.id.tv_user_headname);
         item_search_addb = (TextView) view.findViewById(R.id.item_search_addb);
@@ -116,9 +111,7 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener,
         login_out.setOnClickListener(this);
         changepassword.setOnClickListener(this);
         scavengingcaching.setOnClickListener(this);
-        dataupdate.setOnClickListener(this);
         versionupdate.setOnClickListener(this);
-        aboutus.setOnClickListener(this);
     }
 
     @Override
@@ -140,19 +133,10 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener,
                 //缓存大小
                 item_search_addb.setText("0.0");
                 break;
-            // 数据更新
-            case R.id.dataupdate:
-                new SVProgressHUD(getActivity()).showInfoWithStatus("暂无数据更新");
-                break;
 
             // 版本更新
             case R.id.versionupdate:
-                UpdateRequest.GetUpdate(Tabc_Fragment.this, getActivity(), "os_android", Version_mag.platformkey);
-                break;
-
-            // 关于我们
-            case R.id.aboutus:
-                new SVProgressHUD(getActivity()).showInfoWithStatus("江苏三棱智慧物联发展有限公司\nCopyright©2018-2019 江苏三棱智慧物联发展股份有限公司版权所有");
+//                UpdateRequest.GetUpdate(Tabc_Fragment.this, getActivity(), "os_android", Version_mag.platformkey);
                 break;
 
             case R.id.login_out:
@@ -163,11 +147,6 @@ public class Tabc_Fragment extends BaseFragment implements View.OnClickListener,
                 loginOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(loginOutIntent);
                 getActivity().finish();
-                break;
-            // 头像点击跳转到个人信息界面
-            case R.id.iv_userhead:
-//			Intent intentiv_userhead = new Intent(getActivity(), MyInfoActivity.class);
-//			startActivity(intentiv_userhead);
                 break;
             default:
                 break;

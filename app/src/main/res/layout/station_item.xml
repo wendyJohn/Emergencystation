@@ -13,7 +13,6 @@
             android:id="@+id/dress_yout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/dress_youta"
             android:layout_alignLeft="@+id/dress_youta"
             android:orientation="vertical"
             android:visibility="visible">

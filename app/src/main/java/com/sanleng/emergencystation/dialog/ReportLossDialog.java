@@ -15,8 +15,6 @@ import android.widget.Toast;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.net.NetCallBack;
-import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
 
@@ -119,54 +117,6 @@ public class ReportLossDialog extends Dialog implements View.OnClickListener {
 
     // 获取物资详情
     private void MaterialDetails() {
-        RequestParams params = new RequestParams();
-        params.put("ids", ids);
-        params.put("username", PreferenceUtils.getString(context, "EmergencyStation_username"));
-        params.put("platformkey", "app_firecontrol_owner");
-        RequestUtils.ClientPost(URLs.MaterialDetails_URL, params, new NetCallBack() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
-                }
-                System.out.println("数据请求成功" + result);
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String data = jsonObject.getString("data");
-                    JSONObject object = new JSONObject(data);
-                    String myname = object.getString("name");
-                    String mynumber = object.getString("number");
-                    String myspecification = object.getString("specification");
-                    String mymodel = object.getString("model");
-
-                    stationName = object.getString("stationName");
-                    stationId = object.getString("stationId");
-//                    stationAddress = object.getString("stationAddress");
-                    storageLocation = object.getString("storageLocation");
-
-
-                    name.setText("物资名称：" + myname);
-                    number.setText("物资编号：" + mynumber);
-                    specification.setText("物资数量：" + myspecification);
-                    model.setText("物资型号：" + mymodel);
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onMyFailure(Throwable arg0) {
-                new SVProgressHUD(context).showErrorWithStatus("物资信息加载失败");
-            }
-        });
 
     }
 }

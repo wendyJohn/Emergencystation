@@ -31,8 +31,6 @@ import com.sanleng.emergencystation.dialog.OutofStockDialog;
 import com.sanleng.emergencystation.dialog.ReportLossDialog;
 import com.sanleng.emergencystation.dialog.TipsDialog;
 import com.sanleng.emergencystation.dialog.WarehousingDialog;
-import com.sanleng.emergencystation.net.NetCallBack;
-import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
 import com.sanleng.emergencystation.zxing.bean.ZxingConfig;
@@ -482,161 +480,13 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
 
 
     // 提交入库数据信息
-    private void Warehousing() {
-            RequestParams params = new RequestParams();
-            params.put("ids", ids);
-            params.put("agentName", PreferenceUtils.getString(CaptureActivity.this, "agentName"));
-            params.put("agentId", PreferenceUtils.getString(CaptureActivity.this, "ids"));
-            params.put("stationName", stationName);
-            params.put("stationId", stationId);
-            params.put("storageLocation", storageLocation);
-            params.put("state", "emergencystation_in");
-            params.put("username", PreferenceUtils.getString(CaptureActivity.this, "EmergencyStation_username"));
-            params.put("platformkey", "app_firecontrol_owner");
-
-            RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
-                @Override
-                public void onStart() {
-                    super.onStart();
-                }
-
-                @Override
-                public void onMySuccess(String result) {
-                    if (result == null || result.length() == 0) {
-                        return;
-                    }
-                    try {
-                        JSONObject jSONObject = new JSONObject(result);
-                        String message = jSONObject.getString("state");
-                        if (message.equals("ok")) {
-                            TipsDialog tipsDialog = new TipsDialog(CaptureActivity.this, "入库成功,是否继续？", mHandler);
-                            tipsDialog.show();
-                        } else {
-                            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，入库失败");
-                            continuePreview();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-//                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("入库成功");
-//                continuePreview();
-                }
-
-                @Override
-                public void onMyFailure(Throwable arg0) {
-                    new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("入库失败");
-
-                }
-            });
-    }
+    private void Warehousing() {}
 
     // 提交出库数据信息
-    private void OutOfStock() {
-        if(stationName==null||"".equals(stationName)){
-            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，出库失败");
-            continuePreview();
-        }else {
-            RequestParams params = new RequestParams();
-            params.put("ids", ids);
-            params.put("agentName", PreferenceUtils.getString(CaptureActivity.this, "agentName"));
-            params.put("agentId", PreferenceUtils.getString(CaptureActivity.this, "ids"));
-            params.put("stationName", stationName);
-            params.put("stationId", stationId);
-            params.put("storageLocation", storageLocation);
-            params.put("state", "emergencystation_out");
-            params.put("username", PreferenceUtils.getString(CaptureActivity.this, "EmergencyStation_username"));
-            params.put("platformkey", "app_firecontrol_owner");
-
-            RequestUtils.ClientPost(URLs.Outofstock_URL, params, new NetCallBack() {
-                @Override
-                public void onStart() {
-                    super.onStart();
-                }
-
-                @Override
-                public void onMySuccess(String result) {
-                    if (result == null || result.length() == 0) {
-                        return;
-                    }
-                    try {
-                        JSONObject jSONObject = new JSONObject(result);
-                        String message = jSONObject.getString("msg");
-                        if (message.equals("修改成功")) {
-                            TipsDialog tipsDialog = new TipsDialog(CaptureActivity.this, "出库成功,是否继续？", mHandler);
-                            tipsDialog.show();
-                        } else {
-                            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，出库失败");
-                            continuePreview();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                @Override
-                public void onMyFailure(Throwable arg0) {
-                    new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("出库失败");
-                }
-            });
-        }
-    }
+    private void OutOfStock() {}
 
     // 提交报损数据信息
-    private void ReportLoss() {
-        if(stationName==null||"".equals(stationName)){
-            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，报损失败");
-            continuePreview();
-        }else {
-            RequestParams params = new RequestParams();
-            params.put("ids", ids);
-            params.put("agentName", PreferenceUtils.getString(CaptureActivity.this, "agentName"));
-            params.put("agentId", PreferenceUtils.getString(CaptureActivity.this, "ids"));
-            params.put("stationName", stationName);
-            params.put("stationId", stationId);
-            params.put("storageLocation", storageLocation);
-            params.put("state", "emergencystation_break");
-            params.put("reason", reason);
-
-            params.put("username", PreferenceUtils.getString(CaptureActivity.this, "EmergencyStation_username"));
-            params.put("platformkey", "app_firecontrol_owner");
-
-            RequestUtils.ClientPost(URLs.Warehousing_URL, params, new NetCallBack() {
-                @Override
-                public void onStart() {
-                    super.onStart();
-                }
-
-                @Override
-                public void onMySuccess(String result) {
-                    if (result == null || result.length() == 0) {
-                        return;
-                    }
-
-                    try {
-                        JSONObject jSONObject = new JSONObject(result);
-                        String message = jSONObject.getString("msg");
-                        if (message.equals("修改成功")) {
-                            TipsDialog tipsDialog = new TipsDialog(CaptureActivity.this, "报损成功,是否继续？", mHandler);
-                            tipsDialog.show();
-                        } else {
-                            new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("信息错误，报损失败");
-                            continuePreview();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-//                new SVProgressHUD(CaptureActivity.this).showSuccessWithStatus("报损成功");
-
-                }
-
-                @Override
-                public void onMyFailure(Throwable arg0) {
-                    new SVProgressHUD(CaptureActivity.this).showErrorWithStatus("报损失败");
-                }
-            });
-        }
-    }
+    private void ReportLoss() {}
 
     //重复扫码
     private void continuePreview() {

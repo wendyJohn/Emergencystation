@@ -15,8 +15,6 @@ import android.widget.Toast;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.net.NetCallBack;
-import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
 
@@ -84,59 +82,6 @@ public class PwdChangeActivity extends BaseActivity implements OnClickListener {
         if (isEquale(pwd, newpwd, renewpwd)) {
             return;
         }
-        RequestParams params = new RequestParams();
-        params.put("username", PreferenceUtils.getString(this, "EmergencyStation_username"));
-        params.put("oldpassword", pwd);
-        params.put("newpassword", newpwd);
-        params.put("platformkey", "app_firecontrol_owner");
-
-        RequestUtils.ClientPost(URLs.PasswordModification, params, new NetCallBack() {
-
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
-                }
-                System.out.println("数据请求成功" + result);
-                try {
-                    JSONObject jsonobject = new JSONObject(result);
-                    String msg = jsonobject.getString("msg");
-                    if (msg.equals("密码修改成功,请重新登录")) {
-                        new SVProgressHUD(PwdChangeActivity.this).showSuccessWithStatus("密码修改成功");
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                // 清空sharepre中的用户名和密码
-                                PreferenceUtils.setString(PwdChangeActivity.this, "EmergencyStation_username", "");
-                                PreferenceUtils.setString(PwdChangeActivity.this, "EmergencyStation_password", "");
-                                Intent loginOutIntent = new Intent(PwdChangeActivity.this, LoginActivity.class);
-                                loginOutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(loginOutIntent);
-                                finish();
-                            }
-                        }, 1000);
-                    }
-                    if (msg.equals("旧密码不正确")) {
-                        new SVProgressHUD(PwdChangeActivity.this).showErrorWithStatus("旧密码不正确");
-                    }
-                    if (msg.equals("用户不存在")) {
-                        new SVProgressHUD(PwdChangeActivity.this).showErrorWithStatus("用户不存在");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onMyFailure(Throwable arg0) {
-                new SVProgressHUD(PwdChangeActivity.this).showErrorWithStatus("服务器请求异常");
-            }
-        });
-
 
     }
 

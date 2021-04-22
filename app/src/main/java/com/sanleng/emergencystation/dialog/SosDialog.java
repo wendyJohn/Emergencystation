@@ -19,8 +19,6 @@ import com.baidu.location.LocationClientOption;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.net.NetCallBack;
-import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
 
@@ -102,7 +100,6 @@ public class SosDialog extends Dialog implements View.OnClickListener {
         switch (v.getId()) {
             // 确认求救
             case R.id.notice:
-                CryForHelp();
                 break;
             // 取消
             case R.id.cancle:
@@ -110,59 +107,6 @@ public class SosDialog extends Dialog implements View.OnClickListener {
                 break;
             default:
                 break;
-        }
-    }
-
-    // 一键求救
-    private void CryForHelp() {
-        if (lat == 0.0 && lng == 0.0) {
-            new SVProgressHUD(context).showErrorWithStatus("获取位置信息失败，请重新获取");
-        } else if ("".equals(name.getText().toString().trim()) || "".equals(phone.getText().toString().trim()) || "".equals(identitycrad.getText().toString().trim()) || name.getText().toString().trim() == null || phone.getText().toString().trim() == null || identitycrad.getText().toString().trim() == null
-                ||"".equals(type)||type==null) {
-            Toast.makeText(context,"请填写完求救信息！",Toast.LENGTH_SHORT).show();
-        } else {
-            dismiss();
-            RequestParams params = new RequestParams();
-            params.put("lat", lat + "");
-            params.put("lng", lng + "");
-            params.put("name", name.getText().toString().trim());
-            params.put("phone", phone.getText().toString().trim());
-            params.put("identitycrad", identitycrad.getText().toString().trim());
-            params.put("type", type);
-            params.put("address", address);
-            params.put("unitCode", PreferenceUtils.getString(context, "unitcode"));
-            params.put("username", PreferenceUtils.getString(context, "EmergencyStation_username"));
-            params.put("platformkey", "app_firecontrol_owner");
-            RequestUtils.ClientPost(URLs.CryForHelp_URL, params, new NetCallBack() {
-                @Override
-                public void onStart() {
-                    super.onStart();
-                }
-
-                @Override
-                public void onMySuccess(String result) {
-                    if (result == null || result.length() == 0) {
-                        return;
-                    }
-                    System.out.println("数据请求成功" + result);
-                    try {
-                        JSONObject JSONObject = new JSONObject(result);
-                        String msg = JSONObject.getString("msg");
-                        if (msg.equals("申请成功")) {
-                            new SVProgressHUD(context).showSuccessWithStatus("求救成功");
-                        } else {
-                            new SVProgressHUD(context).showErrorWithStatus(msg);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onMyFailure(Throwable arg0) {
-                    new SVProgressHUD(context).showErrorWithStatus("求救失败");
-                }
-            });
         }
     }
 

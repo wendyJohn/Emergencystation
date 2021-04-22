@@ -1,15 +1,21 @@
 package com.sanleng.emergencystation.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.dalong.library.listener.OnItemClickListener;
+import com.dalong.library.view.LoopRotarySwitchView;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.ArticleActivity;
 import com.sanleng.emergencystation.activity.EmergencyRescueActivity;
@@ -39,12 +45,16 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
     private LinearLayout smallprogram;//应急小程序
     private LinearLayout article;//文章
     private LinearLayout video;//视频
+    private LoopRotarySwitchView mLoopRotarySwitchView;
+    private  int width;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.taba_fragment, null);
         initView();
         listener();
+        initLoopRotarySwitchView();
         return view;
     }
 
@@ -60,6 +70,33 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
         card = view.findViewById(R.id.card);
     }
 
+    /**
+     * 设置LoopRotarySwitchView
+     */
+    private void initLoopRotarySwitchView() {
+        mLoopRotarySwitchView=view.findViewById(R.id.mLoopRotarySwitchView);
+
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(dm);
+        width=dm.widthPixels;
+
+        mLoopRotarySwitchView
+                .setR(width/3)//设置R的大小
+                .setMultiple(0.1f)
+                .setAutoRotation(true)//是否自动切换
+                .setAutoScrollDirection(LoopRotarySwitchView.AutoScrollDirection.left)
+//                .setLoopRotationX(-50)
+                .setAutoRotationTime(2000);//自动切换的时间  单位毫秒
+
+        mLoopRotarySwitchView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int item, View view) {
+                Toast.makeText(getActivity(), "item:"+item, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void listener() {
         administration.setOnClickListener(this);
         rescue.setOnClickListener(this);
@@ -72,7 +109,7 @@ public class Taba_Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         addNews(1);
-        statistics();
+//        statistics();
         super.onResume();
     }
 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/cst_reala"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/widget_size_5">
+
+        <LinearLayout
+            android:id="@+id/info_lin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/cst_image"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cst_infos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxEms="20"
+                android:padding="@dimen/widget_size_5"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_15" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/widget_size_5"
+            android:text="2021-02-01"
+            android:textSize="@dimen/text_size_12" />
+
+        <LinearLayout
+            android:id="@+id/cst_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/image_article"
+                android:layout_width="@dimen/widget_size_80"
+                android:layout_height="@dimen/widget_size_70" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -81,16 +81,16 @@
     <application
         android:name="com.sanleng.emergencystation.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/app_logo"
+        android:icon="@mipmap/logos"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/app_logo"
+        android:roundIcon="@mipmap/logos"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="lEWaSi7xNaDaSUpVumnEeNw0d0fc5pIm" />
+            android:value="i8ukpuWKmhdlY5toB0iKGo7rmI8GD0Po" />
 
         <activity
             android:name=".activity.WelcomeActivity"
@@ -102,15 +102,38 @@
         </activity>
 
         <!-- 登录 -->
+
+
+        <!--2.0登录 -->
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-
-        <!--首页 -->
-        <activity
-            android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
+        <!--2.0首页 -->
+        <activity
+            android:name=".activity.MainTabActivity"
+            android:launchMode="singleInstance" />
+        <!--培训详情 -->
+        <activity
+            android:name=".activity.ArticleInfosActivity"
+            android:launchMode="singleInstance" />
+
+        <!--远程开门 -->
+        <activity
+            android:name=".activity.RemoteControlActivity"
+            android:launchMode="singleInstance" />
+
+        <!--物资库存 -->
+        <activity
+            android:name=".activity.SearchActivity"
+            android:launchMode="singleInstance" />
+
+        <!--事件记录 -->
+        <activity
+            android:name=".activity.EventsActivity"
+            android:launchMode="singleInstance" />
+
+
+
         <!-- 应急救援 -->
         <activity
             android:name=".activity.EmergencyRescueActivity"
@@ -166,6 +189,23 @@
             android:name=".activity.VideoPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+
+        <!-- 个人中心_人脸注册 -->
+        <activity
+            android:name=".activity.FaceRegistrationActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 注意包名 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.sanleng.emergencystation.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
         <activity
             android:name=".zxing.activiry.CaptureActivity"

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.sanleng.emergencystation.activity.MainActivity;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
 
 import org.json.JSONException;
@@ -15,7 +14,6 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.service.PushService;
 
 public class MyReceiver extends BroadcastReceiver {
     private static final String TAG = "JIGUANG";

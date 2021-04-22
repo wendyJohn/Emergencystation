@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/tem_hum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widget_size_10"
+        android:layout_marginBottom="@dimen/widget_size_5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/functiona"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/widget_size_45"
+                android:layout_height="@dimen/widget_size_45"
+                android:layout_marginBottom="@dimen/widget_size_5"
+                android:background="@mipmap/funa_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="远程开锁"
+                android:textColor="@color/black"
+               />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/functionb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/widget_size_45"
+                android:layout_height="@dimen/widget_size_45"
+                android:layout_marginBottom="@dimen/widget_size_5"
+                android:background="@mipmap/funb_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="物资库存"
+                android:textColor="@color/black"
+              />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/functionc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/widget_size_45"
+                android:layout_height="@dimen/widget_size_45"
+                android:layout_marginBottom="@dimen/widget_size_5"
+                android:background="@mipmap/func_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="事件记录"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/functiond"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/widget_size_35"
+                android:layout_height="@dimen/widget_size_35"
+                android:background="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"
+               />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

@@ -9,16 +9,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
-import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.net.NetCallBack;
-import com.sanleng.emergencystation.net.RequestUtils;
-import com.sanleng.emergencystation.net.URLs;
-import com.sanleng.emergencystation.utils.PreferenceUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * 使用说明

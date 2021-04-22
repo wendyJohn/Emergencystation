@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.net.NetCallBack;
-import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
 
@@ -90,59 +88,8 @@ public class MaterialDetailsDialog extends Dialog implements View.OnClickListene
 	}
 
 	// 获取物资详情
-	private void MaterialDetails() {
-		RequestParams params = new RequestParams();
-		params.put("ids", ids);
-		params.put("username", PreferenceUtils.getString(context, "EmergencyStation_username"));
-		params.put("platformkey", "app_firecontrol_owner");
-		RequestUtils.ClientPost(URLs.MaterialDetails_URL, params, new NetCallBack() {
-			@Override
-			public void onStart() {
-				super.onStart();
-			}
-
-			@Override
-			public void onMySuccess(String result) {
-				if (result == null || result.length() == 0) {
-					return;
-				}
-				System.out.println("数据请求成功" + result);
-				try {
-					JSONObject jsonObject = new JSONObject(result);
-					String data = jsonObject.getString("data");
-					JSONObject object = new JSONObject(data);
-					String myname = object.getString("name");
-					String mynumber = object.getString("number");
-					String myspecification = object.getString("specification");
-					String mymodel = object.getString("model");
-
-					String mystationName = object.getString("stationName");
-					String myeffective = object.getString("effective");
-//					String mystationAddress = object.getString("stationAddress");
-					String mystorageLocation = object.getString("storageLocation");
-
-					name.setText("物资名称：" + myname);
-					number.setText("物资编号：" + mynumber);
-					specification.setText("物资数量：" + myspecification);
-					model.setText("物资型号：" + mymodel);
-
-					stationName.setText("站点名称：" + mystationName);
-					effective.setText("有效期：" + myeffective);
-//					stationAddress.setText("站点地址：" + "江苏省南京市江宁区秣陵街道三棱科技（集团）有限公司");
-					storageLocation.setText("存储位置：" + mystorageLocation+"号箱");
-
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-
-			@Override
-			public void onMyFailure(Throwable arg0) {
-                new SVProgressHUD(context).showErrorWithStatus("物资信息加载失败");
-			}
-		});
+	private void MaterialDetails(){
 
 	}
+
 }

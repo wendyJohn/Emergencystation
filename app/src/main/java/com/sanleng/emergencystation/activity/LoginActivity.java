@@ -2,12 +2,11 @@ package com.sanleng.emergencystation.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,28 +14,24 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.loopj.android.http.RequestParams;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.dialog.PromptDialog;
-import com.sanleng.emergencystation.net.NetCallBack;
-import com.sanleng.emergencystation.net.RequestUtils;
-import com.sanleng.emergencystation.net.URLs;
+import com.sanleng.emergencystation.model.LoginModel;
+import com.sanleng.emergencystation.presenter.LoginRequests;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
+import com.sanleng.emergencystation.utils.RSAUtils;
 import com.sanleng.emergencystation.utils.StringUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import cn.jpush.android.api.JPushInterface;
-
 
 /**
  * 登陆界面
+ * 2020/10/10
  *
  * @author qiaoshi
  */
-public class LoginActivity extends BaseActivity implements OnClickListener{
+public class LoginActivity extends BaseActivity implements OnClickListener, LoginModel {
     private EditText login_number;
     private EditText login_password;
     private Button login_btn;
@@ -48,15 +43,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private String lastPwd;
     private CheckBox whether_contact;
     private PromptDialog promptDialog;
-
+    private SystemBarTintManager tintManager;
 
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        setContentView(R.layout.login_activity);
         initView();
+//        initWindow();
     }
 
     @Override
@@ -64,50 +59,56 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         return R.layout.login_activity;
     }
 
+
     private void initView() {
         // 创建对象
         promptDialog = new PromptDialog(this);
         // 设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(2000);
-
         login_btn = findViewById(R.id.login_btn);
         login_number = findViewById(R.id.login_number);
         login_password = findViewById(R.id.login_password);
         login_questions = findViewById(R.id.login_questions);
         scrollviewRootLayout = findViewById(R.id.scrollviewRootLayout);
-//        controlKeyboardLayout(scrollviewRootLayout, login_btn);
-
         login_btn.setOnClickListener(this);
         login_password.setOnClickListener(this);
-
-        whether_contact = (CheckBox) findViewById(R.id.whether_contact);
+        whether_contact = findViewById(R.id.whether_contact);
         whether_contact.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // TODO Auto-generated method stub
                 if (isChecked) {
-                    PreferenceUtils.setInt(LoginActivity.this, "EmergencyStation_state", 1);
+                    PreferenceUtils.setInt(LoginActivity.this, "state", 1);
                 } else {
-                    PreferenceUtils.setInt(LoginActivity.this, "EmergencyStation_state", 0);
+                    PreferenceUtils.setInt(LoginActivity.this, "state", 0);
                 }
             }
         });
+    }
+
+    private void initWindow() {//初始化，将状态栏和标题栏设为透明
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            tintManager = new SystemBarTintManager(LoginActivity.this);
+            tintManager.setStatusBarTintColor(getResources().getColor(R.color.login_btn));
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            tintManager.setStatusBarTintEnabled(true);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         login_number.setText(PreferenceUtils.getString(this, "EmergencyStation_username"));
-        login_password.setText(PreferenceUtils.getString(this, "EmergencyStation_password"));
-        int state = PreferenceUtils.getInt(LoginActivity.this, "EmergencyStation_state");
+        int state = PreferenceUtils.getInt(LoginActivity.this, "state");
         if (state == 1) {
             // 记住上次登录的信息
             lastAccount = PreferenceUtils.getString(this, "EmergencyStation_usernames");
-            lastPwd = PreferenceUtils.getString(this, "EmergencyStation_passwords");
-            if (!StringUtils.isEmpty(lastAccount) && !StringUtils.isEmpty(lastPwd)) {
+            if (!StringUtils.isEmpty(lastAccount)) {
                 login_number.setText(lastAccount);
                 login_password.setText(lastPwd);
-                Intent intent_pwdchange = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent_pwdchange = new Intent(LoginActivity.this, MainTabActivity.class);
                 startActivity(intent_pwdchange);
                 finish();
             }
@@ -116,122 +117,43 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.login_btn:
                 userName = login_number.getText().toString().trim();
                 password = login_password.getText().toString().trim();
-                RequestParams params = new RequestParams();
-                params.put("username", userName);
-                params.put("password", password);
-                params.put("platformkey", "app_firecontrol_owner");
-                RequestUtils.ClientPost(URLs.BULOGIN_URL, params, new NetCallBack() {
-                    @Override
-                    public void onStart() {
-                        promptDialog.showLoading("正在登录...");
-                        super.onStart();
-                    }
-
-                    @Override
-                    public void onMySuccess(String result) {
-                        if (result == null || result.length() == 0) {
-                            return;
-                        }
-
-                        System.out.println("数据请求成功" + result);
-                        try {
-                            JSONObject jsonObject = new JSONObject(result);
-                            String msg = jsonObject.getString("msg");
-
-                            if (msg.equals("登录成功")) {
-                                promptDialog.showSuccess("登录成功");
-                                String data = jsonObject.getString("data");
-                                JSONObject object = new JSONObject(data);
-                                String unitcode = object.getString("unitcode");
-                                String agentName = object.getString("name");
-                                String ids = object.getString("ids");
-                                System.out.println("==================="+ ids);
-                                //绑定唯一标识
-                                JPushInterface.setAlias(LoginActivity.this, 1, ids);
-
-                                // 存入数据库中（登录名称和密码）
-                                PreferenceUtils.setString(LoginActivity.this, "EmergencyStation_username", userName);
-                                PreferenceUtils.setString(LoginActivity.this, "EmergencyStation_password", password);
-
-                                // 存入数据库中（登录名称和密码用来判断是否需要重新登录问题）
-                                PreferenceUtils.setString(LoginActivity.this, "EmergencyStation_usernames", userName);
-                                PreferenceUtils.setString(LoginActivity.this, "EmergencyStation_passwords", password);
-
-                                // 单位ID
-                                PreferenceUtils.setString(LoginActivity.this, "unitcode", unitcode);
-                                // 人员名称
-                                PreferenceUtils.setString(LoginActivity.this, "agentName", agentName);
-                                PreferenceUtils.setString(LoginActivity.this, "ids", ids);
-
-                                new Handler().postDelayed(new Runnable() {
-                                    public void run() {
-                                        // 等待800毫秒后销毁此页面，并提示登陆成功
-                                        Intent intent_pwdchange = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(intent_pwdchange);
-                                        finish();
-                                    }
-                                }, 800);
-                            } else {
-                                promptDialog.showError(msg);
-                            }
-
-                        } catch (JSONException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onMyFailure(Throwable arg0) {
-                        promptDialog.showError("登录失败");
-                    }
-                });
-
+                String psaa= RSAUtils.encryptByPublic(password);
+                if (!StringUtils.isEmpty(userName) && !StringUtils.isEmpty(password)) {
+                    promptDialog.showLoading("正在登录...");
+                    LoginRequests.GetLogin(LoginActivity.this, getApplicationContext(), userName, psaa);
+                } else {
+                    Toast.makeText(LoginActivity.this, "输入的用户和密码不能为空", Toast.LENGTH_LONG).show();
+                }
                 break;
             default:
                 break;
         }
     }
 
-    /**
-     * //	 * @param              键盘出现时，移动布局，是scrollToView出现在键盘上方。
-     * //	 * @param root         最外层布局，需要调整的布局，注：若界面中有ScrollView布局，则为ScrollView下的LinearLayout，
-     * 其他特殊布局，请根据需要自行传入外层布局。
-     *
-     * @param scrollToView 被键盘遮挡的scrollToView，滚动root,使scrollToView在root可视区域的底部
-     */
-    public void controlKeyboardLayout(final View root, final View scrollToView) {
-        try {
 
-            root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    Rect rect = new Rect();
-                    // 获取root在窗体的可视区域
-                    root.getWindowVisibleDisplayFrame(rect);
-                    // 获取root在窗体的不可视区域高度(被其他View遮挡的区域高度)
-                    int rootInvisibleHeight = root.getRootView().getHeight() - rect.bottom;
-                    // 若不可视区域高度大于100，则键盘显示
-                    if (rootInvisibleHeight > 100) {
-                        int[] location = new int[2];
-                        // 获取scrollToView在窗体的坐标
-                        scrollToView.getLocationInWindow(location);
-                        // 计算root滚动高度，使scrollToView在可见区域
-                        int srollHeight = (location[1] + scrollToView.getHeight()) - rect.bottom;
-                        root.scrollTo(0, srollHeight);
-                    } else {
-                        // 键盘隐藏
-                        root.scrollTo(0, 0);
-                    }
+    @Override
+    public void LoginSuccess(String msg) {
+        if (msg.equals("登录成功")) {
+            promptDialog.showSuccess("登录成功");
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    // 等待1000毫秒后销毁此页面，并提示登陆成功
+                    Intent intent_pwdchange = new Intent(LoginActivity.this, MainTabActivity.class);
+                    startActivity(intent_pwdchange);
+                    finish();
                 }
-            });
-        } catch (Exception e) {
-            // TODO: handle exception
+            }, 1000);
+        } else {
+            promptDialog.showError(msg);
         }
+    }
+
+    @Override
+    public void LoginFailed() {
+        promptDialog.showError("登录失败");
     }
 }

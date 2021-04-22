@@ -18,10 +18,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.activity.MainActivity;
-import com.sanleng.emergencystation.data.Version_mag;
-import com.sanleng.emergencystation.net.URLs;
-import com.sanleng.emergencystation.utils.PreferenceUtils;
+import com.sanleng.emergencystation.activity.MainTabActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -85,9 +82,8 @@ public class UpdateService extends Service {
 
         PendingIntent canceledPendingIntent = PendingIntent.getBroadcast(UpdateService.this, 1, canceledIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        // contentView.setOnClickPendingIntent(R.id.cancle, canceledPendingIntent);
         notification.contentView = contentView;
-        Intent intent = new Intent(UpdateService.this, MainActivity.class);
+        Intent intent = new Intent(UpdateService.this, MainTabActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(UpdateService.this, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         notification.contentIntent = contentIntent;

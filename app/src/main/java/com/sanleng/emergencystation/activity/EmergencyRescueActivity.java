@@ -17,7 +17,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -82,8 +81,6 @@ import com.sanleng.emergencystation.baidumap.NormalUtils;
 import com.sanleng.emergencystation.baidumap.WNaviGuideActivity;
 import com.sanleng.emergencystation.bean.StationBean;
 import com.sanleng.emergencystation.dialog.E_StationDialog;
-import com.sanleng.emergencystation.net.NetCallBack;
-import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
 import com.sanleng.emergencystation.utils.ScreenUtil;
@@ -404,7 +401,7 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
             public void run() {
                 // 等待1000毫秒后获取数据
                 NearbyEmergencyStation();
-                NearbyEmergencySOS();
+//                NearbyEmergencySOS();
             }
         }, 1000);
 
@@ -521,7 +518,7 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
             } else {
                 str = mylist.get(i).toString().trim();
                 i++;
-                Unlock(str, Mac);
+//                Unlock(str, Mac);
                 // 要做的事情
                 handler.postDelayed(this, 2000);
             }
@@ -530,27 +527,27 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
     };
 
     // 开锁方式
-    private void Unlock(String position, final String mac) {
-        RequestUtils.ClientPost(URLs.ORDER_BASE_URL + "/" + position + "/" + mac, null, new NetCallBack() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
-                }
-                System.out.println("数据请求成功" + result);
-            }
-
-            @Override
-            public void onMyFailure(Throwable arg0) {
-
-            }
-        });
-    }
+//    private void Unlock(String position, final String mac) {
+//        RequestUtils.ClientPost(URLs.ORDER_BASE_URL + "/" + position + "/" + mac, null, new NetCallBack() {
+//            @Override
+//            public void onStart() {
+//                super.onStart();
+//            }
+//
+//            @Override
+//            public void onMySuccess(String result) {
+//                if (result == null || result.length() == 0) {
+//                    return;
+//                }
+//                System.out.println("数据请求成功" + result);
+//            }
+//
+//            @Override
+//            public void onMyFailure(Throwable arg0) {
+//
+//            }
+//        });
+//    }
 
     @Override
     public void onClick(View v) {
@@ -637,7 +634,7 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
                 break;
             //语音搜索
             case R.id.voicesearch_image:
-                initSpeech(EmergencyRescueActivity.this);
+//                initSpeech(EmergencyRescueActivity.this);
                 break;
             // 步行导航
             case R.id.walkingnavigation:
@@ -675,238 +672,238 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
         params.put("name", stationname);
         params.put("username", PreferenceUtils.getString(EmergencyRescueActivity.this, "EmergencyStation_username"));
         params.put("platformkey", "app_firecontrol_owner");
-        RequestUtils.ClientPost(URLs.NearbyEmergencyStation_URL, params, new NetCallBack() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
-                }
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String msg = jsonObject.getString("msg");
-                    if (msg.equals("获取成功")) {
-                        String data = jsonObject.getString("data");
-                        JSONObject objects = new JSONObject(data);
-                        String list = objects.getString("list");
-                        JSONArray array = new JSONArray(list);
-                        JSONObject object;
-                        for (int i = 0; i < array.length(); i++) {
-                            StationBean bean = new StationBean();
-                            object = (JSONObject) array.get(i);
-                            String name = object.getString("name");
-                            String address = object.getString("address");
-                            String mac = object.getString("mac");
-                            String ids = object.getString("ids");
-                            String lat = object.getString("lat");
-                            String lng = object.getString("lng");
-                            String channel_two = object.getString("channel_two");
-                            String channel_one = object.getString("channel_one");
-
-
-                            bean.setId(ids);
-                            bean.setName(name);
-                            bean.setAddress(address);
-                            bean.setE_mylatitude(Double.parseDouble(lat));
-                            bean.setE_mylongitude(Double.parseDouble(lng));
-                            bean.setMac(mac);
-                            bean.setType(1);
-                            bean.setChannel_one(channel_one);
-                            bean.setChannel_two(channel_two);
-                            bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
-
-                            // 构建MarkerOption，用于在地图上添加Marker
-                            LatLng llA = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                            MarkerOptions option = new MarkerOptions().position(llA).icon(bdAs);
-                            Marker marker = (Marker) mBaiduMap.addOverlay(option);
-                            // 将信息保存
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("marker", bean);
-                            marker.setExtraInfo(bundle);
-                            mBaiduMap.addOverlays(listoption);
-                            slist.add(bean);
-                        }
-                        stationlistview = findViewById(R.id.stationlistview);
-                        stationAdapter = new StationAdapter(EmergencyRescueActivity.this, slist);
-                        stationlistview.setAdapter(stationAdapter);
-
-                        stationlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                E_mylatitude = slist.get(position).getE_mylatitude();
-                                E_mylongitude = slist.get(position).getE_mylongitude();
-                                String ids = slist.get(position).getId();
-                                String names = slist.get(position).getName();
-                                String addresss = slist.get(position).getAddress();
-                                String mac = slist.get(position).getMac();
-                                double distances = slist.get(position).getDistance();
-                                channel_one = slist.get(position).getChannel_one();
-                                channel_two = slist.get(position).getChannel_two();
-                                name.setText(names);
-                                address.setText(addresss);
-                                distance.setText("距您 " + distances + "m");
-
-//                              ChooseMyLocation(E_mylatitude, E_mylongitude);
-                                BottomMenu(names, addresss, distances, ids, mac);
-                                mScrollLayout.setVisibility(View.VISIBLE);
-                                LatLng llA = new LatLng(E_mylatitude, E_mylongitude);
-                                showInfoWindow(llA, names);
-                            }
-                        });
-                    } else {
-                    }
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onMyFailure(Throwable arg0) {
-
-            }
-        });
-    }
-
-    //附近的SOS
-    private void NearbyEmergencySOS() {
-        slistsos = new ArrayList<>();
-        RequestParams params = new RequestParams();
-        params.put("pageNum", "1");
-        params.put("pageSize", "100");
-        params.put("unit_code", PreferenceUtils.getString(EmergencyRescueActivity.this, "unitcode"));
-        params.put("username", PreferenceUtils.getString(EmergencyRescueActivity.this, "EmergencyStation_username"));
-        params.put("platformkey", "app_firecontrol_owner");
-        RequestUtils.ClientPost(URLs.SOSITEM_URL, params, new NetCallBack() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
-                }
-                System.out.println("附近SOS数据请求成功" + result);
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String msg = jsonObject.getString("msg");
-                    if (msg.equals("获取成功")) {
-                        String data = jsonObject.getString("data");
-                        JSONObject objects = new JSONObject(data);
-                        String list = objects.getString("list");
-                        JSONArray array = new JSONArray(list);
-                        JSONObject object;
-                        for (int i = 0; i < array.length(); i++) {
-                            StationBean bean = new StationBean();
-                            object = (JSONObject) array.get(i);
-                            String lat = object.getString("lat");
-                            String lng = object.getString("lng");
-                            String ids = object.getString("ids");
-                            String examineResult = object.getString("examineResult");
-                            String address = object.getString("address");
-
-                            if (examineResult.equals("1")) {
-                                bean.setName("SOS求救");
-                                bean.setAddress(address);
-                                bean.setE_mylatitude(Double.parseDouble(lat));
-                                bean.setE_mylongitude(Double.parseDouble(lng));
-                                bean.setType(2);
-                                bean.setId(ids);
-                                bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
-                                // 构建MarkerOption，用于在地图上添加Marker
-                                LatLng llA = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                                MarkerOptions option = new MarkerOptions().position(llA).icon(bdA);
-                                Marker marker = (Marker) mBaiduMap.addOverlay(option);
-                                // 将信息保存
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("marker", bean);
-                                marker.setExtraInfo(bundle);
-                                mBaiduMap.addOverlays(listoption);
-                                slistsos.add(bean);
-                            }
-                        }
-
-                        soslistview = findViewById(R.id.soslistview);
-                        stationAdapter = new StationAdapter(EmergencyRescueActivity.this, slistsos);
-                        soslistview.setAdapter(stationAdapter);
-
-                        soslistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                E_mylatitude = slistsos.get(position).getE_mylatitude();
-                                E_mylongitude = slistsos.get(position).getE_mylongitude();
-                                sos_ids = slistsos.get(position).getId();
-
-                                String names = slistsos.get(position).getName();
-                                String addresss = slistsos.get(position).getAddress();
-
-                                LatLng llA = new LatLng(E_mylatitude, E_mylongitude);
-                                showInfoWindow(llA, names);
-
-                                // 获得marker中的数据
-                                e_stationDialog = new E_StationDialog(EmergencyRescueActivity.this, names, addresss, clickListener);
-                                e_stationDialog.show();
-                                mScrollLayout.setVisibility(View.GONE);
-
-                            }
-                        });
-                    } else {
-
-
-                    }
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onMyFailure(Throwable arg0) {
-
-            }
-        });
-    }
-
-
-    //清除SOS
-    private void Eliminate_sos() {
-        RequestParams params = new RequestParams();
-        params.put("ids", sos_ids);
-        params.put("examineResult", "0");
-        RequestUtils.ClientPost(URLs.SOSEliminate_URL, params, new NetCallBack() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
-                }
-                System.out.println("========================" + result);
+//        RequestUtils.ClientPost(URLs.NearbyEmergencyStation_URL, params, new NetCallBack() {
+//            @Override
+//            public void onStart() {
+//                super.onStart();
+//            }
+//
+//            @Override
+//            public void onMySuccess(String result) {
+//                if (result == null || result.length() == 0) {
+//                    return;
+//                }
 //                try {
 //                    JSONObject jsonObject = new JSONObject(result);
 //                    String msg = jsonObject.getString("msg");
+//                    if (msg.equals("获取成功")) {
+//                        String data = jsonObject.getString("data");
+//                        JSONObject objects = new JSONObject(data);
+//                        String list = objects.getString("list");
+//                        JSONArray array = new JSONArray(list);
+//                        JSONObject object;
+//                        for (int i = 0; i < array.length(); i++) {
+//                            StationBean bean = new StationBean();
+//                            object = (JSONObject) array.get(i);
+//                            String name = object.getString("name");
+//                            String address = object.getString("address");
+//                            String mac = object.getString("mac");
+//                            String ids = object.getString("ids");
+//                            String lat = object.getString("lat");
+//                            String lng = object.getString("lng");
+//                            String channel_two = object.getString("channel_two");
+//                            String channel_one = object.getString("channel_one");
 //
+//
+//                            bean.setId(ids);
+//                            bean.setName(name);
+//                            bean.setAddress(address);
+//                            bean.setE_mylatitude(Double.parseDouble(lat));
+//                            bean.setE_mylongitude(Double.parseDouble(lng));
+//                            bean.setMac(mac);
+//                            bean.setType(1);
+//                            bean.setChannel_one(channel_one);
+//                            bean.setChannel_two(channel_two);
+//                            bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
+//
+//                            // 构建MarkerOption，用于在地图上添加Marker
+//                            LatLng llA = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+//                            MarkerOptions option = new MarkerOptions().position(llA).icon(bdAs);
+//                            Marker marker = (Marker) mBaiduMap.addOverlay(option);
+//                            // 将信息保存
+//                            Bundle bundle = new Bundle();
+//                            bundle.putSerializable("marker", bean);
+//                            marker.setExtraInfo(bundle);
+//                            mBaiduMap.addOverlays(listoption);
+//                            slist.add(bean);
+//                        }
+//                        stationlistview = findViewById(R.id.stationlistview);
+//                        stationAdapter = new StationAdapter(EmergencyRescueActivity.this, slist);
+//                        stationlistview.setAdapter(stationAdapter);
+//
+//                        stationlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                            @Override
+//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                E_mylatitude = slist.get(position).getE_mylatitude();
+//                                E_mylongitude = slist.get(position).getE_mylongitude();
+//                                String ids = slist.get(position).getId();
+//                                String names = slist.get(position).getName();
+//                                String addresss = slist.get(position).getAddress();
+//                                String mac = slist.get(position).getMac();
+//                                double distances = slist.get(position).getDistance();
+//                                channel_one = slist.get(position).getChannel_one();
+//                                channel_two = slist.get(position).getChannel_two();
+//                                name.setText(names);
+//                                address.setText(addresss);
+//                                distance.setText("距您 " + distances + "m");
+//
+////                              ChooseMyLocation(E_mylatitude, E_mylongitude);
+//                                BottomMenu(names, addresss, distances, ids, mac);
+//                                mScrollLayout.setVisibility(View.VISIBLE);
+//                                LatLng llA = new LatLng(E_mylatitude, E_mylongitude);
+//                                showInfoWindow(llA, names);
+//                            }
+//                        });
+//                    } else {
+//                    }
 //                } catch (JSONException e) {
 //                    // TODO Auto-generated catch block
 //                    e.printStackTrace();
 //                }
-            }
-
-            @Override
-            public void onMyFailure(Throwable arg0) {
-
-            }
-        });
+//            }
+//
+//            @Override
+//            public void onMyFailure(Throwable arg0) {
+//
+//            }
+//        });
     }
+
+    //附近的SOS
+//    private void NearbyEmergencySOS() {
+//        slistsos = new ArrayList<>();
+//        RequestParams params = new RequestParams();
+//        params.put("pageNum", "1");
+//        params.put("pageSize", "100");
+//        params.put("unit_code", PreferenceUtils.getString(EmergencyRescueActivity.this, "unitcode"));
+//        params.put("username", PreferenceUtils.getString(EmergencyRescueActivity.this, "EmergencyStation_username"));
+//        params.put("platformkey", "app_firecontrol_owner");
+//        RequestUtils.ClientPost(URLs.SOSITEM_URL, params, new NetCallBack() {
+//            @Override
+//            public void onStart() {
+//                super.onStart();
+//            }
+//
+//            @Override
+//            public void onMySuccess(String result) {
+//                if (result == null || result.length() == 0) {
+//                    return;
+//                }
+//                System.out.println("附近SOS数据请求成功" + result);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(result);
+//                    String msg = jsonObject.getString("msg");
+//                    if (msg.equals("获取成功")) {
+//                        String data = jsonObject.getString("data");
+//                        JSONObject objects = new JSONObject(data);
+//                        String list = objects.getString("list");
+//                        JSONArray array = new JSONArray(list);
+//                        JSONObject object;
+//                        for (int i = 0; i < array.length(); i++) {
+//                            StationBean bean = new StationBean();
+//                            object = (JSONObject) array.get(i);
+//                            String lat = object.getString("lat");
+//                            String lng = object.getString("lng");
+//                            String ids = object.getString("ids");
+//                            String examineResult = object.getString("examineResult");
+//                            String address = object.getString("address");
+//
+//                            if (examineResult.equals("1")) {
+//                                bean.setName("SOS求救");
+//                                bean.setAddress(address);
+//                                bean.setE_mylatitude(Double.parseDouble(lat));
+//                                bean.setE_mylongitude(Double.parseDouble(lng));
+//                                bean.setType(2);
+//                                bean.setId(ids);
+//                                bean.setDistance(gps_m(S_mylatitude, S_mylongitude, Double.parseDouble(lat), Double.parseDouble(lng)));
+//                                // 构建MarkerOption，用于在地图上添加Marker
+//                                LatLng llA = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+//                                MarkerOptions option = new MarkerOptions().position(llA).icon(bdA);
+//                                Marker marker = (Marker) mBaiduMap.addOverlay(option);
+//                                // 将信息保存
+//                                Bundle bundle = new Bundle();
+//                                bundle.putSerializable("marker", bean);
+//                                marker.setExtraInfo(bundle);
+//                                mBaiduMap.addOverlays(listoption);
+//                                slistsos.add(bean);
+//                            }
+//                        }
+//
+//                        soslistview = findViewById(R.id.soslistview);
+//                        stationAdapter = new StationAdapter(EmergencyRescueActivity.this, slistsos);
+//                        soslistview.setAdapter(stationAdapter);
+//
+//                        soslistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                            @Override
+//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                E_mylatitude = slistsos.get(position).getE_mylatitude();
+//                                E_mylongitude = slistsos.get(position).getE_mylongitude();
+//                                sos_ids = slistsos.get(position).getId();
+//
+//                                String names = slistsos.get(position).getName();
+//                                String addresss = slistsos.get(position).getAddress();
+//
+//                                LatLng llA = new LatLng(E_mylatitude, E_mylongitude);
+//                                showInfoWindow(llA, names);
+//
+//                                // 获得marker中的数据
+//                                e_stationDialog = new E_StationDialog(EmergencyRescueActivity.this, names, addresss, clickListener);
+//                                e_stationDialog.show();
+//                                mScrollLayout.setVisibility(View.GONE);
+//
+//                            }
+//                        });
+//                    } else {
+//
+//
+//                    }
+//                } catch (JSONException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onMyFailure(Throwable arg0) {
+//
+//            }
+//        });
+//    }
+
+
+    //清除SOS
+//    private void Eliminate_sos() {
+//        RequestParams params = new RequestParams();
+//        params.put("ids", sos_ids);
+//        params.put("examineResult", "0");
+//        RequestUtils.ClientPost(URLs.SOSEliminate_URL, params, new NetCallBack() {
+//            @Override
+//            public void onStart() {
+//                super.onStart();
+//            }
+//
+//            @Override
+//            public void onMySuccess(String result) {
+//                if (result == null || result.length() == 0) {
+//                    return;
+//                }
+//                System.out.println("========================" + result);
+////                try {
+////                    JSONObject jsonObject = new JSONObject(result);
+////                    String msg = jsonObject.getString("msg");
+////
+////                } catch (JSONException e) {
+////                    // TODO Auto-generated catch block
+////                    e.printStackTrace();
+////                }
+//            }
+//
+//            @Override
+//            public void onMyFailure(Throwable arg0) {
+//
+//            }
+//        });
+//    }
 
     // 返回单位是米
     private double gps_m(double lat_a, double lng_a, double lat_b, double lng_b) {
@@ -1395,52 +1392,52 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
     /**
      * 初始化语音识别
      */
-    public void initSpeech(final Context context) {
-        //1.创建RecognizerDialog对象
-        RecognizerDialog mDialog = new RecognizerDialog(EmergencyRescueActivity.this, null);
-        //2.设置accent、language等参数
-        mDialog.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
-        mDialog.setParameter(SpeechConstant.ACCENT, "mandarin");
-        //3.设置回调接口
-        mDialog.setListener(new RecognizerDialogListener() {
-            @Override
-            public void onResult(RecognizerResult recognizerResult, boolean isLast) {
-                if (!isLast) {
-                    //解析语音返回的result为识别后的汉字,直接赋值到TextView上即可
-                    String result = parseVoice(recognizerResult.getResultString());
-                    search_edit.setText(result);
-                    mBaiduMap.clear();
-                    if (result.equals("消防应急站") || result.equals("救援") || result.equals("消防")) {
-                        NearbyEmergencyStation();
-                    }
-                    if (result.equals("医疗应急站") || result.equals("医疗")) {
-                        NearbyEmergencyStation();
-                    }
-                    if (result.equals("SOS求救信息") || result.equals("SOS")) {
-                        NearbyEmergencySOS();
-                    }
-                    if (result.equals("全部信息") || result.equals("全部")) {
-                        NearbyEmergencySOS();
-                        NearbyEmergencyStation();
-                        NearbyEmergencySOS();
-                    }
-                    if (result.equals("导航到离我最近的应急站") || result.equals("去我最近的应急站") || result.equals("最近的应急站") || result.equals("导航到去我最近的应急站") || result.equals("去离我最近的应急站") || result.equals("去最近的应急站") || result.equals("导航去最近的应急站") || result.equals("离我最近的应急站")) {
-                        E_mylatitude = slist.get(0).getE_mylatitude();
-                        E_mylongitude = slist.get(0).getE_mylongitude();
-                        routeplanToNavi(CoordinateType.BD09LL);
-                    }
-
-                }
-            }
-
-            @Override
-            public void onError(SpeechError speechError) {
-
-            }
-        });
-        //4.显示dialog，接收语音输入
-        mDialog.show();
-    }
+//    public void initSpeech(final Context context) {
+//        //1.创建RecognizerDialog对象
+//        RecognizerDialog mDialog = new RecognizerDialog(EmergencyRescueActivity.this, null);
+//        //2.设置accent、language等参数
+//        mDialog.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
+//        mDialog.setParameter(SpeechConstant.ACCENT, "mandarin");
+//        //3.设置回调接口
+//        mDialog.setListener(new RecognizerDialogListener() {
+//            @Override
+//            public void onResult(RecognizerResult recognizerResult, boolean isLast) {
+//                if (!isLast) {
+//                    //解析语音返回的result为识别后的汉字,直接赋值到TextView上即可
+//                    String result = parseVoice(recognizerResult.getResultString());
+//                    search_edit.setText(result);
+//                    mBaiduMap.clear();
+//                    if (result.equals("消防应急站") || result.equals("救援") || result.equals("消防")) {
+//                        NearbyEmergencyStation();
+//                    }
+//                    if (result.equals("医疗应急站") || result.equals("医疗")) {
+//                        NearbyEmergencyStation();
+//                    }
+//                    if (result.equals("SOS求救信息") || result.equals("SOS")) {
+//                        NearbyEmergencySOS();
+//                    }
+//                    if (result.equals("全部信息") || result.equals("全部")) {
+//                        NearbyEmergencySOS();
+//                        NearbyEmergencyStation();
+//                        NearbyEmergencySOS();
+//                    }
+//                    if (result.equals("导航到离我最近的应急站") || result.equals("去我最近的应急站") || result.equals("最近的应急站") || result.equals("导航到去我最近的应急站") || result.equals("去离我最近的应急站") || result.equals("去最近的应急站") || result.equals("导航去最近的应急站") || result.equals("离我最近的应急站")) {
+//                        E_mylatitude = slist.get(0).getE_mylatitude();
+//                        E_mylongitude = slist.get(0).getE_mylongitude();
+//                        routeplanToNavi(CoordinateType.BD09LL);
+//                    }
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onError(SpeechError speechError) {
+//
+//            }
+//        });
+//        //4.显示dialog，接收语音输入
+//        mDialog.show();
+//    }
 
     /**
      * 解析语音json
@@ -1504,7 +1501,7 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
             switch (v.getId()) {
                 //到达现场,清除SOS
                 case R.id.eliminate:
-                    Eliminate_sos();
+//                    Eliminate_sos();
                     break;
                 //步行导航
                 case R.id.walknavigation:
@@ -1543,58 +1540,58 @@ public class EmergencyRescueActivity extends BaseActivity implements OnClickList
         params.put("username", PreferenceUtils.getString(EmergencyRescueActivity.this, "EmergencyStation_username"));
         params.put("platformkey", "app_firecontrol_owner");
 
-        RequestUtils.ClientPost(URLs.Material_URL, params, new NetCallBack() {
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-
-            @Override
-            public void onMySuccess(String result) {
-                if (result == null || result.length() == 0) {
-                    return;
-                }
-                System.out.println("数据请求成功" + result);
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String msg = jsonObject.getString("msg");
-                    if (msg.equals("获取成功")) {
-                        String data = jsonObject.getString("data");
-                        JSONObject objects = new JSONObject(data);
-                        String list = objects.getString("list");
-                        JSONArray array = new JSONArray(list);
-                        JSONObject object;
-                        for (int i = 0; i < array.length(); i++) {
-                            StationBean bean = new StationBean();
-                            object = (JSONObject) array.get(i);
-                            String myname = object.getString("name");
-                            String specification = object.getString("specification");
-                            String model = object.getString("model");
-                            String storageLocation = object.getString("storageLocation");
-
-                            bean.setName(myname + "  数量:" + specification);
-                            bean.setNumber(storageLocation + "号应急箱");
-                            bean.setImage_type(model);
-                            bean.setType(1);
-                            bean.setMac(mac);
-                            slists.add(bean);
-                        }
-                        ListView listView = findViewById(R.id.list_view);
-                        bottomMenuAdapter = new BottomMenuAdapter(EmergencyRescueActivity.this, slists, name, address, distance, id, mac, m_Handler);
-                        listView.setAdapter(bottomMenuAdapter);
-                    }
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onMyFailure(Throwable arg0) {
-
-            }
-        });
+//        RequestUtils.ClientPost(URLs.Material_URL, params, new NetCallBack() {
+//            @Override
+//            public void onStart() {
+//                super.onStart();
+//            }
+//
+//            @Override
+//            public void onMySuccess(String result) {
+//                if (result == null || result.length() == 0) {
+//                    return;
+//                }
+//                System.out.println("数据请求成功" + result);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(result);
+//                    String msg = jsonObject.getString("msg");
+//                    if (msg.equals("获取成功")) {
+//                        String data = jsonObject.getString("data");
+//                        JSONObject objects = new JSONObject(data);
+//                        String list = objects.getString("list");
+//                        JSONArray array = new JSONArray(list);
+//                        JSONObject object;
+//                        for (int i = 0; i < array.length(); i++) {
+//                            StationBean bean = new StationBean();
+//                            object = (JSONObject) array.get(i);
+//                            String myname = object.getString("name");
+//                            String specification = object.getString("specification");
+//                            String model = object.getString("model");
+//                            String storageLocation = object.getString("storageLocation");
+//
+//                            bean.setName(myname + "  数量:" + specification);
+//                            bean.setNumber(storageLocation + "号应急箱");
+//                            bean.setImage_type(model);
+//                            bean.setType(1);
+//                            bean.setMac(mac);
+//                            slists.add(bean);
+//                        }
+//                        ListView listView = findViewById(R.id.list_view);
+//                        bottomMenuAdapter = new BottomMenuAdapter(EmergencyRescueActivity.this, slists, name, address, distance, id, mac, m_Handler);
+//                        listView.setAdapter(bottomMenuAdapter);
+//                    }
+//
+//                } catch (JSONException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onMyFailure(Throwable arg0) {
+//
+//            }
+//        });
 
     }
 }

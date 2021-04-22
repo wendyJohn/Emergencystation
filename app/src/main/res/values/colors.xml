@@ -38,7 +38,7 @@
     <color name="LightGray">#D3D3D3</color>
     <color name="trans">#50000000</color>
     <color name="red">#fe0202</color>
-    <color name="background">#e5e5e5</color>
+    <color name="background">#f8f8f8</color>
     <color name="transparent_background">#50000000</color>
     <color name="Grey">#BEBEBE</color>
     <color name="endtime">#708090</color>
@@ -90,7 +90,7 @@
     <color name="nearby_eachprice">#7A7A7A</color>
     <color name="sex_info_bg">#EDEDED</color>
     <color name="black_gray">#686864</color>
-    <color name="gray_thin">#e5e5e5</color>
+    <color name="gray_thin">#f8f8f8</color>
 
     <!-- 以下为  二维码所要的颜色 -->
     <color name="contents_text">#ff000000</color>
@@ -185,4 +185,11 @@
     <color name="controller_tv_color">#ffffff</color>
     <color name="bg">#ffffff</color>
 
+    <color name="colorMainGreen">#40cab3</color>
+    <color name="colortips">#126acd</color>
+    <color name="slidingtab_indicatorcolor">#54a4ef</color>
+
+    <color name="record_in">#1adcff</color>
+    <color name="record_on">#ffc57a</color>
+    <color name="record_line">#5e889d</color>
 </resources>

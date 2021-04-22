@@ -1,7 +1,6 @@
 package com.sanleng.emergencystation.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,8 +10,6 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.sanleng.emergencystation.R;
-import com.sanleng.emergencystation.net.NetCallBack;
-import com.sanleng.emergencystation.net.RequestUtils;
 import com.sanleng.emergencystation.net.URLs;
 
 import java.util.ArrayList;
@@ -84,51 +81,51 @@ public class EmergencyUnlockingActivity extends BaseActivity implements OnClickL
 		list.add("G");
 	}
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-			// 一号开锁
-			case R.id.btn_one:
-				Unlock("A", mac);
-				break;
-			// 二号开锁
-			case R.id.btn_two:
-				Unlock("B", mac);
-				break;
-			// 三号开锁
-			case R.id.btn_three:
-				Unlock("C", mac);
-				break;
-			// 四号开锁
-			case R.id.btn_four:
-				Unlock("D", mac);
-				break;
-			// 五号开锁
-			case R.id.btn_five:
-				Unlock("E", mac);
-				break;
-			// 六号开锁
-			case R.id.btn_six:
-				Unlock("F", mac);
-				break;
-			// 七号开锁
-			case R.id.btn_seven:
-				Unlock("G", mac);
-				break;
-			// 一键开启
-			case R.id.btn_onekey:
-				i = 0;
-				handler.postDelayed(runnable, 2000);// 每两秒执行一次runnable.
-				break;
-			// 返回
-			case R.id.r_back:
-				finish();
-				break;
-			default:
-				break;
-		}
-	}
+//	@Override
+//	public void onClick(View v) {
+//		// TODO Auto-generated method stub
+//		switch (v.getId()) {
+//			// 一号开锁
+//			case R.id.btn_one:
+////				Unlock("A", mac);
+//				break;
+//			// 二号开锁
+//			case R.id.btn_two:
+//				Unlock("B", mac);
+//				break;
+//			// 三号开锁
+//			case R.id.btn_three:
+//				Unlock("C", mac);
+//				break;
+//			// 四号开锁
+//			case R.id.btn_four:
+//				Unlock("D", mac);
+//				break;
+//			// 五号开锁
+//			case R.id.btn_five:
+//				Unlock("E", mac);
+//				break;
+//			// 六号开锁
+//			case R.id.btn_six:
+//				Unlock("F", mac);
+//				break;
+//			// 七号开锁
+//			case R.id.btn_seven:
+//				Unlock("G", mac);
+//				break;
+//			// 一键开启
+//			case R.id.btn_onekey:
+//				i = 0;
+//				handler.postDelayed(runnable, 2000);// 每两秒执行一次runnable.
+//				break;
+//			// 返回
+//			case R.id.r_back:
+//				finish();
+//				break;
+//			default:
+//				break;
+//		}
+//	}
 
 	Handler handler = new Handler();
 	Runnable runnable = new Runnable() {
@@ -140,7 +137,7 @@ public class EmergencyUnlockingActivity extends BaseActivity implements OnClickL
 			} else {
 				str = list.get(i).toString();
 				i++;
-				Unlock(str, mac);
+//				Unlock(str, mac);
 				// 要做的事情
 				handler.postDelayed(this, 2000);
 			}
@@ -149,25 +146,25 @@ public class EmergencyUnlockingActivity extends BaseActivity implements OnClickL
 	};
 
 	// 开锁方式
-	private void Unlock(final String position, final String mac) {
-		RequestUtils.ClientPost(URLs.ORDER_BASE_URL + "/" + position + "/" + mac, null, new NetCallBack() {
-			@Override
-			public void onStart() {
-				super.onStart();
-			}
-
-			@Override
-			public void onMySuccess(String result) {
-				if (result == null || result.length() == 0) {
-					return;
-				}
-			}
-			@Override
-			public void onMyFailure(Throwable arg0) {
-
-			}
-		});
-	}
+//	private void Unlock(final String position, final String mac) {
+//		RequestUtils.ClientPost(URLs.ORDER_BASE_URL + "/" + position + "/" + mac, null, new NetCallBack() {
+//			@Override
+//			public void onStart() {
+//				super.onStart();
+//			}
+//
+//			@Override
+//			public void onMySuccess(String result) {
+//				if (result == null || result.length() == 0) {
+//					return;
+//				}
+//			}
+//			@Override
+//			public void onMyFailure(Throwable arg0) {
+//
+//			}
+//		});
+//	}
 
 	@Override
 	protected void onDestroy() {
@@ -176,4 +173,8 @@ public class EmergencyUnlockingActivity extends BaseActivity implements OnClickL
 		super.onDestroy();
 	}
 
+	@Override
+	public void onClick(View v) {
+
+	}
 }

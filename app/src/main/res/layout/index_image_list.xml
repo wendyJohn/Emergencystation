@@ -9,6 +9,6 @@
         android:id="@+id/imageView_item"
         android:layout_width="match_parent"
         android:background="@drawable/emergency_home"
-        android:layout_height="160dp" />
+        android:layout_height="@dimen/widget_size_180" />
 
 </LinearLayout>
