@@ -26,7 +26,7 @@
                     android:layout_centerInParent="true"
                     android:text="三棱智能应急柜"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_18" />
+                    android:textSize="@dimen/text_size_16" />
 
             </RelativeLayout>
 
@@ -46,25 +46,63 @@
                 android:id="@+id/viewas"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-
                 android:background="@color/gray_thin" />
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/r_reas"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_45"
+            android:layout_below="@id/lins"
+            android:background="@color/white"
+            android:orientation="horizontal">
 
-        <ScrollView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/widget_size_10"
+                android:text="最近记录"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/widget_size_10"
+                android:text="更多"
+                android:textColor="@color/black" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/views"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/r_reas"
+            android:background="@color/gray_thin" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/lins">
+            android:layout_below="@id/views"
+            android:background="@color/gray_thin"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <ListView
+                android:id="@+id/lvtrace"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:listSelector="@android:color/transparent" />
 
-
-            </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
 
     </RelativeLayout>
 </RelativeLayout>

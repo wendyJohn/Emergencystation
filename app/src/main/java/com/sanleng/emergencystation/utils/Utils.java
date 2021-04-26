@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 
 /**
  * Created by litonghui on 2018/5/11.
@@ -142,10 +143,11 @@ public class Utils {
      */
     public static String getFormatTime(String time) {
         String times="";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
         try {
-            times=sdf.format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time));
-        } catch (ParseException e) {
+            SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            times = time.substring(0,19).replace("T"," ");
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return times;
@@ -170,5 +172,19 @@ public class Utils {
     public static String hidePhoneNum(String phone) {
         String phone_s = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
         return phone_s;
+    }
+
+    public static String listToString(List<String> list) {
+        StringBuilder sb = new StringBuilder();
+        if (list != null && list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (i < list.size() - 1) {
+                    sb.append(list.get(i) + ",");
+                } else {
+                    sb.append(list.get(i));
+                }
+            }
+        }
+        return sb.toString();
     }
 }

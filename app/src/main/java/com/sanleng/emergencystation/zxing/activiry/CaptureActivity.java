@@ -23,16 +23,11 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.google.zxing.Result;
-import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.dialog.OutofStockDialog;
 import com.sanleng.emergencystation.dialog.ReportLossDialog;
-import com.sanleng.emergencystation.dialog.TipsDialog;
 import com.sanleng.emergencystation.dialog.WarehousingDialog;
-import com.sanleng.emergencystation.net.URLs;
-import com.sanleng.emergencystation.utils.PreferenceUtils;
 import com.sanleng.emergencystation.zxing.bean.ZxingConfig;
 import com.sanleng.emergencystation.zxing.camera.CameraManager;
 import com.sanleng.emergencystation.zxing.common.Constant;
@@ -40,9 +35,6 @@ import com.sanleng.emergencystation.zxing.decode.DecodeImgCallback;
 import com.sanleng.emergencystation.zxing.decode.DecodeImgThread;
 import com.sanleng.emergencystation.zxing.decode.ImageUtil;
 import com.sanleng.emergencystation.zxing.view.ViewfinderView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 

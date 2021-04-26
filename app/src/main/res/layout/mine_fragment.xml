@@ -19,8 +19,8 @@
 
             <com.sanleng.emergencystation.view.CircleImgView
                 android:id="@+id/iv_userhead"
-                android:layout_width="@dimen/widget_size_60"
-                android:layout_height="@dimen/widget_size_60"
+                android:layout_width="@dimen/widget_size_80"
+                android:layout_height="@dimen/widget_size_80"
                 android:layout_marginRight="@dimen/widget_size_10"
                 android:src="@drawable/ic_person" />
 

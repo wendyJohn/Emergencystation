@@ -70,4 +70,12 @@
         <item>二号柜</item>
         <item>三号柜</item>
     </string-array>
+    <string-array name="events">
+        <item>全部</item>
+        <item>超时关门</item>
+        <item>物资短缺 </item>
+        <item>物资过期</item>
+        <item>温度过高</item>
+        <item>湿度过高</item>
+    </string-array>
 </resources>

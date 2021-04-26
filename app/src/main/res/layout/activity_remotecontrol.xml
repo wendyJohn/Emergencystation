@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gray_thin">
 
     <RelativeLayout
         android:id="@+id/linyears"
@@ -25,8 +26,7 @@
             android:layout_centerInParent="true"
             android:text="远程开门"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_18"
-          />
+            android:textSize="@dimen/text_size_16" />
     </RelativeLayout>
 
     <View
@@ -40,20 +40,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/views"
+        android:layout_above="@id/open_doors"
+        android:background="@color/gray_thin"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@color/gray_thin"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:orientation="vertical">
 
+                <ListView
+                    android:id="@+id/cabinets_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null" />
 
             </LinearLayout>
 
@@ -63,27 +69,175 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/widget_size_5"
             android:layout_weight="2"
-            android:background="@color/gray_thin"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <GridView
-                    android:id="@+id/stock_gridViews"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="none" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/widget_size_10"
+                    android:layout_marginRight="@dimen/widget_size_10"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:id="@+id/lina"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@mipmap/cabinets_icon" />
+
+                        <CheckBox
+                            android:id="@+id/checkboxa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/widget_size_10"
+                            android:text="一号柜"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/widget_size_10"
+                    android:layout_marginRight="@dimen/widget_size_10"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/linb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/widget_size_10"
+                            android:background="@mipmap/cabinets_icon" />
+
+                        <CheckBox
+                            android:id="@+id/checkboxb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/widget_size_10"
+                            android:text="二号柜"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/widget_size_10"
+                    android:layout_marginRight="@dimen/widget_size_10"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/linc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@mipmap/cabinets_icon" />
+
+                        <CheckBox
+                            android:id="@+id/checkboxc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/widget_size_10"
+                            android:text="三号柜"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/widget_size_10"
+                    android:layout_marginRight="@dimen/widget_size_10"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/lind"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/widget_size_10"
+                            android:background="@mipmap/cabinets_icon" />
+
+                        <CheckBox
+                            android:id="@+id/checkboxd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/widget_size_10"
+                            android:text="四号柜"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
+
+
+    <TextView
+        android:id="@+id/open_doors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/widget_size_10"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/selector_mine_logout_bg"
+        android:gravity="center"
+        android:paddingLeft="@dimen/widget_size_100"
+        android:paddingTop="@dimen/widget_size_10"
+        android:paddingRight="@dimen/widget_size_100"
+        android:paddingBottom="@dimen/widget_size_10"
+        android:text="开门"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16" />
 
 </RelativeLayout>

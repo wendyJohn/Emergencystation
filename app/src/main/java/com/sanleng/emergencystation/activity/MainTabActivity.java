@@ -30,12 +30,10 @@ import com.sanleng.emergencystation.dialog.CustomDialog;
 import com.sanleng.emergencystation.fragment.HomeFragment;
 import com.sanleng.emergencystation.fragment.MineFragment;
 import com.sanleng.emergencystation.fragment.TrainFragment;
-import com.sanleng.emergencystation.model.LoginModel;
 import com.sanleng.emergencystation.model.UpdateModel;
 import com.sanleng.emergencystation.presenter.UpdateRequest;
 import com.sanleng.emergencystation.service.UpdateService;
 import com.sanleng.emergencystation.utils.NotificationUtil;
-import com.sanleng.emergencystation.utils.UpdatePresenter;
 
 public class MainTabActivity extends BaseActivity implements UpdateModel {
     private Receivers receivers;

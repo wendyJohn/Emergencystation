@@ -20,9 +20,9 @@ public class LoginRequests {
     //登录
     public static void GetLogin(final LoginModel loginModel, final Context context, final String username, final String password) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URLs.HOST) // 设置 网络请求 Url
+                .baseUrl(URLs.HOST) // 设置网络请求Url
                 .client(Request_Interface.genericClient(context))
-                .addConverterFactory(GsonConverterFactory.create()) //设置使用Gson解析
+                .addConverterFactory(GsonConverterFactory.create())//设置使用Gson解析
                 .build();
         Request_Interface request_Interface = retrofit.create(Request_Interface.class);
         //对 发送请求 进行封装
@@ -40,7 +40,7 @@ public class LoginRequests {
                         //存入数据库中（登录名称和密码用来判断是否需要重新登录问题）
                         PreferenceUtils.setString(context, "EmergencyStation_username", username);
                         loginModel.LoginSuccess("登录成功");
-                        LoginRequests.GetUser(context,username);
+                        LoginRequests.GetUser(context, username);
                     } else {
                         loginModel.LoginFailed();
                     }
@@ -71,26 +71,39 @@ public class LoginRequests {
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
+                try {
+                    String unitcode = response.body().getData().getUnitcode();
+                    String agentName = response.body().getData().getName();
+                    String mobile = response.body().getData().getMobile();
+                    String ids = response.body().getData().getId();
+                    String duty = response.body().getData().getDuty();
+                    String usericon = response.body().getData().getUsericon();
+                    if(usericon==null){
+                        // 头像
+                        PreferenceUtils.setString(context, "usericon", "no_portrait");
+                    }else{
+                        // 头像
+                        PreferenceUtils.setString(context, "usericon", usericon);
+                    }
 
-                String unitcode = response.body().getData().getUnitcode();
-                String agentName = response.body().getData().getName();
-                String mobile = response.body().getData().getMobile();
+                    //绑定唯一标识
+                    JPushInterface.setAlias(context, 1, ids);
+                    // 存入数据库中（登录名称和密码）
+                    PreferenceUtils.setString(context, "EmergencyStation_username", username);
+                    //存入数据库中（登录名称和密码用来判断是否需要重新登录问题）
+                    PreferenceUtils.setString(context, "EmergencyStation_usernames", username);
+                    PreferenceUtils.setString(context, "EmergencyStation_usernames", username);
+                    // 单位ID
+                    PreferenceUtils.setString(context, "unitcode", unitcode);
+                    // 人员名称
+                    PreferenceUtils.setString(context, "agentName", agentName);
+                    PreferenceUtils.setString(context, "ids", ids);
+                    PreferenceUtils.setString(context, "duty", duty);
+                    PreferenceUtils.setString(context, "mobile", mobile);
 
-                String ids = response.body().getData().getId();
-                String duty = response.body().getData().getDuty();
-//               //绑定唯一标识
-                JPushInterface.setAlias(context, 1, ids);
-                // 存入数据库中（登录名称和密码）
-                PreferenceUtils.setString(context, "EmergencyStation_username", username);
-                //存入数据库中（登录名称和密码用来判断是否需要重新登录问题）
-                PreferenceUtils.setString(context, "EmergencyStation_usernames", username);
-                // 单位ID
-                PreferenceUtils.setString(context, "unitcode", unitcode);
-                // 人员名称
-                PreferenceUtils.setString(context, "agentName", agentName);
-                PreferenceUtils.setString(context, "ids", ids);
-                PreferenceUtils.setString(context, "duty", duty);
-                PreferenceUtils.setString(context, "mobile", mobile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

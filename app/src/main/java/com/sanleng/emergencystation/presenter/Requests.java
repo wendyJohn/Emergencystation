@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.sanleng.emergencystation.bean.Articles;
 import com.sanleng.emergencystation.bean.Banners;
+import com.sanleng.emergencystation.bean.Cabinet;
 import com.sanleng.emergencystation.bean.Events;
 import com.sanleng.emergencystation.model.ArticlesContract;
 import com.sanleng.emergencystation.model.BannersContract;
+import com.sanleng.emergencystation.model.CabinetContract;
 import com.sanleng.emergencystation.model.EventsContract;
 import com.sanleng.emergencystation.net.Request_Interface;
 import com.sanleng.emergencystation.net.URLs;
@@ -92,7 +94,7 @@ public class Requests {
                 .build();
         Request_Interface request_Interface = retrofit.create(Request_Interface.class);
         //对 发送请求 进行封装
-        Call<Events> call = request_Interface.getStoreEvent(chevType, startTime, endTime);
+        Call<Events> call = request_Interface.getStoreEvent(chevType, startTime, endTime, "0", "50");
         call.enqueue(new Callback<Events>() {
             @Override
             public void onResponse(Call<Events> call, Response<Events> response) {
@@ -111,5 +113,31 @@ public class Requests {
         });
     }
 
+    //获取柜体信息
+    public static void getVersalStores(final CabinetContract cabinetContract, final Context context) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(URLs.HOST) // 设置 网络请求 Url
+                .client(Request_Interface.genericClient(context))
+                .addConverterFactory(GsonConverterFactory.create()) //设置使用Gson解析
+                .build();
+        Request_Interface request_Interface = retrofit.create(Request_Interface.class);
+        //对 发送请求 进行封装
+        Call<Cabinet> call = request_Interface.getVersalStore(PreferenceUtils.getString(context, "unitcode"));
+        call.enqueue(new Callback<Cabinet>() {
+            @Override
+            public void onResponse(Call<Cabinet> call, Response<Cabinet> response) {
+                try {
+                    if (response.body().getState().equals("ok")) {
+                        cabinetContract.Success(response.body().getMapList());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Cabinet> call, Throwable t) {
+            }
+        });
+    }
 }

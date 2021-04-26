@@ -12,18 +12,33 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/log_images"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/login_number"
             android:layout_centerInParent="true"
-            android:layout_marginBottom="@dimen/widget_size_100"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/widget_size_60"
             android:src="@mipmap/login_tittles" />
 
+        <TextView
+            android:id="@+id/tv_tittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/log_images"
+            android:layout_centerInParent="true"
+            android:text="三棱智慧应急柜"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/widget_size_10"
+            android:textSize="@dimen/widget_size_30"
+            android:textStyle="bold"
+            />
         <EditText
             android:id="@+id/login_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_below="@id/tv_tittle"
+            android:layout_marginTop="@dimen/widget_size_80"
             android:layout_marginLeft="@dimen/widget_size_20"
             android:layout_marginRight="@dimen/widget_size_20"
             android:background="@drawable/edit_line"
@@ -42,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/login_number"
             android:layout_marginLeft="@dimen/widget_size_20"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/widget_size_20"
             android:layout_marginRight="@dimen/widget_size_20"
             android:background="@drawable/edit_line"
             android:drawableLeft="@drawable/login_tip_password"
@@ -61,7 +76,7 @@
             android:layout_height="@dimen/widget_size_45"
             android:layout_below="@+id/login_password"
             android:layout_marginLeft="@dimen/widget_size_20"
-            android:layout_marginTop="@dimen/widget_size_50"
+            android:layout_marginTop="@dimen/widget_size_60"
             android:layout_marginRight="@dimen/widget_size_20"
             android:background="@drawable/login_btn_color"
             android:text="登录"

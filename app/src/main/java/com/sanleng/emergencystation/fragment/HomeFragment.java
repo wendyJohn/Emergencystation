@@ -3,34 +3,29 @@ package com.sanleng.emergencystation.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
-import com.baidu.mapframework.nirvana.Utils;
 import com.bumptech.glide.Glide;
-import com.sanleng.emergencystation.MyApplication;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.activity.EventsActivity;
 import com.sanleng.emergencystation.activity.RemoteControlActivity;
 import com.sanleng.emergencystation.activity.SearchActivity;
+import com.sanleng.emergencystation.adapter.TraceListAdapter;
 import com.sanleng.emergencystation.bean.Banners;
+import com.sanleng.emergencystation.bean.Trace;
 import com.sanleng.emergencystation.model.BannersContract;
-import com.sanleng.emergencystation.mqtt.MyMqttClient;
 import com.sanleng.emergencystation.presenter.Requests;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
-
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +35,15 @@ import java.util.List;
  */
 public class HomeFragment extends BaseFragment implements BannersContract, OnBannerListener, View.OnClickListener {
     private View view;
-    private LinearLayout functiona,functionb,functionc;
+    private LinearLayout functiona, functionb, functionc;
     private Banner mBanner;
     private ArrayList<String> imagePath;
     private ArrayList<String> imageTitle;
+
+    private ListView lvTrace;
+    private List<Trace> traceList = new ArrayList<>();
+    private TraceListAdapter adapter;
+
 
     @Nullable
     @Override
@@ -57,16 +57,17 @@ public class HomeFragment extends BaseFragment implements BannersContract, OnBan
         super.onActivityCreated(savedInstanceState);
         view = getView();
         initView();
-        MqttClient();//连接Mqtt协议；
         setBanner();//加载Banner;
+        initData();//加载数据;
     }
 
     //初始化
     public void initView() {
+        lvTrace = view.findViewById(R.id.lvtrace);
         mBanner = view.findViewById(R.id.banner);
         functiona = view.findViewById(R.id.functiona);
-        functionb= view.findViewById(R.id.functionb);
-        functionc= view.findViewById(R.id.functionc);
+        functionb = view.findViewById(R.id.functionb);
+        functionc = view.findViewById(R.id.functionc);
         functiona.setOnClickListener(this);
         functionb.setOnClickListener(this);
         functionc.setOnClickListener(this);
@@ -75,6 +76,22 @@ public class HomeFragment extends BaseFragment implements BannersContract, OnBan
     //设置Banner
     private void setBanner() {
         Requests.getBannerCall(HomeFragment.this, getActivity());
+    }
+
+
+    private void initData() {
+        // 模拟一些假的数据
+        traceList.add(new Trace("2021-04-22 17:48:00", "测试员", "取出", "灭火器", "应急柜"));
+        traceList.add(new Trace("2021-04-22 14:13:00", "测试员", "存放", "钥匙", "钥匙柜"));
+        traceList.add(new Trace("2021-04-22 13:01:04", "测试员", "取出", "灭火器", "应急柜"));
+        traceList.add(new Trace("2021-04-22 12:19:47", "测试员", "存放", "灭火器", "应急柜"));
+        traceList.add(new Trace("2021-04-22 11:12:44", "测试员", "取出", "钥匙", "钥匙柜"));
+        traceList.add(new Trace("2021-04-22 03:12:12", "测试员", "存放", "灭火器", "应急柜"));
+        traceList.add(new Trace("2021-04-22 21:06:46", "测试员", "取出", "灭火器", "应急柜"));
+        traceList.add(new Trace("2021-04-22 18:59:41", "测试员", "存放", "灭火器", "应急柜"));
+        traceList.add(new Trace("2021-04-22 18:35:32", "测试员", "取出", "灭火器", "应急柜"));
+        adapter = new TraceListAdapter(getActivity(), traceList);
+        lvTrace.setAdapter(adapter);
     }
 
     @Override
@@ -90,7 +107,7 @@ public class HomeFragment extends BaseFragment implements BannersContract, OnBan
             mBanner.setImageLoader(new MyLoader());
             mBanner.setBannerAnimation(Transformer.Default);
             mBanner.setBannerTitles(imageTitle);
-            mBanner.setDelayTime(3000);
+            mBanner.setDelayTime(5000);
             mBanner.isAutoPlay(true);
             mBanner.setIndicatorGravity(BannerConfig.CENTER);
             mBanner.setImages(imagePath)
@@ -133,29 +150,7 @@ public class HomeFragment extends BaseFragment implements BannersContract, OnBan
     }
 
 
-    //连接MQTT
-    public void MqttClient() {
-        MyMqttClient.sharedCenter().setConnect();//连接MQTT
-        MyMqttClient.sharedCenter().setOnServerDisConnectedCallback(new MyMqttClient.OnServerDisConnectedCallback() {
-            @Override
-            public void callback(Throwable e) {
-            }
-        });
 
-        //MQTT接收数据
-        MyMqttClient.sharedCenter().setOnServerReadStringCallback(new MyMqttClient.OnServerReadStringCallback() {
-            @Override
-            public void callback(String Topic, MqttMessage Msg, byte[] MsgByte) {
-            }
-        });
-
-        //连接上服务器
-        MyMqttClient.sharedCenter().setOnServerConnectedCallback(new MyMqttClient.OnServerConnectedCallback() {
-            @Override
-            public void callback() {
-            }
-        });
-    }
 
     /**
      * 网络加载图片

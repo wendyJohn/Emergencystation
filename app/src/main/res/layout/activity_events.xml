@@ -25,8 +25,7 @@
             android:layout_centerInParent="true"
             android:text="事件记录"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_18"
-           />
+            android:textSize="@dimen/text_size_16" />
     </RelativeLayout>
 
     <View
@@ -37,16 +36,96 @@
         android:background="@color/gray_thin" />
 
     <LinearLayout
+        android:id="@+id/menu_lin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_size_50"
+        android:layout_below="@id/linyears"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/widget_size_5">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/widget_size_40"
+            android:layout_marginRight="@dimen/widget_size_2"
+            android:layout_weight="1.2"
+            android:background="@drawable/meun_rounded"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_40"
+                android:overlapAnchor="false"
+                android:spinnerMode="dropdown"
+                android:entries="@array/events" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/widget_size_40"
+            android:layout_marginLeft="@dimen/widget_size_2"
+            android:layout_weight="2"
+            android:background="@drawable/meun_rounded"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/timea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="0000-00-00"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/timeb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0000-00-00"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/views"
+        android:layout_below="@id/menu_lin"
         android:orientation="horizontal">
 
         <ListView
             android:id="@+id/events_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none" />
+            android:divider="@null" />
 
     </LinearLayout>
 

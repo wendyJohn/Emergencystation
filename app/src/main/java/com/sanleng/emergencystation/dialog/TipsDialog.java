@@ -1,7 +1,9 @@
 package com.sanleng.emergencystation.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,7 +12,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.sanleng.emergencystation.R;
+import com.sanleng.emergencystation.activity.LoginActivity;
+import com.sanleng.emergencystation.utils.PreferenceUtils;
 
 /**
  * 提示
@@ -55,20 +60,16 @@ public class TipsDialog extends Dialog implements View.OnClickListener {
             //继续
             case R.id.notice:
                 Message mymsg = new Message();
-                mymsg.what = 22260;
+                mymsg.what = 0x4521260;
                 mHandler.sendMessage(mymsg);
                 dismiss();
                 break;
             // 取消
             case R.id.cancle:
-                Message msg = new Message();
-                msg.what = 22261;
-                mHandler.sendMessage(msg);
                 dismiss();
                 break;
             default:
                 break;
         }
     }
-
 }

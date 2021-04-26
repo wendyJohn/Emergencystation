@@ -16,6 +16,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="6dp"
             android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/widget_size_5"
             android:orientation="vertical"
             android:paddingLeft="3dp" >
 

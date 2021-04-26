@@ -6,7 +6,9 @@ import android.util.Log;
 
 import com.sanleng.emergencystation.bean.Articles;
 import com.sanleng.emergencystation.bean.Banners;
+import com.sanleng.emergencystation.bean.Cabinet;
 import com.sanleng.emergencystation.bean.Events;
+import com.sanleng.emergencystation.bean.Trace;
 import com.sanleng.emergencystation.bean.User;
 import com.sanleng.emergencystation.bean.Users;
 import com.sanleng.emergencystation.bean.Version;
@@ -47,7 +49,16 @@ public interface Request_Interface {
 
     //获取事件记录
     @GET("/sl-universal-store-sys/api/universalStoreEvent/list")
-    Call<Events> getStoreEvent(@Query("chevType") String chevType, @Query("startTime") String startTime, @Query("endTime") String endTime);
+    Call<Events> getStoreEvent(@Query("chevType") String chevType, @Query("startTime") String startTime, @Query("endTime") String endTime, @Query("page") String page, @Query("limit") String limit);
+
+    //获取使用记录
+    @GET("/sl-universal-store-sys/api/chemicalStoreIo/getList")
+    Call<Trace> getStoreIo(@Query("chioType") String chioType, @Query("startTime") String startTime, @Query("endTime") String endTime, @Query("page") String page, @Query("limit") String limit);
+
+
+    //获取柜体信息
+    @GET("/sl-universal-store-sys/api/universalStoreApp/getList")
+    Call<Cabinet> getVersalStore(@Query("unitId") String unitId);
 
 
 

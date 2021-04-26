@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import com.sanleng.emergencystation.dialog.CustomDialog;
 import com.sanleng.emergencystation.presenter.UpdateRequest;
 import com.sanleng.emergencystation.service.UpdateService;
 import com.sanleng.emergencystation.utils.DataCleanManager;
+import com.sanleng.emergencystation.utils.ImageDown;
 import com.sanleng.emergencystation.utils.PreferenceUtils;
 import com.sanleng.emergencystation.utils.UpdatePresenter;
 import com.sanleng.emergencystation.utils.Utils;
@@ -40,9 +42,7 @@ import java.io.File;
  */
 public class MineFragment extends BaseFragment implements OnClickListener, UpdatePresenter {
     private View view;
-    public static final String ACTION_IMGHEAD_PORTRAIT = "image_head";
     private RelativeLayout changepassword, scavengingcaching, faceregistration, versionupdate;
-    private File cameraFile;
     private TextView tv_user_headname, tv_mobile, item_search_addb, login_out;
     private ImageView iv_userhead;
     private DataCleanManager dm;
@@ -68,19 +68,19 @@ public class MineFragment extends BaseFragment implements OnClickListener, Updat
         tv_mobile.setText(Utils.hidePhoneNum(PreferenceUtils.getString(getActivity(), "mobile")));
         // 头像
         iv_userhead = view.findViewById(R.id.iv_userhead);
-        cameraFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/head.jpg");
-        if (!cameraFile.exists()) {
-            cameraFile.getParentFile().mkdir();
-            iv_userhead.setImageResource(R.drawable.ic_person);
-        } else {
-            iv_userhead.setImageBitmap(BitmapFactory.decodeFile(cameraFile.getAbsolutePath()));
-        }
-        iv_userhead.setOnClickListener(this);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ACTION_IMGHEAD_PORTRAIT);
         // 头像设置
         try {
-            getActivity().registerReceiver(imgHeadportrait, filter);
+            if (PreferenceUtils.getString(getActivity(), "usericon").equals("no_portrait")) {
+                return;
+            } else {
+                ImageDown downImage = new ImageDown("http://" + PreferenceUtils.getString(getActivity(), "usericon"));
+                downImage.loadImage(new ImageDown.ImageCallBack() {
+                    @Override
+                    public void getDrawable(Drawable drawable) {
+                        iv_userhead.setImageDrawable(drawable);
+                    }
+                });
+            }
             //缓存大小
             item_search_addb.setText(dm.getTotalCacheSize(getActivity()));
         } catch (Exception e) {
@@ -137,26 +137,10 @@ public class MineFragment extends BaseFragment implements OnClickListener, Updat
         }
     }
 
-    // 广播接收器
-    private final BroadcastReceiver imgHeadportrait = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context arg0, Intent intent) {
-            String action = intent.getAction();
-            // 获取头像设置
-            if (action.equals(ACTION_IMGHEAD_PORTRAIT)) {
-                String imag_path = intent.getStringExtra("CameraFilePath");
-                Bitmap bitmap = BitmapFactory.decodeFile(imag_path);
-                iv_userhead.setImageBitmap(bitmap);
-            }
-        }
-    };
 
     @Override
     public void onDestroyView() {
         // TODO Auto-generated method stub
-        if (imgHeadportrait != null) {
-            getActivity().unregisterReceiver(imgHeadportrait);
-        }
         super.onDestroyView();
     }
 

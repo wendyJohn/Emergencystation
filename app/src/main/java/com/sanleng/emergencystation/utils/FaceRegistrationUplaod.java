@@ -60,7 +60,8 @@ public class FaceRegistrationUplaod extends AsyncTask<String, Integer, String> {
         HttpContext httpContext = new BasicHttpContext();
         String ids = PreferenceUtils.getString(context, "ids");
         String username = PreferenceUtils.getString(context, "EmergencyStation_username");
-        HttpPost httpPost = new HttpPost(URLs.HOST + "/thirdpartypush/api/getui/faceRecognition?ids=" + ids + "&platformkey=app_firecontrol_owner");
+        HttpPost httpPost = new HttpPost(URLs.HOST + "/thirdpartypush/api/getui/faceRecognition?ids=" + ids + "&platformkey=app_emergency_new");
+        httpPost.addHeader("Authorization", PreferenceUtils.getString(context, "JWT"));
         try {
             CustomMultipartEntity multipartContent = new CustomMultipartEntity(new CustomMultipartEntity.ProgressListener() {
                 @Override
@@ -71,13 +72,10 @@ public class FaceRegistrationUplaod extends AsyncTask<String, Integer, String> {
             // 把上传内容添加到MultipartEntity
             for (int i = 0; i < filePathList.size(); i++) {
                 multipartContent.addPart("file", new FileBody(new File(filePathList.get(i))));
-                multipartContent.addPart("data",
-                        new StringBody(filePathList.get(i), Charset.forName(org.apache.http.protocol.HTTP.UTF_8)));
+                multipartContent.addPart("data", new StringBody(filePathList.get(i), Charset.forName(org.apache.http.protocol.HTTP.UTF_8)));
             }
             totalSize = multipartContent.getContentLength();
-
             httpPost.setEntity(multipartContent);
-
             org.apache.http.HttpResponse response = httpClient.execute(httpPost, httpContext);
             serverResponse = EntityUtils.toString(response.getEntity());
 
@@ -94,6 +92,7 @@ public class FaceRegistrationUplaod extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        System.out.println("=============上传信息============"+result);
         if (result == null) {
             return;
         } else {

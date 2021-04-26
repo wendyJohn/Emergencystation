@@ -19,16 +19,13 @@ import com.sanleng.emergencystation.R;
 public class FunctionAdapter extends BaseAdapter {
 	private String[] names;
 	private TypedArray icons;
-
 	private Context context;
 
 	public FunctionAdapter(Context context, int nameId, int iconsId) {
 		// TODO Auto-generated constructor stub
 		this.context = context;
-
 		names = context.getResources().getStringArray(nameId);
 		icons = context.getResources().obtainTypedArray(iconsId);
-
 	}
 
 	@Override

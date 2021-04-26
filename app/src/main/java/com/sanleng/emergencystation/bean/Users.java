@@ -76,7 +76,7 @@ public class Users {
         private String email;
         private Object birthday;
         private String address;
-        private Object usericon;
+        private String usericon;
         private String department;
         private String type;
         private String duty;
@@ -163,11 +163,11 @@ public class Users {
             this.address = address;
         }
 
-        public Object getUsericon() {
+        public String getUsericon() {
             return usericon;
         }
 
-        public void setUsericon(Object usericon) {
+        public void setUsericon(String usericon) {
             this.usericon = usericon;
         }
 
