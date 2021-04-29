@@ -7,7 +7,11 @@ import android.util.Log;
 import com.sanleng.emergencystation.bean.Articles;
 import com.sanleng.emergencystation.bean.Banners;
 import com.sanleng.emergencystation.bean.Cabinet;
+import com.sanleng.emergencystation.bean.Cabinets;
 import com.sanleng.emergencystation.bean.Events;
+import com.sanleng.emergencystation.bean.Materialdetails;
+import com.sanleng.emergencystation.bean.Records;
+import com.sanleng.emergencystation.bean.Stocks;
 import com.sanleng.emergencystation.bean.Trace;
 import com.sanleng.emergencystation.bean.User;
 import com.sanleng.emergencystation.bean.Users;
@@ -53,14 +57,31 @@ public interface Request_Interface {
 
     //获取使用记录
     @GET("/sl-universal-store-sys/api/chemicalStoreIo/getList")
-    Call<Trace> getStoreIo(@Query("chioType") String chioType, @Query("startTime") String startTime, @Query("endTime") String endTime, @Query("page") String page, @Query("limit") String limit);
-
+    Call<Trace> getStoreIo(@Query("chioChemicalStoreCode") String chioChemicalStoreCode
+            , @Query("chioType") String chioType
+            , @Query("startTime") String startTime
+            , @Query("endTime") String endTime
+            , @Query("page") String page
+            , @Query("limit") String limit);
 
     //获取柜体信息
     @GET("/sl-universal-store-sys/api/universalStoreApp/getList")
     Call<Cabinet> getVersalStore(@Query("unitId") String unitId);
 
+    //获取副柜体信息
+    @GET("/sl-universal-store-sys/api/universal-store/getOne")
+    Call<Cabinets> getOnes(@Query("id") String id);
 
+
+    //获取库存信息
+    @GET("/sl-universal-store-sys/api/universalStoreApp/stockMaterial")
+    Call<Stocks> getStockMaterial(@Query("usId") String usId, @Query("uscId") String uscId);
+
+
+    //获取物资详情
+    @GET("/sl-universal-store-sys/api/universalStoreApp/getGoodsInfo")
+    Call<Materialdetails> getGoodsInfo(@Query("ugrUscCode") String ugrUscCode
+            , @Query("ugiType") String ugiType);
 
 
     //统一添加文件头

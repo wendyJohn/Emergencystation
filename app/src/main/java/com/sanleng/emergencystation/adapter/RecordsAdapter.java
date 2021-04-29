@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.bean.Records;
+import com.sanleng.emergencystation.bean.Trace;
+import com.sanleng.emergencystation.utils.Utils;
 
 import java.util.List;
 
@@ -21,9 +23,9 @@ import java.util.List;
 public class RecordsAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<Records> mList;
+    private List<Trace.PageBean.ListBean> mList;
 
-    public RecordsAdapter(Context mContext, List<Records> mList) {
+    public RecordsAdapter(Context mContext, List<Trace.PageBean.ListBean> mList) {
         // TODO Auto-generated constructor stub
         this.mContext = mContext;
         this.mList = mList;
@@ -63,18 +65,18 @@ public class RecordsAdapter extends BaseAdapter {
         } else {
             holder = (Holder) convertView.getTag();
         }
-        holder.record_times.setText(mList.get(position).getTiem());
+        holder.record_times.setText(Utils.getFormatTime(mList.get(position).getChio_operation_time()));
         holder.record_users.setText(mList.get(position).getName());
-        if (mList.get(position).getState().equals("存")) {
-            holder.record_states.setText(mList.get(position).getState());
+        if (mList.get(position).getChio_type() == 2) {
+            holder.record_states.setText("存");
             holder.record_states.setTextColor(mContext.getResources().getColor(R.color.record_in));
             holder.record_states.setBackground(mContext.getResources().getDrawable(R.drawable.records_in));
         } else {
-            holder.record_states.setText(mList.get(position).getState());
+            holder.record_states.setText("取");
             holder.record_states.setTextColor(mContext.getResources().getColor(R.color.record_on));
             holder.record_states.setBackground(mContext.getResources().getDrawable(R.drawable.records_on));
         }
-        holder.record_types.setText(mList.get(position).getType());
+        holder.record_types.setText(mList.get(position).getNames());
         return convertView;
     }
 

@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 
 import com.sanleng.emergencystation.R;
+import com.sanleng.emergencystation.bean.Cabinet;
+import com.sanleng.emergencystation.utils.PreferenceUtils;
 
 import java.util.Locale;
 
@@ -70,7 +72,7 @@ public class PagerSlidingTab extends HorizontalScrollView {
     private int tabPadding;
 
     private int tabTextSize = 14;
-    private int tabTextColor =Color.parseColor("#A6A6A6");
+    private int tabTextColor = Color.parseColor("#A6A6A6");
     private Typeface tabTypeface = null;
     private int tabTypefaceStyle = Typeface.BOLD;
 
@@ -90,7 +92,19 @@ public class PagerSlidingTab extends HorizontalScrollView {
 
     public PagerSlidingTab(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        tabPadding = 30;
+        if (PreferenceUtils.getString(context, "number").equals("1")) {
+            tabPadding = 70;
+        }
+        if (PreferenceUtils.getString(context, "number").equals("2")) {
+            tabPadding = 50;
+        }
+        if (PreferenceUtils.getString(context, "number").equals("3")) {
+            tabPadding = 30;
+        }
+        if (PreferenceUtils.getString(context, "number").equals("4")) {
+            tabPadding = 20;
+        }
+
         setFillViewport(true);
         setWillNotDraw(false);
         tabsContainer = new LinearLayout(context);

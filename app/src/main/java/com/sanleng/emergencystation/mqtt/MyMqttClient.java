@@ -21,14 +21,14 @@ public class MyMqttClient {
     private static final String TAG = MyMqttClient.class.getSimpleName();
     private static MyMqttClient myMqttClient;
     private static String ClientId = MyApplication.getMac();
-//    private static String MqttUserString = "sanleng";
-//    private static String MqttPwdString = "JSsl2020!";
-//    private static String MqttIPString = "47.103.151.52";
-//    private static int MqttPort = 1883;
-    private static String MqttUserString = "root";
-    private static String MqttPwdString = "root";
-    private static String MqttIPString = "10.101.80.188";
+    private static String MqttUserString = "sanleng";
+    private static String MqttPwdString = "JSsl2020!";
+    private static String MqttIPString = "47.103.151.52";
     private static int MqttPort = 1883;
+//    private static String MqttUserString = "root";
+//    private static String MqttPwdString = "root";
+//    private static String MqttIPString = "10.101.80.188";
+//    private static int MqttPort = 1883;
 
     private static MqttClient mqttClient;
     private static MqttConnectOptions mqttConnectOptions;

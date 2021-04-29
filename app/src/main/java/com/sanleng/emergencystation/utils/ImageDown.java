@@ -27,13 +27,10 @@ public class ImageDown {
 		};
  
 		new Thread(new Runnable() {
- 
 			@Override
 			public void run() {
 				try {
-					Drawable drawable = Drawable.createFromStream(new URL(
-							image_path).openStream(), "");
- 
+					Drawable drawable = Drawable.createFromStream(new URL(image_path).openStream(), "");
 					Message message = Message.obtain();
 					message.obj = drawable;
 					handler.sendMessage(message);

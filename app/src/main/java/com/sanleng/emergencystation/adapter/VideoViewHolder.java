@@ -33,7 +33,6 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
 
     public void bindData(Video video) {
         mController.setTitle(video.getTitle());
-//        mController.setLenght(video.getLength());
         RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.black_b).error(R.drawable.black_b);
 
         Glide.with(itemView.getContext())

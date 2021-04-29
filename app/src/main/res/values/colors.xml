@@ -192,4 +192,6 @@
     <color name="record_in">#1adcff</color>
     <color name="record_on">#ffc57a</color>
     <color name="record_line">#5e889d</color>
+    <color name="gray_maters">#bfbfbf</color>
+
 </resources>

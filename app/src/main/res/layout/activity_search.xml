@@ -19,7 +19,7 @@
             android:padding="@dimen/widget_size_10">
 
             <ImageView
-                android:id="@+id/backs"
+                android:id="@+id/searbacks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -57,7 +57,6 @@
                 android:layout_width="match_parent"
                 android:background="@color/gray_thin"
                 android:layout_height="match_parent" />
-
         </LinearLayout>
 
 
@@ -67,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
+            android:visibility="gone"
             android:gravity="center"
             android:padding="@dimen/widget_size_10">
 

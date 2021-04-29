@@ -50,15 +50,17 @@
     </array>
     <!--tab选项名称-->
     <string-array name="tab_namea">
-        <item>一号柜</item>
+        <item>全部</item>
     </string-array>
     <!--tab选项名称-->
     <string-array name="tab_nameb">
+        <item>全部</item>
         <item>一号柜</item>
         <item>二号柜</item>
     </string-array>
     <!--tab选项名称-->
     <string-array name="tab_namec">
+        <item>全部</item>
         <item>一号柜</item>
         <item>二号柜</item>
         <item>三号柜</item>
@@ -69,6 +71,7 @@
         <item>一号柜</item>
         <item>二号柜</item>
         <item>三号柜</item>
+        <item>四号柜</item>
     </string-array>
     <string-array name="events">
         <item>全部</item>

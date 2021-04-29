@@ -52,6 +52,7 @@ public class TrainFragment extends BaseFragment implements ArticlesContract {
         super.onActivityCreated(savedInstanceState);
         view = getView();
         initView();
+        refresh();
     }
 
     public void initView() {

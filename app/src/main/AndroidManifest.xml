@@ -101,9 +101,6 @@
             </intent-filter>
         </activity>
 
-        <!-- 登录 -->
-
-
         <!--2.0登录 -->
         <activity
             android:name=".activity.LoginActivity"
@@ -132,8 +129,16 @@
             android:name=".activity.EventsActivity"
             android:launchMode="singleInstance" />
 
-
-
+        <!--使用记录 -->
+        <activity
+            android:name=".activity.RecordsActivity"
+            android:launchMode="singleInstance" />
+        <!--物资详情 -->
+        <activity
+            android:name=".activity.MaterialDesActivity"
+            android:launchMode="singleInstance"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
         <!-- 应急救援 -->
         <activity
             android:name=".activity.EmergencyRescueActivity"

@@ -20,6 +20,9 @@ import cn.jpush.android.api.JPushInterface;
 public class MyApplication extends MultiDexApplication {
     private static Application instance;
     public static final int REQUEST_CODE_ASK_PERMISSIONS = 0x1231232;
+    public static final int REQUEST_CODE_ASK_Cabinets = 0x1221463;
+    public static final int REQUEST_NOCabinets = 0x1225663;
+
     private static Handler mainHandler;
     private static Context context = null;
 

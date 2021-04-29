@@ -69,7 +69,7 @@ public class MainTabActivity extends BaseActivity implements UpdateModel {
     @SuppressLint("ClickableViewAccessibility")
     private void initViews() {
         //获取版本号与下载链接
-        UpdateRequest.GetUpdate(MainTabActivity.this, getApplicationContext(), "os_android", Version_mag.platformkey);
+//        UpdateRequest.GetUpdate(MainTabActivity.this, getApplicationContext(), "os_android", Version_mag.platformkey);
 //        initWindow();
         homefragment = new HomeFragment();
         trainFragment = new TrainFragment();
@@ -109,7 +109,7 @@ public class MainTabActivity extends BaseActivity implements UpdateModel {
             case R.id.re_alarm_list:
                 index = 1;
                 try {
-                    trainFragment.refresh();
+//                    trainFragment.refresh();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

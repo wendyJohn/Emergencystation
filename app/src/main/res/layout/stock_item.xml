@@ -47,13 +47,13 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/stock__images"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/stock_images"
+                android:layout_width="@dimen/widget_size_80"
+                android:layout_height="@dimen/widget_size_80"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/widget_size_10"
                 android:layout_marginBottom="@dimen/widget_size_10"
-                android:background="@mipmap/ic_launcher" />
+                />
 
 
             <LinearLayout

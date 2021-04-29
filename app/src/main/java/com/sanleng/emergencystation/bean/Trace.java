@@ -1,62 +1,211 @@
 package com.sanleng.emergencystation.bean;
 
+import java.util.List;
+
 public class Trace {
-
     /**
-     * 时间
+     * state : ok
+     * page : {"totalCount":1,"pageSize":10,"totalPage":1,"currPage":1,"nextPage":-1,"list":[{"usc_name":"1号柜","names":"钥匙","chio_type":1,"ugi_name":"1号房钥匙","chio_batch_number":"202104260005","us_name":"1号钥匙柜","name":"应急柜","chio_rfid":"10100006","chio_operation_time":"2021-04-26T02:28:39.000+0000"}]}
+     * statecode : PAGE_DATA_SUCCESS
+     * message : 分页数据获取成功
      */
-    private String acceptTime;
-    private String tv_names, tv_states, tv_types, tv_cabinet;
 
-    public Trace() {
+    private String state;
+    private PageBean page;
+    private String statecode;
+    private String message;
+
+    public String getState() {
+        return state;
     }
 
-    public Trace(String acceptTime, String tv_names, String tv_states, String tv_types, String tv_cabinet) {
-        this.acceptTime = acceptTime;
-        this.tv_names = tv_names;
-        this.tv_states = tv_states;
-        this.tv_types = tv_types;
-        this.tv_cabinet = tv_cabinet;
+    public void setState(String state) {
+        this.state = state;
     }
 
-
-    public String getAcceptTime() {
-        return acceptTime;
+    public PageBean getPage() {
+        return page;
     }
 
-    public void setAcceptTime(String acceptTime) {
-        this.acceptTime = acceptTime;
+    public void setPage(PageBean page) {
+        this.page = page;
     }
 
-    public String getTv_names() {
-        return tv_names;
+    public String getStatecode() {
+        return statecode;
     }
 
-    public void setTv_names(String tv_names) {
-        this.tv_names = tv_names;
+    public void setStatecode(String statecode) {
+        this.statecode = statecode;
     }
 
-    public String getTv_states() {
-        return tv_states;
+    public String getMessage() {
+        return message;
     }
 
-    public void setTv_states(String tv_states) {
-        this.tv_states = tv_states;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getTv_types() {
-        return tv_types;
-    }
+    public static class PageBean {
+        /**
+         * totalCount : 1
+         * pageSize : 10
+         * totalPage : 1
+         * currPage : 1
+         * nextPage : -1
+         * list : [{"usc_name":"1号柜","names":"钥匙","chio_type":1,"ugi_name":"1号房钥匙","chio_batch_number":"202104260005","us_name":"1号钥匙柜","name":"应急柜","chio_rfid":"10100006","chio_operation_time":"2021-04-26T02:28:39.000+0000"}]
+         */
 
-    public void setTv_types(String tv_types) {
-        this.tv_types = tv_types;
-    }
+        private int totalCount;
+        private int pageSize;
+        private int totalPage;
+        private int currPage;
+        private int nextPage;
+        private List<ListBean> list;
 
-    public String getTv_cabinet() {
-        return tv_cabinet;
-    }
+        public int getTotalCount() {
+            return totalCount;
+        }
 
-    public void setTv_cabinet(String tv_cabinet) {
-        this.tv_cabinet = tv_cabinet;
+        public void setTotalCount(int totalCount) {
+            this.totalCount = totalCount;
+        }
+
+        public int getPageSize() {
+            return pageSize;
+        }
+
+        public void setPageSize(int pageSize) {
+            this.pageSize = pageSize;
+        }
+
+        public int getTotalPage() {
+            return totalPage;
+        }
+
+        public void setTotalPage(int totalPage) {
+            this.totalPage = totalPage;
+        }
+
+        public int getCurrPage() {
+            return currPage;
+        }
+
+        public void setCurrPage(int currPage) {
+            this.currPage = currPage;
+        }
+
+        public int getNextPage() {
+            return nextPage;
+        }
+
+        public void setNextPage(int nextPage) {
+            this.nextPage = nextPage;
+        }
+
+        public List<ListBean> getList() {
+            return list;
+        }
+
+        public void setList(List<ListBean> list) {
+            this.list = list;
+        }
+
+        public static class ListBean {
+            /**
+             * usc_name : 1号柜
+             * names : 钥匙
+             * chio_type : 1
+             * ugi_name : 1号房钥匙
+             * chio_batch_number : 202104260005
+             * us_name : 1号钥匙柜
+             * name : 应急柜
+             * chio_rfid : 10100006
+             * chio_operation_time : 2021-04-26T02:28:39.000+0000
+             */
+
+            private String usc_name;
+            private String names;
+            private int chio_type;
+            private String ugi_name;
+            private String chio_batch_number;
+            private String us_name;
+            private String name;
+            private String chio_rfid;
+            private String chio_operation_time;
+
+            public String getUsc_name() {
+                return usc_name;
+            }
+
+            public void setUsc_name(String usc_name) {
+                this.usc_name = usc_name;
+            }
+
+            public String getNames() {
+                return names;
+            }
+
+            public void setNames(String names) {
+                this.names = names;
+            }
+
+            public int getChio_type() {
+                return chio_type;
+            }
+
+            public void setChio_type(int chio_type) {
+                this.chio_type = chio_type;
+            }
+
+            public String getUgi_name() {
+                return ugi_name;
+            }
+
+            public void setUgi_name(String ugi_name) {
+                this.ugi_name = ugi_name;
+            }
+
+            public String getChio_batch_number() {
+                return chio_batch_number;
+            }
+
+            public void setChio_batch_number(String chio_batch_number) {
+                this.chio_batch_number = chio_batch_number;
+            }
+
+            public String getUs_name() {
+                return us_name;
+            }
+
+            public void setUs_name(String us_name) {
+                this.us_name = us_name;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getChio_rfid() {
+                return chio_rfid;
+            }
+
+            public void setChio_rfid(String chio_rfid) {
+                this.chio_rfid = chio_rfid;
+            }
+
+            public String getChio_operation_time() {
+                return chio_operation_time;
+            }
+
+            public void setChio_operation_time(String chio_operation_time) {
+                this.chio_operation_time = chio_operation_time;
+            }
+        }
     }
 }

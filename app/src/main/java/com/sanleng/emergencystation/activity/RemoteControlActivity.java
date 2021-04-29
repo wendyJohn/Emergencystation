@@ -8,11 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
@@ -64,17 +62,14 @@ public class RemoteControlActivity extends BaseActivity implements View.OnClickL
     //初始化
     private void initView() {
         open_doors = findViewById(R.id.open_doors);
-
         lina = findViewById(R.id.lina);
         linb = findViewById(R.id.linb);
         linc = findViewById(R.id.linc);
         lind = findViewById(R.id.lind);
-
         checkboxa = findViewById(R.id.checkboxa);
         checkboxb = findViewById(R.id.checkboxb);
         checkboxc = findViewById(R.id.checkboxc);
         checkboxd = findViewById(R.id.checkboxd);
-
         backs = findViewById(R.id.backs);
         cabinets_list = findViewById(R.id.cabinets_list);
         backs.setOnClickListener(this);
@@ -172,6 +167,12 @@ public class RemoteControlActivity extends BaseActivity implements View.OnClickL
             if (value.equals("A") || value.equals("B") || value.equals("C") || value.equals("D")) {
                 iterator.remove();
             }
+        }
+        if (str == 0) {
+            lina.setVisibility(View.GONE);
+            linb.setVisibility(View.GONE);
+            linc.setVisibility(View.GONE);
+            lind.setVisibility(View.GONE);
         }
         if (str == 1) {
             lina.setVisibility(View.VISIBLE);
@@ -300,10 +301,10 @@ public class RemoteControlActivity extends BaseActivity implements View.OnClickL
                 //确认开门
                 case 0x4521260:
                     try {
-                        JSONObject object=new JSONObject();
-                        object.put("control",checkedValues);
-                        object.put("userIds",PreferenceUtils.getString(context, "ids"));
-                        MyMqttClient.sharedCenter().setSendData("iotcontrol/" + mac, object.toString());
+                        JSONObject object = new JSONObject();
+                        object.put("control", checkedValues);
+                        object.put("userIds", PreferenceUtils.getString(context, "ids"));
+                        MyMqttClient.sharedCenter().setSendData("controls/" + mac, object.toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

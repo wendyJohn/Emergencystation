@@ -7,26 +7,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.loopj.android.http.RequestParams;
 import com.sanleng.emergencystation.R;
 import com.sanleng.emergencystation.adapter.MaterialAdapter;
 import com.sanleng.emergencystation.bean.ArchitectureBean;
-import com.sanleng.emergencystation.dialog.MaterialDetailsDialog;
 import com.sanleng.emergencystation.dialog.PromptDialog;
-import com.sanleng.emergencystation.net.URLs;
-import com.sanleng.emergencystation.utils.PreferenceUtils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

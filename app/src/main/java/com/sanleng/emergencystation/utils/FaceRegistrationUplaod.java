@@ -60,7 +60,7 @@ public class FaceRegistrationUplaod extends AsyncTask<String, Integer, String> {
         HttpContext httpContext = new BasicHttpContext();
         String ids = PreferenceUtils.getString(context, "ids");
         String username = PreferenceUtils.getString(context, "EmergencyStation_username");
-        HttpPost httpPost = new HttpPost(URLs.HOST + "/thirdpartypush/api/getui/faceRecognition?ids=" + ids + "&platformkey=app_emergency_new");
+        HttpPost httpPost = new HttpPost(URLs.HOST + "/sl-universal-jpush/api/getui/faceRecognition?userId=" + ids + "&platformType=app_emergency_new");
         httpPost.addHeader("Authorization", PreferenceUtils.getString(context, "JWT"));
         try {
             CustomMultipartEntity multipartContent = new CustomMultipartEntity(new CustomMultipartEntity.ProgressListener() {
@@ -100,7 +100,7 @@ public class FaceRegistrationUplaod extends AsyncTask<String, Integer, String> {
                 JSONObject object = new JSONObject(result);
                 String mymsg = object.getString("msg");
                 if (serverResponse != null) {
-                    if (mymsg.equals("上传成功！")) {
+                    if (mymsg.equals("更新成功")) {
                         Message msg = new Message();
                         msg.what = 4354343;
                         handler.sendMessage(msg);
